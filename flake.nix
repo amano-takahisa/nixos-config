@@ -21,6 +21,7 @@
 	      imports = [
 	        ./modules/home-manager/development.nix
 	      ];
+	      home.stateVersion = "25.05";
 	    };
 	  }
 	];

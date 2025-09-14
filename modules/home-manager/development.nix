@@ -5,5 +5,5 @@
     python3
     tmux
     ripgrep
-  ]
+  ];
 }
