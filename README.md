@@ -24,15 +24,22 @@ Update `configuration.nix` to enable Flakes features as follows:
 }
 ```
 
+Generate hardware-configuration.nix
+
+```bash
+# replace sx2 with your hostname.
+mkdir ~/nix-config/hosts/<NEW_HOST_NAME>
+sudo nixos-generate-config --show-hardware-config > ~/nix-config/hosts/<NEW_HOST_NAME>/hardware-configuration.nix
+```
+
+and create a `~/nix-config/hosts/<NEW_HOST_NAME>/configuration.nix`.
+
+
 Then, apply the setting:
 
 ```bash
-sudo nixos-rebuild switch
-```
-
-```bash
 cd ~/nixos-config
-sudo nixos-rebuild switch --flake .#sx2
+sudo nixos-rebuild switch --flake .#<NEW_HOST_NAME>
 ```
 
 ## How this repository was initialized
