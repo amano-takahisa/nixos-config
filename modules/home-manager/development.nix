@@ -2,8 +2,8 @@
 
 {
   home.packages = with pkgs; [
-    python3
-    tmux
+    # python3
+    # tmux
     ripgrep
   ];
 }
