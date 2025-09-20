@@ -10,14 +10,14 @@
     packages = with pkgs; [
       # System utilities
       # curl
-      # git
       # htop
       tree
+      tmux
       # unzip
       # wget
 
       # Text processing
-      vim
+      neovim
       nano
     ];
   };

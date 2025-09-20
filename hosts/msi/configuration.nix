@@ -8,13 +8,15 @@
 
   # Bootloader
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/nvme0n1";  # Adjust for MSI hardware
+  boot.loader.grub.device = "/dev/sda";
+  # boot.loader.grub.device = "/dev/nvme0n1";  # Adjust for MSI hardware
   boot.loader.grub.useOSProber = true;
 
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "msi";
+  # networking.hostName = "msi";
+  networking.hostName = "sx2";
   networking.networkmanager.enable = true;
 
   # Set your time zone
