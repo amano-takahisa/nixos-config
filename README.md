@@ -15,11 +15,6 @@ This repository manages NixOS configurations for multiple environments using Nix
 - **Modules**: common, development, graphics, office, gui
 - **Includes**: All packages and applications
 
-### wsl2 (WSL2 - CLI Focused)
-- **Target**: Windows Subsystem for Linux environment
-- **Modules**: common, development
-- **Excludes**: GUI applications, desktop environment
-
 ## Directory Structure
 
 ```
@@ -29,11 +24,8 @@ nixos-config/
 │   ├── sx2/
 │   │   ├── configuration.nix    # sx2-specific system config
 │   │   └── hardware-configuration.nix
-│   ├── msi/
-│   │   ├── configuration.nix    # msi-specific system config
-│   │   └── hardware-configuration.nix
-│   └── wsl2/
-│       ├── configuration.nix    # wsl2-specific system config
+│   └── msi/
+│       ├── configuration.nix    # msi-specific system config
 │       └── hardware-configuration.nix
 └── modules/home-manager/
     ├── common.nix               # Base packages for all environments
@@ -49,7 +41,6 @@ nixos-config/
 ```bash
 sudo nixos-rebuild switch --flake .#sx2   # For sx2 host
 sudo nixos-rebuild switch --flake .#msi   # For msi host
-sudo nixos-rebuild switch --flake .#wsl2  # For wsl2 host
 ```
 
 ### Testing a configuration:
@@ -61,7 +52,7 @@ sudo nixos-rebuild test --flake .#sx2
 ```bash
 home-manager switch --flake .#takahisa@sx2
 home-manager switch --flake .#takahisa@msi
-home-manager switch --flake .#takahisa@wsl2
+nix run home-manager -- switch --flake .#takahisa@sx2
 ```
 
 ## Setup Instructions
@@ -90,7 +81,7 @@ home-manager switch --flake .#takahisa@wsl2
 
 ## User Information
 - **Username**: takahisa (consistent across all hosts)
-- **Host names**: sx2, msi, wsl2
+- **Host names**: sx2, msi
 - **State version**: 25.05
 
 ## Notes
