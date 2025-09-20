@@ -49,6 +49,7 @@ sudo nixos-rebuild test --flake .#sx2
 ```
 
 ### Building with home-manager only:
+
 ```bash
 home-manager switch --flake .#takahisa@sx2
 home-manager switch --flake .#takahisa@msi
@@ -70,6 +71,23 @@ nix run home-manager -- switch --flake .#takahisa@sx2
    ```bash
    sudo nixos-rebuild switch --flake .#HOST_NAME
    ```
+
+## Manual setups
+
+Following configrations are not integrated nix-config yet.
+
+### Disable 5GHz wifi
+
+If your wi-fi authentication fails repeatedly, try disabling 5 GHz band.
+
+```bash
+nix-shell -p networkmanagerapplet
+nm-connection-editor
+```
+
+Then, select Band B/G (2.4 GHz) for your wifi.
+
+
 
 ## Module Breakdown
 

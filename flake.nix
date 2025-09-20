@@ -5,6 +5,12 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # nixvim = {
+    #     # url = "github:nix-community/nixvim";
+    #     url = "github:nix-community/nixvim/nixos-25.05";
+    #     # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
+    #     inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -16,6 +22,7 @@
       commonModules = [
         ./modules/home-manager/common.nix
         ./modules/home-manager/development.nix
+        ./modules/home-manager/editor.nix
       ];
 
       # Host-specific module configurations

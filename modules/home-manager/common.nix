@@ -15,10 +15,6 @@
       tmux
       # unzip
       # wget
-
-      # Text processing
-      neovim
-      nano
     ];
   };
 
