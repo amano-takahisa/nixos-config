@@ -2,9 +2,10 @@
 
 {
   imports = [
-    ./git
-    ./gh-cli
-    ./ripgrep
     ./claude-code
+    ./gh-cli
+    ./git
+    ./lazygit
+    ./ripgrep
   ];
 }
