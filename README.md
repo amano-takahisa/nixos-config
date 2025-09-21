@@ -5,14 +5,14 @@ This repository manages NixOS configurations for multiple environments using Nix
 
 ## Host Configurations
 
-### sx2 (Desktop - Graphics Restricted)
-- **Target**: Desktop environment without graphics tools
-- **Modules**: common, development
-- **Excludes**: graphics (GIMP, ImageMagick), office suite, GUI apps
+### sx2 (Desktop - Full Featured)
+- **Target**: Complete desktop environment  
+- **Modules**: common, development, editor, gui
+- **Includes**: All packages and applications
 
 ### msi (Desktop - Full Featured)
 - **Target**: Complete desktop environment
-- **Modules**: common, development, graphics, office, gui
+- **Modules**: common, development, editor, graphics, office, gui
 - **Includes**: All packages and applications
 
 ## Directory Structure
@@ -29,7 +29,8 @@ nixos-config/
 │       └── hardware-configuration.nix
 └── modules/home-manager/
     ├── common.nix               # Base packages for all environments
-    ├── development.nix          # Development tools
+    ├── development.nix          # Development tools (git, ripgrep, claude-code)
+    ├── editor.nix               # Text editors and IDE tools
     ├── graphics.nix             # Graphics tools (GIMP, ImageMagick, etc.)
     ├── office.nix               # Office suite (LibreOffice, etc.)
     └── gui.nix                  # GUI applications
@@ -37,23 +38,26 @@ nixos-config/
 
 ## Usage
 
-### Building a specific host configuration:
+### Applying changes to user environment (recommended for modules/home-manager/ changes):
 ```bash
-sudo nixos-rebuild switch --flake .#sx2   # For sx2 host
-sudo nixos-rebuild switch --flake .#msi   # For msi host
+nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@sx2   # For sx2 host
+nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@msi   # For msi host
+```
+
+### Applying system-wide changes:
+```bash
+sudo nixos-rebuild switch --flake .#sx2      # For sx2 host  
+sudo nixos-rebuild switch --flake .#msi      # For msi host
 ```
 
 ### Testing a configuration:
 ```bash
-sudo nixos-rebuild test --flake .#sx2
+sudo nixos-rebuild test --flake .#sx2        # Test without activation
 ```
 
-### Building with home-manager only:
-
+### General rebuild (applies both system and user changes):
 ```bash
-home-manager switch --flake .#takahisa@sx2
-home-manager switch --flake .#takahisa@msi
-nix run home-manager -- switch --flake .#takahisa@sx2
+sudo nixos-rebuild switch                    # Uses default host configuration
 ```
 
 ## Setup Instructions
@@ -104,11 +108,46 @@ Check "Configure keyboard options", and
 
 ## Module Breakdown
 
-- **common.nix**: Essential utilities (git, vim, htop, etc.)
-- **development.nix**: Programming tools (Python, tmux, ripgrep)
+- **common.nix**: Essential utilities and base system tools
+- **development.nix**: Programming tools (git, ripgrep, claude-code)
+- **editor.nix**: Text editors and IDE tools
 - **graphics.nix**: Image processing (GIMP, ImageMagick, Inkscape)
 - **office.nix**: Office applications (LibreOffice, Thunderbird)
 - **gui.nix**: Desktop applications (Kate, Dolphin, VLC, Discord)
+
+## Update Workflow
+
+When making changes to `modules/home-manager/` files:
+
+1. **Fast user-only updates** (recommended):
+   ```bash
+   nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@sx2
+   ```
+   - No `sudo` required
+   - Only rebuilds user environment
+   - Faster than full system rebuild
+   - Uses temporary home-manager to avoid package conflicts
+
+2. **Full system rebuild** (when system changes are needed):
+   ```bash
+   sudo nixos-rebuild switch --flake .#sx2
+   ```
+   - Requires `sudo`
+   - Rebuilds entire system including user environment
+   - Slower but comprehensive
+
+### Useful Aliases
+
+To simplify the long home-manager command, you can add this alias to your shell:
+
+```bash
+alias hm='nix shell nixpkgs#home-manager -c home-manager'
+```
+
+Then use:
+```bash
+hm switch --flake .#takahisa@sx2
+```
 
 ## User Information
 - **Username**: takahisa (consistent across all hosts)

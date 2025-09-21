@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     # python3
     ripgrep
+    claude-code
   ];
 
   # Git configuration
@@ -32,5 +33,4 @@
       init = { defaultBranch = "main"; };
     };
   };
-
 }

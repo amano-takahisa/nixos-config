@@ -74,12 +74,22 @@
       # Standalone home-manager configurations (optional)
       homeConfigurations = {
         "takahisa@sx2" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = hostModules.sx2;
+          pkgs = import nixpkgs { 
+            inherit system; 
+            config.allowUnfree = true; 
+          };
+          modules = hostModules.sx2 ++ [
+            { home.stateVersion = "25.05"; }
+          ];
         };
         "takahisa@msi" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-          modules = hostModules.msi;
+          pkgs = import nixpkgs { 
+            inherit system; 
+            config.allowUnfree = true; 
+          };
+          modules = hostModules.msi ++ [
+            { home.stateVersion = "25.05"; }
+          ];
         };
       };
     };
