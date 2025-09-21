@@ -20,21 +20,22 @@
 
       # Common modules for all hosts
       commonModules = [
-        ./modules/home-manager/common.nix
-        ./modules/home-manager/development.nix
-        ./modules/home-manager/editor.nix
+        ./modules/home-manager/common
+        ./modules/home-manager/development
+        ./modules/home-manager/editor
+        ./modules/home-manager/terminal
       ];
 
       # Host-specific module configurations
       hostModules = {
         # sx2 = commonModules; # No graphics for sx2
         sx2 = commonModules ++ [
-          ./modules/home-manager/gui.nix
+          ./modules/home-manager/media
         ];
         msi = commonModules ++ [
-          ./modules/home-manager/graphics.nix
-          ./modules/home-manager/office.nix
-          ./modules/home-manager/gui.nix
+          ./modules/home-manager/graphics
+          ./modules/home-manager/office
+          ./modules/home-manager/media
         ]; # Full feature set for msi
       };
 
