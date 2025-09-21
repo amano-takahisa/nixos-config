@@ -40,11 +40,12 @@ nixos-config/
 
 ### Applying changes to user environment (recommended for modules/home-manager/ changes):
 ```bash
-nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@sx2   # For sx2 host
-nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@msi   # For msi host
+NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@sx2 --impure   # For sx2 host
+NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@msi --impure   # For msi host
 ```
 
 ### Applying system-wide changes:
+
 ```bash
 sudo nixos-rebuild switch --flake .#sx2      # For sx2 host  
 sudo nixos-rebuild switch --flake .#msi      # For msi host
@@ -124,6 +125,12 @@ gh auth login -p ssh -h github.com -w
 ssh -T git@github.com
 ```
 
+#### copilot.vim
+
+```
+:Copilot auth
+```
+
 ## Module Breakdown
 
 - **common.nix**: Essential utilities and base system tools
@@ -139,12 +146,13 @@ When making changes to `modules/home-manager/` files:
 
 1. **Fast user-only updates** (recommended):
    ```bash
-   nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@sx2
+   NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@sx2 --impure
    ```
    - No `sudo` required
    - Only rebuilds user environment
    - Faster than full system rebuild
    - Uses temporary home-manager to avoid package conflicts
+   - `--impure` and `NIXPKGS_ALLOW_UNFREE=1` needed for unfree packages (e.g., copilot.vim)
 
 2. **Full system rebuild** (when system changes are needed):
    ```bash
@@ -159,12 +167,12 @@ When making changes to `modules/home-manager/` files:
 To simplify the long home-manager command, you can add this alias to your shell:
 
 ```bash
-alias hm='nix shell nixpkgs#home-manager -c home-manager'
+alias hm='NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager'
 ```
 
 Then use:
 ```bash
-hm switch --flake .#takahisa@sx2
+hm switch --flake .#takahisa@sx2 --impure
 ```
 
 ## User Information
@@ -176,4 +184,5 @@ hm switch --flake .#takahisa@sx2
 - All configurations use home-manager for user-level package management
 - Unfree packages are allowed in all configurations
 - Flakes are enabled for all hosts
+- **Important**: When using home-manager directly (not through nixos-rebuild), the `--impure` flag and `NIXPKGS_ALLOW_UNFREE=1` environment variable are required for unfree packages like copilot.vim
 - WSL2 configuration includes Docker support

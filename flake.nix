@@ -73,23 +73,29 @@
       # Standalone home-manager configurations (optional)
       homeConfigurations = {
         "takahisa@sx2" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs { 
-            inherit system; 
-            config.allowUnfree = true; 
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
           };
           modules = hostModules.sx2 ++ [
             nixvim.homeModules.nixvim
-            { home.stateVersion = "25.05"; }
+            {
+              home.stateVersion = "25.05";
+              nixpkgs.config.allowUnfree = true;
+            }
           ];
         };
         "takahisa@msi" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs { 
-            inherit system; 
-            config.allowUnfree = true; 
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
           };
           modules = hostModules.msi ++ [
             nixvim.homeModules.nixvim
-            { home.stateVersion = "25.05"; }
+            {
+              home.stateVersion = "25.05";
+              nixpkgs.config.allowUnfree = true;
+            }
           ];
         };
       };
