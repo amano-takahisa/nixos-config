@@ -1,8 +1,8 @@
-{ pkgs, ...}:
+{ pkgs, lib, ... }:
 
+let
+  libUtils = import ../lib { inherit lib; };
+in
 {
-  imports = [
-    # ./neovim
-    ./nixvim
-  ];
+  imports = libUtils.importSubdirectoriesWithDefault ./.;
 }

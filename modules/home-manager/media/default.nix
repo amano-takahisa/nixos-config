@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
+let
+  libUtils = import ../lib { inherit lib; };
+in
 {
-  imports = [
-    ./vlc
-  ];
+  imports = libUtils.importSubdirectoriesWithDefault ./.;
 }
