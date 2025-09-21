@@ -9,6 +9,9 @@
     # spectacle     # Screenshot tool
     # gwenview      # Image viewer
 
+    # Terminal
+    wezterm
+
     # Media players
     vlc
     # mpv
