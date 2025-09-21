@@ -95,6 +95,13 @@ For more details see https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plas
 Go to "System Settings" -> "Input Method" -> "Add Input Method",
 then search Mozc, and add Mozc.
 
+### Key bindings
+
+"System Settings" -> "Keyboard" -> "Key Bindings"
+Check "Configure keyboard options", and
+- Ctrl position
+    (x) Caps Lock as Ctrl 
+
 ## Module Breakdown
 
 - **common.nix**: Essential utilities (git, vim, htop, etc.)

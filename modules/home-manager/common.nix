@@ -12,18 +12,51 @@
       # curl
       # htop
       tree
-      tmux
       # unzip
       # wget
     ];
   };
 
-  # Git configuration
-  programs.git = {
+  # tmux
+  programs.tmux = {
     enable = true;
-    userName = "takahisa";
-    userEmail = "takahisa@example.com"; # Change this to your email
+    shortcut = "a";
+    mouse = true;
+    keyMode = "vi";
+    extraConfig = ''
+      #################
+      # Pains
+      #################
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+
+      # Use Alt-arrow keys without prefix key to switch panes
+      bind -n M-Left select-pane -L
+      bind -n M-Right select-pane -R
+      bind -n M-Up select-pane -U
+      bind -n M-Down select-pane -D
+
+      # Change pane border colors
+      set -g pane-active-border-style "bg=#ffffa4,fg=#000000"
+
+      # Keep showing window numbe when <prefix> q
+      bind -T prefix e display-panes -d 0
+
+      # keep pane title static
+      set -g automatic-rename off
+      set -g pane-border-format "#{pane_index}:#T #{pane_current_path}"
+      set -g status-interval 5
+      set -g pane-border-status bottom
+    '';
+
+
+    # plugins = with pkgs; [
+    #   tmuxPlugins.better-mouse-mode
+    # ];
   };
+
 
   # Shell configuration
   programs.bash = {
