@@ -21,6 +21,7 @@ This repository manages NixOS configurations for multiple environments using Nix
 nixos-config/
 ├── flake.nix                    # Main flake configuration
 ├── rebuild.sh                   # Convenience script for system rebuilds
+├── home-rebuild.sh              # Convenience script for home-manager rebuilds
 ├── hosts/
 │   ├── sx2/
 │   │   ├── configuration.nix    # sx2-specific system config
@@ -41,6 +42,10 @@ nixos-config/
 
 ### Applying changes to user environment (recommended for modules/home-manager/ changes):
 ```bash
+./home-rebuild.sh takahisa@sx2 switch      # For sx2 host (recommended)
+./home-rebuild.sh takahisa@msi switch      # For msi host (recommended)
+
+# Alternative (manual approach):
 NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@sx2 --impure   # For sx2 host
 NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@msi --impure   # For msi host
 ```
@@ -151,13 +156,13 @@ When making changes to `modules/home-manager/` files:
 
 1. **Fast user-only updates** (recommended):
    ```bash
-   NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@sx2 --impure
+   ./home-rebuild.sh takahisa@sx2 switch
    ```
    - No `sudo` required
    - Only rebuilds user environment
    - Faster than full system rebuild
    - Uses temporary home-manager to avoid package conflicts
-   - `--impure` and `NIXPKGS_ALLOW_UNFREE=1` needed for unfree packages (e.g., copilot.vim)
+   - Automatically handles unfree packages and impure flags
 
 2. **Full system rebuild** (when system changes are needed):
    ```bash
@@ -170,15 +175,16 @@ When making changes to `modules/home-manager/` files:
 
 ### Useful Aliases
 
-To simplify the long home-manager command, you can add this alias to your shell:
+For even faster home-manager rebuilds, you can add this alias to your shell:
 
 ```bash
-alias hm='NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager'
+alias hmr='./home-rebuild.sh'
 ```
 
 Then use:
 ```bash
-hm switch --flake .#takahisa@sx2 --impure
+hmr takahisa@sx2 switch
+hmr                     # Defaults to takahisa@sx2 switch
 ```
 
 ## User Information
@@ -186,7 +192,9 @@ hm switch --flake .#takahisa@sx2 --impure
 - **Host names**: sx2, msi
 - **State version**: 25.05
 
-## Rebuild Script
+## Rebuild Scripts
+
+### System Rebuild Script (`rebuild.sh`)
 
 The `rebuild.sh` script is provided to simplify system rebuilds with proper unfree package handling:
 
@@ -200,10 +208,24 @@ The `rebuild.sh` script is provided to simplify system rebuilds with proper unfr
 ./rebuild.sh               # Defaults to: sx2 switch
 ```
 
-**Why use the script?**
+### Home Manager Rebuild Script (`home-rebuild.sh`)
+
+The `home-rebuild.sh` script simplifies home-manager rebuilds:
+
+```bash
+# Basic usage
+./home-rebuild.sh [user@host] [operation]
+
+# Examples
+./home-rebuild.sh takahisa@sx2 switch    # Rebuild and switch user configuration
+./home-rebuild.sh takahisa@msi test      # Test user configuration without switching
+./home-rebuild.sh                        # Defaults to: takahisa@sx2 switch
+```
+
+**Why use the scripts?**
 - Automatically sets `NIXPKGS_ALLOW_UNFREE=1` environment variable
 - Uses `--impure` flag required for unfree packages (e.g., copilot.vim)
-- Handles `sudo` permissions correctly
+- Handles permissions correctly (`sudo` for system, no `sudo` for home-manager)
 - Simpler than remembering the full command with flags
 
 ## Notes
@@ -212,3 +234,4 @@ The `rebuild.sh` script is provided to simplify system rebuilds with proper unfr
 - Flakes are enabled for all hosts
 - **Important**: When using home-manager directly (not through nixos-rebuild), the `--impure` flag and `NIXPKGS_ALLOW_UNFREE=1` environment variable are required for unfree packages like copilot.vim
 - **System rebuilds**: Always use `./rebuild.sh` instead of direct `nixos-rebuild` to ensure unfree packages work correctly
+- **Home-manager rebuilds**: Always use `./home-rebuild.sh` instead of direct `home-manager` commands for consistent unfree package handling
