@@ -11,7 +11,7 @@
       # Toggle relative line numbers
       {
         mode = "n";
-        key = "<leader>n";
+        key = "<F3>";
         action = "<cmd>set relativenumber!<cr>";
         options = {
           desc = "Toggle relative line numbers";
@@ -28,7 +28,7 @@
       }
       {
         mode = "n";
-        key = "<S-l>";
+        key = "<C-j>";
         action = "<cmd>bnext<cr>";
         options = {
           desc = "Next buffer";
