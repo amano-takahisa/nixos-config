@@ -87,7 +87,13 @@ nm-connection-editor
 
 Then, select Band B/G (2.4 GHz) for your wifi.
 
+### Japanese environment
 
+Go to "System Settings" -> "Virtual keyboard" and select "Fcitx 5" from it.
+For more details see https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma 
+
+Go to "System Settings" -> "Input Method" -> "Add Input Method",
+then search Mozc, and add Mozc.
 
 ## Module Breakdown
 
