@@ -1,0 +1,40 @@
+{ ... }:
+
+{
+  imports = [
+    ./lsp-servers.nix
+    ./cmp.nix
+  ];
+
+  programs.nixvim.plugins = {
+    lsp = {
+      enable = false;
+      inlayHints = true;
+
+      keymaps = {
+        silent = true;
+        diagnostic = {
+          "<leader>ld" = "open_float";
+          "[d" = "goto_prev";
+          "]d" = "goto_next";
+          "<leader>lq" = "setloclist";
+        };
+        lspBuf = {
+          "gd" = "definition";
+          "gD" = "declaration";
+          "gr" = "references";
+          "gi" = "implementation";
+          "gt" = "type_definition";
+          "K" = "hover";
+          "<leader>lh" = "signature_help";
+          "<leader>lr" = "rename";
+          "<leader>la" = "code_action";
+          "<leader>lf" = "format";
+        };
+      };
+    };
+
+    # Additional LSP-related plugins
+    lsp-format.enable = false;
+  };
+}

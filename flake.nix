@@ -78,7 +78,7 @@
             config.allowUnfree = true; 
           };
           modules = hostModules.sx2 ++ [
-            nixvim.homeManagerModules.nixvim
+            nixvim.homeModules.nixvim
             { home.stateVersion = "25.05"; }
           ];
         };
@@ -88,7 +88,7 @@
             config.allowUnfree = true; 
           };
           modules = hostModules.msi ++ [
-            nixvim.homeManagerModules.nixvim
+            nixvim.homeModules.nixvim
             { home.stateVersion = "25.05"; }
           ];
         };
