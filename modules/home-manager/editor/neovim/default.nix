@@ -6,16 +6,10 @@
   ];
   
   programs.neovim = {
-    enable = true;
+    enable = false;
+    defaultEditor = false;
     extraConfig = ''
       set number relativenumber
     '';
-    defaultEditor = true;
   };
-
-  # programs.nixvim = {
-  # enable = true;
-  #   # colorschemes.catppuccin.enable = true;
-  #   # plugins.lualine.enable = true;
-  # };
 }

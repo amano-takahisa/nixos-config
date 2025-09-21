@@ -5,15 +5,13 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # nixvim = {
-    #     # url = "github:nix-community/nixvim";
-    #     url = "github:nix-community/nixvim/nixos-25.05";
-    #     # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
-    #     inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    nixvim = {
+        url = "github:nix-community/nixvim/nixos-25.05";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixvim, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -80,6 +78,7 @@
             config.allowUnfree = true; 
           };
           modules = hostModules.sx2 ++ [
+            nixvim.homeManagerModules.nixvim
             { home.stateVersion = "25.05"; }
           ];
         };
@@ -89,6 +88,7 @@
             config.allowUnfree = true; 
           };
           modules = hostModules.msi ++ [
+            nixvim.homeManagerModules.nixvim
             { home.stateVersion = "25.05"; }
           ];
         };
