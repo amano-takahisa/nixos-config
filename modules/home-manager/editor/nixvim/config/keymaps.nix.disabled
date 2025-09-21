@@ -8,16 +8,6 @@
     };
 
     keymaps = [
-      # File explorer
-      {
-        mode = "n";
-        key = "<leader>e";
-        action = "<cmd>NvimTreeToggle<cr>";
-        options = {
-          desc = "Toggle file explorer";
-        };
-      }
-
       # Telescope
       {
         mode = "n";
