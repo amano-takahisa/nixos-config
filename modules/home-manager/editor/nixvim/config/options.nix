@@ -1,33 +1,37 @@
 { ... }:
 
 {
-  programs.nixvim.opts = {
-    number = true;
-    relativenumber = true;
-    shiftwidth = 2;
-    tabstop = 2;
-    expandtab = true;
-    smartindent = true;
-    wrap = false;
-    scrolloff = 8;
-    signcolumn = "yes";
-    updatetime = 50;
-    colorcolumn = "80";
+  programs.nixvim = {
+    globals.mapleader = " ";  # Set leader key to space
 
-    # Search settings
-    ignorecase = true;
-    smartcase = true;
-    hlsearch = true;
-    incsearch = true;
+      opts = {
+        number = true;
+        relativenumber = true;
+        shiftwidth = 2;
+        tabstop = 2;
+        expandtab = true;
+        smartindent = true;
+        wrap = false;
+        scrolloff = 8;
+        signcolumn = "yes";
+        updatetime = 50;
+        colorcolumn = "80";
 
-    # UI settings
-    termguicolors = true;
-    cursorline = true;
-    showmode = false;
+        # Search settings
+        ignorecase = true;
+        smartcase = true;
+        hlsearch = true;
+        incsearch = true;
 
-    # Backup and swap
-    backup = false;
-    swapfile = false;
-    undofile = true;
+        # UI settings
+        termguicolors = true;
+        cursorline = true;
+        showmode = false;
+
+        # Backup and swap
+        backup = false;
+        swapfile = false;
+        undofile = true;
+      };
   };
 }
