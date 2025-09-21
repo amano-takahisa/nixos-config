@@ -24,4 +24,5 @@
 
   # Enable font configuration
   fonts.fontconfig.enable = true;
+
 }

@@ -27,7 +27,10 @@
 
       # Host-specific module configurations
       hostModules = {
-        sx2 = commonModules; # No graphics for sx2
+        # sx2 = commonModules; # No graphics for sx2
+        sx2 = commonModules ++ [
+          ./modules/home-manager/gui.nix
+        ];
         msi = commonModules ++ [
           ./modules/home-manager/graphics.nix
           ./modules/home-manager/office.nix
