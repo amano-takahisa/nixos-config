@@ -106,6 +106,24 @@ Check "Configure keyboard options", and
 - Ctrl position
     (x) Caps Lock as Ctrl 
 
+### Login services
+
+#### Firefox
+
+#### claude code
+
+```bash
+claude
+```
+
+#### gh-cli
+
+```bash
+gh auth login -p ssh -h github.com -w
+# test connection
+ssh -T git@github.com
+```
+
 ## Module Breakdown
 
 - **common.nix**: Essential utilities and base system tools
