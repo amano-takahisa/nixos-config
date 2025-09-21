@@ -2,9 +2,12 @@
 
 {
   environment.systemPackages = with pkgs; [
-    gcc
     clang
+    gcc
     gnumake
+    nodejs
     pkg-config
+    tree-sitter
+    wl-clipboard
   ];
 }
