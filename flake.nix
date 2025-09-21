@@ -41,8 +41,11 @@
       mkHomeManager = hostName: {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = {
+          pkgs = pkgs;
+        };
         home-manager.users.takahisa = {
-          imports = hostModules.${hostName};
+          imports = hostModules.${hostName} ++ [ nixvim.homeModules.nixvim ];
           home.stateVersion = "25.05";
         };
       };
@@ -81,7 +84,6 @@
             nixvim.homeModules.nixvim
             {
               home.stateVersion = "25.05";
-              nixpkgs.config.allowUnfree = true;
             }
           ];
         };
@@ -94,7 +96,6 @@
             nixvim.homeModules.nixvim
             {
               home.stateVersion = "25.05";
-              nixpkgs.config.allowUnfree = true;
             }
           ];
         };

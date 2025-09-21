@@ -20,6 +20,7 @@ This repository manages NixOS configurations for multiple environments using Nix
 ```
 nixos-config/
 ├── flake.nix                    # Main flake configuration
+├── rebuild.sh                   # Convenience script for system rebuilds
 ├── hosts/
 │   ├── sx2/
 │   │   ├── configuration.nix    # sx2-specific system config
@@ -47,18 +48,22 @@ NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager switch --f
 ### Applying system-wide changes:
 
 ```bash
-sudo nixos-rebuild switch --flake .#sx2      # For sx2 host  
-sudo nixos-rebuild switch --flake .#msi      # For msi host
+./rebuild.sh sx2 switch      # For sx2 host (recommended)
+./rebuild.sh msi switch      # For msi host (recommended)
+
+# Alternative (manual approach):
+export NIXPKGS_ALLOW_UNFREE=1
+sudo -E nixos-rebuild switch --flake .#sx2 --impure
+sudo -E nixos-rebuild switch --flake .#msi --impure
 ```
 
 ### Testing a configuration:
 ```bash
-sudo nixos-rebuild test --flake .#sx2        # Test without activation
-```
+./rebuild.sh sx2 test        # Test without activation (recommended)
 
-### General rebuild (applies both system and user changes):
-```bash
-sudo nixos-rebuild switch                    # Uses default host configuration
+# Alternative (manual approach):
+export NIXPKGS_ALLOW_UNFREE=1
+sudo -E nixos-rebuild test --flake .#sx2 --impure
 ```
 
 ## Setup Instructions
@@ -74,7 +79,7 @@ sudo nixos-rebuild switch                    # Uses default host configuration
 
 4. **Build and switch** to your configuration:
    ```bash
-   sudo nixos-rebuild switch --flake .#HOST_NAME
+   ./rebuild.sh HOST_NAME switch
    ```
 
 ## Manual setups
@@ -156,11 +161,12 @@ When making changes to `modules/home-manager/` files:
 
 2. **Full system rebuild** (when system changes are needed):
    ```bash
-   sudo nixos-rebuild switch --flake .#sx2
+   ./rebuild.sh sx2 switch
    ```
-   - Requires `sudo`
+   - Requires `sudo` (handled by script)
    - Rebuilds entire system including user environment
    - Slower but comprehensive
+   - Automatically handles unfree packages
 
 ### Useful Aliases
 
@@ -180,9 +186,29 @@ hm switch --flake .#takahisa@sx2 --impure
 - **Host names**: sx2, msi
 - **State version**: 25.05
 
+## Rebuild Script
+
+The `rebuild.sh` script is provided to simplify system rebuilds with proper unfree package handling:
+
+```bash
+# Basic usage
+./rebuild.sh [host] [operation]
+
+# Examples
+./rebuild.sh sx2 switch    # Rebuild and switch sx2 configuration
+./rebuild.sh msi test      # Test msi configuration without switching
+./rebuild.sh               # Defaults to: sx2 switch
+```
+
+**Why use the script?**
+- Automatically sets `NIXPKGS_ALLOW_UNFREE=1` environment variable
+- Uses `--impure` flag required for unfree packages (e.g., copilot.vim)
+- Handles `sudo` permissions correctly
+- Simpler than remembering the full command with flags
+
 ## Notes
 - All configurations use home-manager for user-level package management
 - Unfree packages are allowed in all configurations
 - Flakes are enabled for all hosts
 - **Important**: When using home-manager directly (not through nixos-rebuild), the `--impure` flag and `NIXPKGS_ALLOW_UNFREE=1` environment variable are required for unfree packages like copilot.vim
-- WSL2 configuration includes Docker support
+- **System rebuilds**: Always use `./rebuild.sh` instead of direct `nixos-rebuild` to ensure unfree packages work correctly
