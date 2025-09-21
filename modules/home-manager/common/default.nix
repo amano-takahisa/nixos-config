@@ -14,16 +14,15 @@
       tree
       # unzip
       # wget
+      fish
     ];
   };
 
 
 
   # Shell configuration
-  programs.bash = {
+  programs.fish = {
     enable = true;
-    historySize = 10000;
-    historyFileSize = 20000;
   };
 
   # Enable home-manager
