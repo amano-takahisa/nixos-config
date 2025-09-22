@@ -73,6 +73,21 @@ sudo -E nixos-rebuild test --flake .#sx2 --impure
 
 ## Setup Instructions
 
+### WSL2 Setup
+
+Install NixOS on WSL2 by following the instructions at
+https://nix-community.github.io/NixOS-WSL/
+
+Clone this repository into your WSL2 instance
+
+```bash
+nix-shell -p git --run "git clone 
+```
+
+### New physical host setup
+
+### Post OS installation steps
+
 1. **Generate hardware configuration** for new hosts:
    ```bash
    sudo nixos-generate-config --dir hosts/HOST_NAME/
