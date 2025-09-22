@@ -9,6 +9,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../modules/system/packages/development.nix
+    ../../modules/system/services/docker.nix
   ];
 
   # Bootloader

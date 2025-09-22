@@ -155,6 +155,14 @@ ssh -T git@github.com
 ```
 :Copilot auth
 ```
+### Docker
+
+```bash
+systemctl --user enable --now docker
+# test docker
+docker run hello-world
+```
+
 
 ## Module Breakdown
 
