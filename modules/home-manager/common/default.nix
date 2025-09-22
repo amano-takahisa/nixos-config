@@ -14,15 +14,7 @@
       tree
       # unzip
       # wget
-      fish
     ];
-  };
-
-
-
-  # Shell configuration
-  programs.fish = {
-    enable = true;
   };
 
   # Enable home-manager
