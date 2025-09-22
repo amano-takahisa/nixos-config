@@ -5,6 +5,9 @@
     plugins.lualine = {
       enable = true;
       settings = {
+        options = {
+          always_divide_middle = false;
+        };
         sections = {
           lualine_a = [ "mode" ];
           lualine_b = [ "branch" "diff" "diagnostics" ];
@@ -22,7 +25,8 @@
           lualine_z = [  ];
         };
         tabline = {
-          lualine_a = [  ];
+          # show buffers and file path
+          lualine_a = [ { __unkeyed-1 = "buffers"; show_filename_only = false; path = 3; } ];
           lualine_b = [  ];
           lualine_c = [  ];
           lualine_x = [  ];

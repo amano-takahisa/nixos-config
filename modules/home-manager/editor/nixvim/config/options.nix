@@ -11,7 +11,7 @@
         tabstop = 2;
         expandtab = true;
         smartindent = true;
-        wrap = false;
+        wrap = true;
         scrolloff = 8;
         signcolumn = "yes";
         updatetime = 50;
