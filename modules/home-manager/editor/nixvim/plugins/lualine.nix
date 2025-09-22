@@ -3,7 +3,7 @@
 {
   programs.nixvim = {
     plugins.lualine = {
-      enable = false;
+      enable = true;
       settings = {
         sections = {
           lualine_a = [ "mode" ];
