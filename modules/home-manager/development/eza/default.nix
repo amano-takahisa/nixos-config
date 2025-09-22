@@ -3,5 +3,6 @@
 {
   programs.eza = {
     enable = true;
+  };
 }
 
