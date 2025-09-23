@@ -1,15 +1,12 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
+# SX2 host configuration - Lightweight desktop
 { config, pkgs, ... }:
 
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../modules/system/packages/development.nix
     ../../modules/system/services/docker.nix
+    ../../modules/system/ui/fonts.nix
   ];
 
   # Bootloader
@@ -20,7 +17,7 @@
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "sx2"; # Define your hostname.
+  networking.hostName = "sx2";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -30,7 +27,6 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone
   time.timeZone = "Europe/Vienna";
 
   # Select internationalisation properties
@@ -92,7 +88,6 @@
     shell = pkgs.fish;
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
     ];
   };
 
@@ -112,6 +107,9 @@
   #  wget
     slack
   ];
+
+  # This settings enables Ozone/Wayland support for Electron apps like
+  # Slack and Discord.
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Some programs need SUID wrappers, can be configured further or are

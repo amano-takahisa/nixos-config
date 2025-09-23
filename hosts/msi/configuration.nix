@@ -4,7 +4,9 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/system/packages/development.nix
     ../../modules/system/services/docker.nix
+    ../../modules/system/ui/fonts.nix
   ];
 
   # Bootloader
@@ -20,7 +22,6 @@
   networking.hostName = "sx2";
   networking.networkmanager.enable = true;
 
-  # Set your time zone
   time.timeZone = "Europe/Vienna";
 
   # Select internationalisation properties
@@ -79,14 +80,17 @@
     isNormalUser = true;
     description = "takahisa";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.fish;
     packages = with pkgs; [
       kdePackages.kate
-    #  thunderbird
     ];
   };
 
   # Install firefox.
   programs.firefox.enable = true;
+
+  # Enable fish shell
+  programs.fish.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -97,6 +101,10 @@
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
   ];
+
+  # This settings enables Ozone/Wayland support for Electron apps like
+  # Slack and Discord.
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
