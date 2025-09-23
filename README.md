@@ -81,7 +81,7 @@ https://nix-community.github.io/NixOS-WSL/
 Clone this repository into your WSL2 instance
 
 ```bash
-nix-shell -p git --run "git clone 
+nix-shell -p git --run "git clone
 ```
 
 ### New physical host setup
@@ -196,20 +196,6 @@ When making changes to `modules/home-manager/` files:
    - Slower but comprehensive
    - Automatically handles unfree packages
 
-### Useful Aliases
-
-For even faster home-manager rebuilds, you can add this alias to your shell:
-
-```bash
-alias hmr='./home-rebuild.sh'
-```
-
-Then use:
-```bash
-hmr takahisa@sx2 switch
-hmr                     # Defaults to takahisa@sx2 switch
-```
-
 ## User Information
 - **Username**: takahisa (consistent across all hosts)
 - **Host names**: sx2, msi
@@ -258,3 +244,32 @@ The `home-rebuild.sh` script simplifies home-manager rebuilds:
 - **Important**: When using home-manager directly (not through nixos-rebuild), the `--impure` flag and `NIXPKGS_ALLOW_UNFREE=1` environment variable are required for unfree packages like copilot.vim
 - **System rebuilds**: Always use `./rebuild.sh` instead of direct `nixos-rebuild` to ensure unfree packages work correctly
 - **Home-manager rebuilds**: Always use `./home-rebuild.sh` instead of direct `home-manager` commands for consistent unfree package handling
+
+## TODO
+
+### Nixvim
+
+Add following plugins:
+
+- gitsigns
+- illuminate
+- quickhl
+
+and setup following features:
+
+- copy to system clipboard when yanking
+- automatic bracket closing (mini.surround, mini.pairs ?)
+- zen mode (true-zen ?)
+- visualize whitespace (vim-better-whitespace, visual-whitespace ?)
+- auto formatting with `<leader>f`
+
+### tmux
+
+- use united history file among multiple tmux windows/panes
+
+### Applications
+
+- zoxid
+
+- mozc
+  apply keymap.txt
