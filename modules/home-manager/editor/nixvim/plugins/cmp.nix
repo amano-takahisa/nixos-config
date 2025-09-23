@@ -3,7 +3,7 @@
 {
   programs.nixvim.plugins = {
     cmp = {
-      enable = false;
+      enable = true;
       autoEnableSources = true;
 
       settings = {

@@ -4,7 +4,7 @@
   programs.nixvim.plugins.lsp.servers = {
     # Nix
     nil_ls = {
-      enable = false;
+      enable = true;
       settings = {
         formatting = {
           command = [ "nixpkgs-fmt" ];
@@ -20,9 +20,9 @@
           runtime = {
             version = "LuaJIT";
           };
-          diagnostics = {
-            globals = [ "vim" ];
-          };
+      diagnostics = {
+       globals = [ "vim" ];
+        };
           workspace = {
             library = {
               __raw = "vim.api.nvim_get_runtime_file('', true)";
@@ -64,7 +64,7 @@
 
     # Python
     pyright = {
-      enable = false;
+      enable = true;
       settings = {
         python = {
           analysis = {
@@ -76,34 +76,6 @@
       };
     };
 
-    # TypeScript/JavaScript
-    tsserver = {
-      enable = false;
-      settings = {
-        typescript = {
-          inlayHints = {
-            includeInlayParameterNameHints = "all";
-            includeInlayParameterNameHintsWhenArgumentMatchesName = false;
-            includeInlayFunctionParameterTypeHints = true;
-            includeInlayVariableTypeHints = true;
-            includeInlayPropertyDeclarationTypeHints = true;
-            includeInlayFunctionLikeReturnTypeHints = true;
-            includeInlayEnumMemberValueHints = true;
-          };
-        };
-        javascript = {
-          inlayHints = {
-            includeInlayParameterNameHints = "all";
-            includeInlayParameterNameHintsWhenArgumentMatchesName = false;
-            includeInlayFunctionParameterTypeHints = true;
-            includeInlayVariableTypeHints = true;
-            includeInlayPropertyDeclarationTypeHints = true;
-            includeInlayFunctionLikeReturnTypeHints = true;
-            includeInlayEnumMemberValueHints = true;
-          };
-        };
-      };
-    };
 
     # HTML/CSS
     html.enable = true;

@@ -4,11 +4,12 @@
   imports = [
     ./lsp-servers.nix
     ./cmp.nix
+    ./conform.nix
   ];
 
   programs.nixvim.plugins = {
     lsp = {
-      enable = false;
+      enable = true;
       inlayHints = true;
 
       keymaps = {
@@ -23,13 +24,12 @@
           "gd" = "definition";
           "gD" = "declaration";
           "gr" = "references";
-          "gi" = "implementation";
-          "gt" = "type_definition";
-          "K" = "hover";
-          "<leader>lh" = "signature_help";
+            "gi" = "implementation";
+            "gt" = "type_definition";
+            "K" = "hover";
+            "<leader>lh" = "signature_help";
           "<leader>lr" = "rename";
           "<leader>la" = "code_action";
-          "<leader>lf" = "format";
         };
       };
     };
