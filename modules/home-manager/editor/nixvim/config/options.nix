@@ -32,6 +32,9 @@
         backup = false;
         swapfile = false;
         undofile = true;
+
+        # Clipboard integration
+        clipboard = "unnamedplus";
       };
   };
 }
