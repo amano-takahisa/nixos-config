@@ -7,6 +7,11 @@
     ../../modules/system/packages/development.nix
     ../../modules/system/services/docker.nix
     ../../modules/system/ui/fonts.nix
+    ../../modules/system/input/ime.nix
+    ../../modules/home-manager/media/firefox
+    ../../modules/home-manager/development/fish
+    ../../modules/home-manager/editor/kate
+    ../../modules/home-manager/media/slack
   ];
 
   # Bootloader
@@ -87,15 +92,9 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
     packages = with pkgs; [
-      kdePackages.kate
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
-  # Enable fish shell
-  programs.fish.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -105,7 +104,6 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
-    slack
   ];
 
   # This settings enables Ozone/Wayland support for Electron apps like
@@ -142,19 +140,4 @@
   # Enable Flakes
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  # IME
-  i18n.inputMethod = {
-    type = "fcitx5";
-    enable = true;
-    fcitx5.addons = with pkgs; [
-      fcitx5-mozc
-      kdePackages.fcitx5-qt
-    ];
-  };
-  environment.variables = {
-    GTK_IM_MODULE = "fcitx";
-    QT_IM_MODULE = "fcitx";
-    XMODIFIERS = "@im=fcitx";
-    GLFW_IM_MODULE = "ibus";
-  };
 }

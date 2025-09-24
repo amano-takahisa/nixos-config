@@ -7,6 +7,9 @@
     ../../modules/system/packages/development.nix
     ../../modules/system/services/docker.nix
     ../../modules/system/ui/fonts.nix
+    ../../modules/home-manager/media/firefox
+    ../../modules/home-manager/development/fish
+    ../../modules/home-manager/editor/kate
   ];
 
   # Bootloader
@@ -82,15 +85,9 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
     packages = with pkgs; [
-      kdePackages.kate
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
-  # Enable fish shell
-  programs.fish.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
