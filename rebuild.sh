@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # NixOS rebuild script with unfree packages enabled
 # Usage: ./rebuild.sh [host] [operation]
 # Example: ./rebuild.sh sx2 switch

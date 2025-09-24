@@ -4,12 +4,10 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../../modules/system/input/ime.nix
     ../../modules/system/packages/development.nix
     ../../modules/system/services/docker.nix
     ../../modules/system/ui/fonts.nix
-    ../../modules/home-manager/media/firefox
-    ../../modules/home-manager/development/fish
-    ../../modules/home-manager/editor/kate
   ];
 
   # Bootloader
@@ -78,7 +76,10 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Enable fish shell
+  programs.fish.enable = true;
+
+  # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.takahisa = {
     isNormalUser = true;
     description = "takahisa";

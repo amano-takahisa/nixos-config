@@ -32,8 +32,8 @@
         ];
         msi = commonModules ++ [
           ./modules/home-manager/graphics
-          ./modules/home-manager/office
           ./modules/home-manager/media
+          ./modules/home-manager/office
         ]; # Full feature set for msi
       };
 
