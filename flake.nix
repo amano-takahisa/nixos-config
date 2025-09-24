@@ -52,7 +52,7 @@
         home-manager.users.takahisa = {
           imports = hostModules.${hostName} ++ [
             nixvim.homeModules.nixvim
-            plasma-manager.homeManagerModules.plasma-manager
+            plasma-manager.homeModules.plasma-manager
           ];
           home.stateVersion = "25.05";
         };
@@ -90,7 +90,7 @@
           };
           modules = hostModules.sx2 ++ [
             nixvim.homeModules.nixvim
-            plasma-manager.homeManagerModules.plasma-manager
+            plasma-manager.homeModules.plasma-manager
             {
               home.stateVersion = "25.05";
             }
@@ -103,7 +103,7 @@
           };
           modules = hostModules.msi ++ [
             nixvim.homeModules.nixvim
-            plasma-manager.homeManagerModules.plasma-manager
+            plasma-manager.homeModules.plasma-manager
             {
               home.stateVersion = "25.05";
             }
