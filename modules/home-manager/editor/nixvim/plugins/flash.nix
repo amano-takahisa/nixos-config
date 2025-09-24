@@ -4,6 +4,10 @@
   programs.nixvim = {
     plugins.flash = {
       enable = true;
+      settings = {
+        label.after = false;
+        label.before = true;
+      };
     };
     keymaps = [
       {
@@ -49,4 +53,3 @@
     ];
   };
 }
-

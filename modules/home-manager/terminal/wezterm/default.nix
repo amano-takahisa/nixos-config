@@ -1,7 +1,23 @@
 { pkgs, ... }:
 
 {
-  home.packages = with pkgs; [
-    wezterm
-  ];
+  programs.wezterm = {
+    enable = true;
+    extraConfig = ''
+      -- Your lua code / config here
+        local mylib = require 'mylib';
+        return {
+          usemylib = mylib.do_fun();
+          font = wezterm.font("JetBrains Mono"),
+          font_size = 16.0,
+          color_scheme = "Tomorrow Night",
+          hide_tab_bar_if_only_one_tab = true,
+          default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
+          keys = {
+            {key="n", mods="SHIFT|CTRL", action="ToggleFullScreen"},
+          }
+        }
+    '';
+  };
 }
+

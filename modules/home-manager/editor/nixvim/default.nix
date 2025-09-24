@@ -22,22 +22,12 @@ in
     defaultEditor = true;
 
     # Colorscheme
-    colorschemes.catppuccin = {
+    colorschemes.tokyonight = {
       enable = true;
       settings = {
-        flavour = "mocha";
-        transparent_background = false;
-        term_colors = true;
-        integrations = {
-          cmp = true;
-          gitsigns = true;
-          neo_tree = true;
-          telescope = {
-            enabled = true;
-          };
-          treesitter = true;
-          which_key = true;
-        };
+        style = "night";
+        transparent = false;
+        terminal_colors = true;
       };
     };
   };
