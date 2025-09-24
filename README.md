@@ -257,11 +257,8 @@ Add following plugins:
 
 and setup following features:
 
-- copy to system clipboard when yanking
 - automatic bracket closing (mini.surround, mini.pairs ?)
 - zen mode (true-zen ?)
-- visualize whitespace (vim-better-whitespace, visual-whitespace ?)
-- auto formatting with `<leader>f`
 
 ### tmux
 
@@ -269,7 +266,6 @@ and setup following features:
 
 ### Applications
 
-- zoxid
 
 - mozc
   apply keymap.txt

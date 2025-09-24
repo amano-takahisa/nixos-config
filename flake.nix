@@ -9,9 +9,12 @@
         url = "github:nix-community/nixvim/nixos-25.05";
         inputs.nixpkgs.follows = "nixpkgs";
     };
+    plasma-manager.url = "github:nix-community/plasma-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -28,9 +31,11 @@
       hostModules = {
         # sx2 = commonModules; # No graphics for sx2
         sx2 = commonModules ++ [
+          ./modules/home-manager/desktop
           ./modules/home-manager/media
         ];
         msi = commonModules ++ [
+          ./modules/home-manager/desktop
           ./modules/home-manager/graphics
           ./modules/home-manager/media
           ./modules/home-manager/office
@@ -45,7 +50,10 @@
           pkgs = pkgs;
         };
         home-manager.users.takahisa = {
-          imports = hostModules.${hostName} ++ [ nixvim.homeModules.nixvim ];
+          imports = hostModules.${hostName} ++ [
+            nixvim.homeModules.nixvim
+            plasma-manager.homeManagerModules.plasma-manager
+          ];
           home.stateVersion = "25.05";
         };
       };
@@ -82,6 +90,7 @@
           };
           modules = hostModules.sx2 ++ [
             nixvim.homeModules.nixvim
+            plasma-manager.homeManagerModules.plasma-manager
             {
               home.stateVersion = "25.05";
             }
@@ -94,6 +103,7 @@
           };
           modules = hostModules.msi ++ [
             nixvim.homeModules.nixvim
+            plasma-manager.homeManagerModules.plasma-manager
             {
               home.stateVersion = "25.05";
             }
