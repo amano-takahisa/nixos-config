@@ -25,7 +25,6 @@
       commonModules = [
         ./modules/home-manager/common
         ./modules/home-manager/development
-        ./modules/home-manager/editor
         ./modules/home-manager/terminal
       ];
 
@@ -34,16 +33,18 @@
         # sx2 = commonModules; # No graphics for sx2
         sx2 = commonModules ++ [
           ./modules/home-manager/desktop
+          ./modules/home-manager/editor
           ./modules/home-manager/media
         ];
         msi = commonModules ++ [
           ./modules/home-manager/desktop
+          ./modules/home-manager/editor
           ./modules/home-manager/graphics
+          ./modules/home-manager/geospatial
           ./modules/home-manager/media
           ./modules/home-manager/office
         ]; # Full feature set for msi
-        wsl = [
-          ./modules/home-manager/common
+        wsl = commonModules ++ [
           ./modules/home-manager/development
           ./modules/home-manager/editor-wsl
           ./modules/home-manager/terminal

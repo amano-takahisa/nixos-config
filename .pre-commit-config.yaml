@@ -1,0 +1,20 @@
+repos:
+  - repo: local
+    hooks:
+      - id: nixpkgs-fmt
+        name: nixpkgs-fmt
+        entry: nixpkgs-fmt
+        language: system
+        files: '\.nix$'
+      - id: trailing-whitespace
+        name: Trim Trailing Whitespace
+        entry: sed
+        args: ['-i', 's/[[:space:]]*$//']
+        language: system
+        files: '\.(nix|yaml|yml|md)$'
+      - id: end-of-file-fixer
+        name: Fix End of Files
+        entry: bash
+        args: ['-c', 'if [[ ! -s "$1" || $(tail -c1 "$1" | wc -l) -eq 0 ]]; then echo >> "$1"; fi', '--']
+        language: system
+        files: '\.(nix|yaml|yml|md)$'
