@@ -16,18 +16,18 @@
         silent = true;
         diagnostic = {
           "<leader>ld" = "open_float";
-          "[d" = "goto_prev";
-          "]d" = "goto_next";
+          "g[" = "goto_prev";
+          "g]" = "goto_next";
           "<leader>lq" = "setloclist";
         };
         lspBuf = {
           "gd" = "definition";
           "gD" = "declaration";
           "gr" = "references";
-            "gi" = "implementation";
-            "gt" = "type_definition";
-            "K" = "hover";
-            "<leader>lh" = "signature_help";
+          "gi" = "implementation";
+          "gt" = "type_definition";
+          "K" = "hover";
+          "<leader>lh" = "signature_help";
           "<leader>lr" = "rename";
           "<leader>la" = "code_action";
         };
