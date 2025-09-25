@@ -81,7 +81,10 @@ https://nix-community.github.io/NixOS-WSL/
 Clone this repository into your WSL2 instance
 
 ```bash
-nix-shell -p git --run "git clone
+nix-shell -p git --run "git clone https://github.com/amano-takahisa/nixos-config.git"
+cd nixos-config
+nix-shell -p git
+./rebuild.sh wsl switch
 ```
 
 ### New physical host setup
