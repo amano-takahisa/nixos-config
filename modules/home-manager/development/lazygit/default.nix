@@ -2,7 +2,7 @@
 
 {
   programs.lazygit = {
-      enable = true;  
-    };
+    enable = true;
+  };
 }
 

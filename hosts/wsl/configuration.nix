@@ -17,10 +17,10 @@
     startMenuLaunchers = true;
 
     # Enable integration features
-    docker-desktop.enable = false;  # Set to true if using Docker Desktop
+    docker-desktop.enable = false; # Set to true if using Docker Desktop
 
     # WSL2 interoperability
-    interop.includePath = false;  # Don't add Windows PATH
+    interop.includePath = false; # Don't add Windows PATH
   };
 
   networking.hostName = "wsl";
@@ -58,7 +58,7 @@
   users.users.takahisa = {
     isNormalUser = true;
     description = "takahisa";
-    extraGroups = [ "wheel" "docker" ];  # Remove networkmanager for WSL
+    extraGroups = [ "wheel" "docker" ]; # Remove networkmanager for WSL
     shell = pkgs.fish;
   };
 
@@ -74,5 +74,5 @@
   system.stateVersion = "25.05";
 
   # Enable Flakes
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

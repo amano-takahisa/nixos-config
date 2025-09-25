@@ -9,9 +9,11 @@
       # Filter for directories only
       subdirectories = lib.filterAttrs (name: type: type == "directory") dirContents;
       # Check if each subdirectory has default.nix and import it
-      validSubdirs = lib.filterAttrs (name: type:
-        builtins.pathExists (currentDir + "/${name}/default.nix")
-      ) subdirectories;
+      validSubdirs = lib.filterAttrs
+        (name: type:
+          builtins.pathExists (currentDir + "/${name}/default.nix")
+        )
+        subdirectories;
     in
     map (name: currentDir + "/${name}") (builtins.attrNames validSubdirs);
 }

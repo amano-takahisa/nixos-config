@@ -17,7 +17,7 @@
       pushf = "push --force-with-lease --force-if-includes";
     };
     extraConfig = {
-      commit = {verbose = "true"; };
+      commit = { verbose = "true"; };
       pull = { rebase = "true"; };
       rebase = { autoStash = "true"; };
       merge = { commit = "false"; };

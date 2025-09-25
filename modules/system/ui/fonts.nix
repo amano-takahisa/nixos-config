@@ -13,9 +13,9 @@
       source-han-serif
 
       # Programming fonts with Japanese support
-      plemoljp            # PlemolJP - 日本語プログラミング用フォント
-      hackgen-nf-font     # HackGen Nerd Font - 白源
-      udev-gothic-nf      # UDEV Gothic Nerd Font
+      plemoljp # PlemolJP - 日本語プログラミング用フォント
+      hackgen-nf-font # HackGen Nerd Font - 白源
+      udev-gothic-nf # UDEV Gothic Nerd Font
 
       # Popular programming fonts
       jetbrains-mono

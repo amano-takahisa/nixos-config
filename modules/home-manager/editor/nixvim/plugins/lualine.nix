@@ -17,20 +17,20 @@
           lualine_z = [ "location" ];
         };
         inactive_sections = {
-          lualine_a = [  ];
-          lualine_b = [  ];
+          lualine_a = [ ];
+          lualine_b = [ ];
           lualine_c = [ "filename" ];
           lualine_x = [ "location" ];
-          lualine_y = [  ];
-          lualine_z = [  ];
+          lualine_y = [ ];
+          lualine_z = [ ];
         };
         tabline = {
           # show buffers and file path
-          lualine_a = [ { __unkeyed-1 = "buffers"; show_filename_only = false; path = 3; } ];
-          lualine_b = [  ];
-          lualine_c = [  ];
-          lualine_x = [  ];
-          lualine_y = [  ];
+          lualine_a = [{ __unkeyed-1 = "buffers"; show_filename_only = false; path = 3; }];
+          lualine_b = [ ];
+          lualine_c = [ ];
+          lualine_x = [ ];
+          lualine_y = [ ];
           lualine_z = [ "tabs" ];
         };
       };

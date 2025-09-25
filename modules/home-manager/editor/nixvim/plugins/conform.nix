@@ -31,7 +31,7 @@
 
   # Install formatters
   home.packages = with pkgs; [
-    ruff         # Python formatter/linter
-    nixpkgs-fmt  # Nix formatter
+    ruff # Python formatter/linter
+    nixpkgs-fmt # Nix formatter
   ];
 }
