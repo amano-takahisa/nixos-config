@@ -5,10 +5,11 @@
     plugins.web-devicons.enable = true;
 
     plugins.neo-tree = {
-      # https://nix-community.github.io/nixvim/plugins/neo-tree/index.html
       enable = true;
       enableGitStatus = false;
-      popupBorderStyle = "rounded";
+      extraOptions = {
+        default_component_configs.symlink_target.enabled = true;
+      };
       window = {
         width = 40;
         mappings = {
@@ -38,6 +39,7 @@
       };
       filesystem = {
         useLibuvFileWatcher = true;
+        filteredItems.hideDotfiles = false;
       };
     };
     keymaps = [
