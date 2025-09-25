@@ -5,17 +5,12 @@
     enable = true;
     extraConfig = ''
       -- Your lua code / config here
-        local mylib = require 'mylib';
         return {
-          usemylib = mylib.do_fun();
-          font = wezterm.font("JetBrains Mono"),
-          font_size = 16.0,
-          color_scheme = "Tomorrow Night",
+          font_size = 10.0,
           hide_tab_bar_if_only_one_tab = true,
-          default_prog = { "zsh", "--login", "-c", "tmux attach -t dev || tmux new -s dev" },
-          keys = {
-            {key="n", mods="SHIFT|CTRL", action="ToggleFullScreen"},
-          }
+          window_frame = {
+            font_size = 9.0,
+          },
         }
     '';
   };
