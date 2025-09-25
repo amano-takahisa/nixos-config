@@ -34,6 +34,14 @@
           desc = "Next buffer";
         };
       }
+      {
+        mode = "n";
+        key = "<C-c>";
+        action = "<cmd>bprevious<bar>bdelete #<cr>";
+        options = {
+          desc = "Close buffer without closing window";
+        };
+      }
       # Clear search highlighting
       {
         mode = "n";
