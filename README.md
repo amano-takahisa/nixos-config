@@ -114,8 +114,7 @@ Following configrations are not integrated nix-config yet.
 If your wi-fi authentication fails repeatedly, try disabling 5 GHz band.
 
 ```bash
-nix-shell -p networkmanagerapplet
-nm-connection-editor
+nix-shell -p networkmanagerapplet --run nm-connection-editor
 ```
 
 Then, select Band B/G (2.4 GHz) for your wifi.
