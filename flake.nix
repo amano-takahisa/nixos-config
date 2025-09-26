@@ -25,6 +25,7 @@
       commonModules = [
         ./modules/home-manager/common
         ./modules/home-manager/development
+        ./modules/home-manager/vcs
         ./modules/home-manager/terminal
       ];
 
