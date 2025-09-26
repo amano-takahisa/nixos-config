@@ -24,7 +24,8 @@
       # Common modules for all hosts
       commonModules = [
         ./modules/home-manager/common
-        ./modules/home-manager/development
+        ./modules/home-manager/cli-tools
+        ./modules/home-manager/misc
         ./modules/home-manager/vcs
         ./modules/home-manager/terminal
       ];
@@ -44,12 +45,11 @@
           ./modules/home-manager/geospatial
           ./modules/home-manager/media
           ./modules/home-manager/office
-        ]; # Full feature set for msi
+        ];
         wsl = commonModules ++ [
-          ./modules/home-manager/development
           ./modules/home-manager/editor-wsl
-          ./modules/home-manager/terminal
-        ]; # Terminal-focused environment for WSL
+          ./modules/home-manager/terminal-wsl
+        ];
       };
 
       # Helper function to create home-manager configuration
