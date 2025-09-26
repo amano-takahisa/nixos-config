@@ -6,7 +6,7 @@ This repository manages NixOS configurations for multiple environments using Nix
 ## Host Configurations
 
 ### sx2 (Desktop - Full Featured)
-- **Target**: Complete desktop environment  
+- **Target**: Complete desktop environment
 - **Modules**: common, development, editor, gui
 - **Includes**: All packages and applications
 
@@ -122,7 +122,7 @@ Then, select Band B/G (2.4 GHz) for your wifi.
 ### Japanese environment
 
 Go to "System Settings" -> "Virtual keyboard" and select "Fcitx 5" from it.
-For more details see https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma 
+For more details see https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
 
 Go to "System Settings" -> "Input Method" -> "Add Input Method",
 then search Mozc, and add Mozc.
@@ -132,7 +132,7 @@ then search Mozc, and add Mozc.
 "System Settings" -> "Keyboard" -> "Key Bindings"
 Check "Configure keyboard options", and
 - Ctrl position
-    (x) Caps Lock as Ctrl 
+    (x) Caps Lock as Ctrl
 
 ### Login services
 
@@ -165,6 +165,15 @@ systemctl --user enable --now docker
 docker run hello-world
 ```
 
+### Clone repositories
+
+The following command clones all repositories from GitHub user "amano-takahisa"
+
+```bash
+gh repo list "amano-takahisa" --limit 1000 --json sshUrl \
+  | jq -r '.[].sshUrl' \
+  | xargs -n1 ghq get --shallow
+```
 
 ## Module Breakdown
 
