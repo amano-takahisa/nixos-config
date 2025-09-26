@@ -107,19 +107,18 @@
     #   };
     # };
 
-    # # Application settings
-    # configFile = {
-    #   # Dolphin file manager
-    #   "dolphinrc"."General"."BrowseThroughArchives" = true;
-    #   "dolphinrc"."General"."ShowFullPath" = true;
+    # Application settings
+    configFile = {
+      # Dolphin file manager
+      "dolphinrc"."DetailsMode"."PreviewSize" = 16;
 
-    #   # Konsole terminal
-    #   "konsolerc"."Desktop Entry"."DefaultProfile" = "Main.profile";
-    #   "konsolerc"."UiSettings"."ColorScheme" = "Breeze";
+      # # Konsole terminal
+      # "konsolerc"."Desktop Entry"."DefaultProfile" = "Main.profile";
+      # "konsolerc"."UiSettings"."ColorScheme" = "Breeze";
 
-    #   # Kate editor
-    #   "katerc"."General"."Show Full Path in Title" = true;
-    #   "katerc"."General"."Recent Files"."maxCount" = 20;
-    # };
+      # # Kate editor
+      # "katerc"."General"."Show Full Path in Title" = true;
+      # "katerc"."General"."Recent Files"."maxCount" = 20;
+    };
   };
 }
