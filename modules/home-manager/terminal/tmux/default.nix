@@ -44,7 +44,8 @@
       bind -n M-Down select-pane -D
 
       # Change pane border colors
-      set-option -g pane-active-border-style "bg=#ffffa4,fg=#000000"
+      set-option -g pane-border-style "bg=#333333,fg=#aaaaaa"
+      set-option -g pane-active-border-style "bg=#aaaaaa,fg=#333333"
 
       # Keep showing window numbe when <prefix> q
       bind -T prefix e display-panes -d 0
@@ -54,6 +55,15 @@
       set-option -g pane-border-format "#{pane_index}:#T #{pane_current_path}"
       set-option -g status-interval 5
       set-option -g pane-border-status bottom
+
+      #################
+      # Status Bar
+      #################
+      # Set status bar position
+      set-option -g status-position top
+      set -g status-justify centre
+      set -g status-fg white
+      set -g status-bg black
     '';
 
 
