@@ -1,5 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
+let
+  workGitConfig = "${config.home.homeDirectory}/.config/git/work.gitconfig";
+in
 {
   # Git configuration
   programs.git = {
@@ -11,20 +14,40 @@
       bl = "blame --abbrev=6";
       lo = "log --graph --all --date=format:'%Y-%m-%d %H:%M' --format='%C(white dim) %h %Creset %s %C(cyan dim)(%ad)%Creset%C(green) <%an>%C(bold yellow)%d%Creset'";
       loo = "log --stat --graph --decorate --all";
+      pushf = "push --force-with-lease --force-if-includes";
       root = "rev-parse --show-toplevel";
       sh = "show --color-words='[^[:space:]]'";
       st = "status --short --branch";
-      pushf = "push --force-with-lease --force-if-includes";
     };
     extraConfig = {
       commit = { verbose = "true"; };
+      core = { commentChar = ";"; };
+      grep = { linenumber = "true"; };
+      init = { defaultBranch = "main"; };
+      log = { date = "iso-local"; };
+      merge = { commit = "false"; };
       pull = { rebase = "true"; };
       rebase = { autoStash = "true"; };
-      merge = { commit = "false"; };
-      grep = { linenumber = "true"; };
-      log = { date = "iso-local"; };
-      core = { commentChar = ";"; };
-      init = { defaultBranch = "main"; };
+
+      # use different commit profiles based on the directory
+      includeIf = {
+        "gitdir:${config.home.homeDirectory}/ghq/work/".path = workGitConfig;
+      };
+
+      # extra tools
+      ghq = {
+        root = "~/ghq/personal";
+        "https://github.com/eodcgmbh" = { root = "~/ghq/work"; };
+        "git@github.com:eodcgmbh" = { root = "~/ghq/work"; };
+        # "github.com/eodcgmbh" = { root = "~/ghq/work"; };
+      };
     };
   };
+
+  # Generate work git configuration file
+  home.file."${workGitConfig}".text = ''
+    [user]
+        email = work-email@example.com
+        name = Taka
+  '';
 }
