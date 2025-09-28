@@ -5,36 +5,45 @@
     globals.mapleader = " "; # Set leader key to space
 
     opts = {
+      colorcolumn = "79,120";
+      expandtab = true;
       number = true;
       relativenumber = true;
-      shiftwidth = 2;
-      tabstop = 2;
-      expandtab = true;
-      smartindent = true;
-      wrap = true;
       scrolloff = 8;
+      shiftwidth = 2;
       signcolumn = "yes";
+      smartindent = true;
+      tabstop = 2;
       updatetime = 50;
-      colorcolumn = "80";
+      wrap = true;
 
       # Search settings
-      ignorecase = true;
-      smartcase = true;
       hlsearch = true;
+      ignorecase = true;
       incsearch = true;
+      smartcase = true;
 
       # UI settings
-      termguicolors = true;
+      cmdheight = 2;
       cursorline = true;
       showmode = false;
+      termguicolors = true;
 
       # Backup and swap
-      backup = false;
-      swapfile = false;
+      backupcopy = "yes";
+      swapfile = true;
       undofile = true;
 
       # Clipboard integration
       clipboard = "unnamedplus";
+
+      # Window
+      splitbelow = true;
+      splitright = true;
+
+      # Floating window transparency
+      pumblend = 20;
+      winblend = 20;
     };
   };
 }
