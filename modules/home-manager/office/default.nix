@@ -2,9 +2,9 @@
 
 {
   home.packages = with pkgs; [
-    # libreoffice
+    libreoffice
     thunderbird
-    # evince        # PDF viewer
+    evince # PDF viewer
     # okular        # KDE PDF viewer
     # hunspell      # Spell checker
     # hunspellDicts.en_US
