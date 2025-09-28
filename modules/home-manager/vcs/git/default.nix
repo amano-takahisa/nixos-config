@@ -34,12 +34,10 @@ in
         "gitdir:${config.home.homeDirectory}/ghq/work/".path = workGitConfig;
       };
 
-      # extra tools
       ghq = {
         root = "~/ghq/personal";
         "https://github.com/eodcgmbh" = { root = "~/ghq/work"; };
-        "git@github.com:eodcgmbh" = { root = "~/ghq/work"; };
-        # "github.com/eodcgmbh" = { root = "~/ghq/work"; };
+        "ssh://github.com/eodcgmbh" = { root = "~/ghq/work"; };
       };
     };
   };
@@ -47,7 +45,7 @@ in
   # Generate work git configuration file
   home.file."${workGitConfig}".text = ''
     [user]
-        email = work-email@example.com
+        email = takahisa.amano@eodc.eu
         name = Taka
   '';
 }
