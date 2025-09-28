@@ -1,76 +1,70 @@
-# Japanese fonts configuration for programming
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   fonts = {
     enableDefaultPackages = true;
+    fontDir.enable = true;
     packages = with pkgs; [
-      # Japanese fonts
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      ipafont
-      source-han-sans
-      source-han-serif
-
-      # Programming fonts with Japanese support
-      plemoljp # PlemolJP - 日本語プログラミング用フォント
-      hackgen-nf-font # HackGen Nerd Font - 白源
-      udev-gothic-nf # UDEV Gothic Nerd Font
-
-      # Popular programming fonts
-      jetbrains-mono
+      dejavu_fonts
       fira-code
-      source-code-pro
-
-      # Nerd Fonts collection
+      font-awesome
+      font-awesome_5
+      hackgen-nf-font
+      ipafont
+      jetbrains-mono
+      liberation_ttf
+      nerd-fonts.dejavu-sans-mono
       nerd-fonts.fira-code
-      nerd-fonts.jetbrains-mono
       nerd-fonts.hack
+      nerd-fonts.inconsolata
+      nerd-fonts.jetbrains-mono
       nerd-fonts.sauce-code-pro
       nerd-fonts.ubuntu-mono
-      nerd-fonts.dejavu-sans-mono
-      nerd-fonts.inconsolata
-
-      # Additional useful fonts
       noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
       noto-fonts-emoji
-      liberation_ttf
-      dejavu_fonts
+      noto-fonts-monochrome-emoji
+      source-code-pro
+      source-han-sans
+      source-han-serif
+      udev-gothic-nf
     ];
 
     fontconfig = {
       defaultFonts = {
         serif = [ "Noto Serif CJK JP" "Noto Serif" ];
         sansSerif = [ "Noto Sans CJK JP" "Noto Sans" ];
-        monospace = [ "PlemolJP" "JetBrains Mono" "Fira Code" ];
+        monospace = [ "HackGen Console NF" "Hack Nerd Font Mono" "Noto Sans Mono CJK JP" ];
         emoji = [ "Noto Color Emoji" ];
       };
-      localConf = ''
-        <fontconfig>
-          <alias>
-            <family>sans-serif</family>
-            <prefer>
-              <family>Noto Sans JP</family>
-              <family>Noto Sans CJK JP</family>
-              <family>Noto Sans</family>
-            </prefer>
-          </alias>
-          <alias>
-            <family>serif</family>
-            <prefer>
-              <family>Noto Serif CJK JP</family>
-              <family>Noto Serif</family>
-            </prefer>
-          </alias>
-          <alias>
-            <family>monospace</family>
-            <prefer>
-              <family>PlemolJP</family>
-              <family>JetBrains Mono</family>
-            </prefer>
-          </alias>
-        </fontconfig>
-      '';
+      # localConf = ''
+      #   <fontconfig>
+      #     <alias>
+      #       <family>sans-serif</family>
+      #       <prefer>
+      #         <family>Noto Sans JP</family>
+      #         <family>Noto Sans CJK JP</family>
+      #         <family>Noto Sans</family>
+      #       </prefer>
+      #     </alias>
+      #     <alias>
+      #       <family>serif</family>
+      #       <prefer>
+      #         <family>Noto Serif CJK JP</family>
+      #         <family>Noto Serif</family>
+      #       </prefer>
+      #     </alias>
+      #     <alias>
+      #       <family>monospace</family>
+      #       <prefer>
+      #         <family>HackGen Console NF</family>
+      #         <family>Hack Nerd Font Mono</family>
+      #       </prefer>
+      #     </alias>
+      #   </fontconfig>
+      # '';
     };
   };
 }

@@ -4,6 +4,11 @@
   programs.plasma = {
     enable = true;
 
+    fonts.fixedWidth = {
+      family = "HackGen Console NF";
+      pointSize = 9;
+    };
+
     workspace = {
       # Look and feel - Dark mode
       lookAndFeel = "org.kde.breezedark.desktop";

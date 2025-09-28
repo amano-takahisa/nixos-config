@@ -6,10 +6,11 @@
     extraConfig = ''
       -- Your lua code / config here
         return {
-          font_size = 10.0,
+          font = wezterm.font("HackGen Console NF"),
+          font_size = 9.0,
           hide_tab_bar_if_only_one_tab = true,
           window_frame = {
-            font_size = 9.0,
+            font_size = 8.0,
           },
         }
     '';
