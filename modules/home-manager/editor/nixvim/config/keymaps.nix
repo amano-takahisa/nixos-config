@@ -68,6 +68,23 @@
           desc = "Move up by display line";
         };
       }
+      # Disable native completion
+      {
+        mode = "i";
+        key = "<C-n>";
+        action = "<Nop>";
+        options = {
+          desc = "Disable native completion (use cmp instead)";
+        };
+      }
+      {
+        mode = "i";
+        key = "<C-p>";
+        action = "<Nop>";
+        options = {
+          desc = "Disable native completion (use cmp instead)";
+        };
+      }
     ];
   };
 }
