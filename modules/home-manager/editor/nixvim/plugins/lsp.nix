@@ -1,16 +1,16 @@
 { ... }:
 
 {
-  imports = [
-    ./lsp-servers.nix
-    ./cmp.nix
-    ./conform.nix
-  ];
+  # imports = [
+  #   ./lsp-servers.nix
+  #   ./cmp.nix
+  #   ./conform.nix
+  # ];
 
   programs.nixvim.plugins = {
     lsp = {
       enable = true;
-      inlayHints = true;
+      # inlayHints = true;
 
       keymaps = {
         silent = true;
