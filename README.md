@@ -248,6 +248,27 @@ The `home-rebuild.sh` script simplifies home-manager rebuilds:
 - Handles permissions correctly (`sudo` for system, no `sudo` for home-manager)
 - Simpler than remembering the full command with flags
 
+
+## Tools
+
+### node2nix
+
+```bash
+cd tool/node2nix
+nix-shell -p nodePackages.node2nix
+echo '["@github/copilot-language-server", "@anthropic-ai/claude-code", "sitemcp"]' \
+  >> node-packages.json
+node2nix -i node-packages.json
+```
+https://www.takeokunn.org/posts/fleeting/20250622133346-how_to_use_node2nix/
+
+To update packages, run following in tool/node2nix/
+
+```bash
+nix-shell -p nodePackages.node2nix --run "node2nix -i node-packages.json -o node-packages.nix"
+```
+
+
 ## Notes
 - All configurations use home-manager for user-level package management
 - Unfree packages are allowed in all configurations
@@ -258,25 +279,4 @@ The `home-rebuild.sh` script simplifies home-manager rebuilds:
 
 ## TODO
 
-### Nixvim
-
-Add following plugins:
-
-- gitsigns
-- illuminate
-- quickhl
-
-and setup following features:
-
-- automatic bracket closing (mini.surround, mini.pairs ?)
-- zen mode (true-zen ?)
-
-### tmux
-
-- use united history file among multiple tmux windows/panes
-
-### Applications
-
-
-- mozc
-  apply keymap.txt
+- change key bindings to select autocomplete candidates from tab to ctrl + n

@@ -1,7 +1,10 @@
-{ pkgs, ... }:
+{ pkgs, nodePkgs ? null, ... }:
 
 {
-  home.packages = with pkgs; [
-    claude-code
-  ];
+  home.packages =
+    if nodePkgs != null then [
+      nodePkgs."@anthropic-ai/claude-code"
+    ] else with pkgs; [
+      claude-code
+    ];
 }

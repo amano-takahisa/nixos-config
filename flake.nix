@@ -20,6 +20,7 @@
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
+      nodePkgs = pkgs.callPackage ./tools/node2nix { inherit pkgs; };
 
       # Common modules for all hosts
       commonModules = [
@@ -58,6 +59,7 @@
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           pkgs = pkgs;
+          nodePkgs = nodePkgs;
         };
         home-manager.users.takahisa = {
           imports = hostModules.${hostName} ++ [
@@ -110,6 +112,9 @@
             inherit system;
             config.allowUnfree = true;
           };
+          extraSpecialArgs = {
+            nodePkgs = nodePkgs;
+          };
           modules = hostModules.sx2 ++ [
             nixvim.homeModules.nixvim
             plasma-manager.homeModules.plasma-manager
@@ -123,6 +128,9 @@
             inherit system;
             config.allowUnfree = true;
           };
+          extraSpecialArgs = {
+            nodePkgs = nodePkgs;
+          };
           modules = hostModules.msi ++ [
             nixvim.homeModules.nixvim
             plasma-manager.homeModules.plasma-manager
@@ -135,6 +143,9 @@
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
+          };
+          extraSpecialArgs = {
+            nodePkgs = nodePkgs;
           };
           modules = hostModules.wsl ++ [
             nixvim.homeModules.nixvim
