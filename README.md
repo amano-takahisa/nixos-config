@@ -44,6 +44,7 @@ nixos-config/
 ```bash
 ./home-rebuild.sh takahisa@sx2 switch      # For sx2 host (recommended)
 ./home-rebuild.sh takahisa@msi switch      # For msi host (recommended)
+./home-rebuild.sh takahisa@wsl switch      # For wsl host (recommended)
 
 # Alternative (manual approach):
 NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager switch --flake .#takahisa@sx2 --impure   # For sx2 host
@@ -55,11 +56,13 @@ NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager switch --f
 ```bash
 ./rebuild.sh sx2 switch      # For sx2 host (recommended)
 ./rebuild.sh msi switch      # For msi host (recommended)
+./rebuild.sh wsl switch      # For msi host (recommended)
 
 # Alternative (manual approach):
 export NIXPKGS_ALLOW_UNFREE=1
 sudo -E nixos-rebuild switch --flake .#sx2 --impure
 sudo -E nixos-rebuild switch --flake .#msi --impure
+sudo -E nixos-rebuild switch --flake .#wsl --impure
 ```
 
 ### Testing a configuration:
