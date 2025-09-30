@@ -3,13 +3,17 @@
 {
   programs.nixvim.plugins.conform-nvim = {
     enable = true;
+    autoInstall.enable = true;
 
     settings = {
       formatters_by_ft = {
-        python = [ "ruff_format" ];
+        # List of available formatters can be found here:
+        # https://github.com/stevearc/conform.nvim/#formatters
+        bash = [ "shellcheck" "shfmt" ];
+        javascript = [ "prettierd" ];
         nix = [ "nixpkgs_fmt" ];
+        python = [ "isort" "ruff_fix" "ruff_format" ];
       };
-
     };
   };
 
@@ -29,9 +33,9 @@
     }
   ];
 
-  # Install formatters
-  home.packages = with pkgs; [
-    ruff # Python formatter/linter
-    nixpkgs-fmt # Nix formatter
-  ];
+  # # Install formatters
+  # home.packages = with pkgs; [
+  #   ruff # Python formatter/linter
+  #   nixpkgs-fmt # Nix formatter
+  # ];
 }
