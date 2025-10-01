@@ -38,6 +38,8 @@ in
         root = "~/ghq/personal";
         "https://github.com/eodcgmbh" = { root = "~/ghq/work"; };
         "ssh://github.com/eodcgmbh" = { root = "~/ghq/work"; };
+        "https://git.eodc.eu/jrc-marsop" = { root = "~/ghq/work"; };
+        "ssh://git.eodc.eu/jrc-marsop" = { root = "~/ghq/work"; };
       };
     };
   };
