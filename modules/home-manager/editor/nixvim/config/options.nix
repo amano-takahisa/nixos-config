@@ -45,5 +45,13 @@
       pumblend = 20;
       winblend = 20;
     };
+
+    autoCmd = [
+      {
+        event = [ "FileType" ];
+        pattern = [ "gitcommit" ];
+        command = "setlocal spell spelllang=en";
+      }
+    ];
   };
 }

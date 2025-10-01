@@ -23,6 +23,7 @@
 
         sources = [
           { name = "copilot"; }
+          { name = "git"; }
           { name = "nvim_lsp"; }
           { name = "luasnip"; }
           { name = "buffer"; }
