@@ -8,6 +8,15 @@
     };
 
     keymaps = [
+      # Copy relative file path to clipboard
+      {
+        mode = "n";
+        key = "<leader>y";
+        action = "<cmd>let @+ = expand('%')<cr>";
+        options = {
+          desc = "Copy file path to clipboard";
+        };
+      }
       # Toggle relative line numbers
       {
         mode = "n";
