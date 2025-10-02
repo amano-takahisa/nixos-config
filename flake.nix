@@ -29,6 +29,7 @@
         ./modules/home-manager/misc
         ./modules/home-manager/vcs
         ./modules/home-manager/terminal
+        ./modules/home-manager/programming
       ];
 
       # Host-specific module configurations
