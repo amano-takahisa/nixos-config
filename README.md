@@ -282,4 +282,4 @@ nix-shell -p nodePackages.node2nix --run "node2nix -i node-packages.json -o node
 
 ## TODO
 
-- change key bindings to select autocomplete candidates from tab to ctrl + n
+- https://github.com/numtide/treefmt-nix
