@@ -1,14 +1,18 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 
-let
-  workGitConfig = "${config.home.homeDirectory}/.config/git/work.gitconfig";
-in
 {
   # Git configuration
   programs.git = {
     enable = true;
     userName = "Taka";
     userEmail = "amano.takahisa@gmail.com";
+    includes = [
+      {
+        condition = "gitdir:${config.home.homeDirectory}/ghq/work/";
+        contents.user.email = "takahisa.amano@eodc.eu";
+        contents.user.name = "Taka";
+      }
+    ];
     aliases = {
       aliases = "config --get-regexp '^alias\\.'";
       bl = "blame --abbrev=6";
@@ -29,25 +33,15 @@ in
       pull = { rebase = "true"; };
       rebase = { autoStash = "true"; };
 
-      # use different commit profiles based on the directory
-      includeIf = {
-        "gitdir:${config.home.homeDirectory}/ghq/work/".path = workGitConfig;
-      };
-
       ghq = {
         root = "~/ghq/personal";
         "https://github.com/eodcgmbh" = { root = "~/ghq/work"; };
         "ssh://github.com/eodcgmbh" = { root = "~/ghq/work"; };
         "https://git.eodc.eu/jrc-marsop" = { root = "~/ghq/work"; };
         "ssh://git.eodc.eu/jrc-marsop" = { root = "~/ghq/work"; };
+        "https://git.eodc.eu/sentinel-2-cnn" = { root = "~/ghq/work"; };
+        "ssh://git.eodc.eu/sentinel-2-cnn" = { root = "~/ghq/work"; };
       };
     };
   };
-
-  # Generate work git configuration file
-  home.file."${workGitConfig}".text = ''
-    [user]
-        email = takahisa.amano@eodc.eu
-        name = Taka
-  '';
 }
