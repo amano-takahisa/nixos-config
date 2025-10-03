@@ -37,10 +37,8 @@
         root = "~/ghq/personal";
         "https://github.com/eodcgmbh" = { root = "~/ghq/work"; };
         "ssh://github.com/eodcgmbh" = { root = "~/ghq/work"; };
-        "https://git.eodc.eu/jrc-marsop" = { root = "~/ghq/work"; };
-        "ssh://git.eodc.eu/jrc-marsop" = { root = "~/ghq/work"; };
-        "https://git.eodc.eu/sentinel-2-cnn" = { root = "~/ghq/work"; };
-        "ssh://git.eodc.eu/sentinel-2-cnn" = { root = "~/ghq/work"; };
+        "https://git.eodc.eu" = { root = "~/ghq/work"; };
+        "ssh://git.eodc.eu" = { root = "~/ghq/work"; };
       };
     };
   };
