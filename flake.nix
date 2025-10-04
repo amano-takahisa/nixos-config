@@ -2,21 +2,19 @@
   description = "Multi-host NixOS configuration for sx2, msi, wsl";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    plasma-manager.url = "github:nix-community/plasma-manager";
-    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
-    plasma-manager.inputs.home-manager.follows = "home-manager";
-    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    home-manager.url = "github:nix-community/home-manager";
+    mcp-servers-nix = { url = "github:natsukium/mcp-servers-nix"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixvim = { url = "github:nix-community/nixvim"; inputs.nixpkgs.follows = "nixpkgs"; };
+    plasma-manager.inputs.home-manager.follows = "home-manager";
+    plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
+    plasma-manager.url = "github:nix-community/plasma-manager";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, nixos-wsl, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, nixos-wsl, mcp-servers-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -61,6 +59,7 @@
         home-manager.extraSpecialArgs = {
           pkgs = pkgs;
           nodePkgs = nodePkgs;
+          mcp-servers-nix = mcp-servers-nix;
         };
         home-manager.users.takahisa = {
           imports = hostModules.${hostName} ++ [
@@ -115,6 +114,7 @@
           };
           extraSpecialArgs = {
             nodePkgs = nodePkgs;
+            mcp-servers-nix = mcp-servers-nix;
           };
           modules = hostModules.sx2 ++ [
             nixvim.homeModules.nixvim
@@ -131,6 +131,7 @@
           };
           extraSpecialArgs = {
             nodePkgs = nodePkgs;
+            mcp-servers-nix = mcp-servers-nix;
           };
           modules = hostModules.msi ++ [
             nixvim.homeModules.nixvim
@@ -147,6 +148,7 @@
           };
           extraSpecialArgs = {
             nodePkgs = nodePkgs;
+            mcp-servers-nix = mcp-servers-nix;
           };
           modules = hostModules.wsl ++ [
             nixvim.homeModules.nixvim
