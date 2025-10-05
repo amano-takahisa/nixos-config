@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ lib, ... }:
 
 let
   # Helper function to import all .nix files in a directory
@@ -14,21 +14,13 @@ in
   imports =
     # Import all config files
     (importNixFiles "config") ++
+    # import all color schemes
+    (importNixFiles "colorschemes") ++
     # Import all plugin files
     (importNixFiles "plugins");
 
   programs.nixvim = {
     enable = true;
     defaultEditor = true;
-
-    # Colorscheme
-    colorschemes.tokyonight = {
-      enable = true;
-      settings = {
-        style = "night";
-        transparent = false;
-        terminal_colors = true;
-      };
-    };
   };
 }
