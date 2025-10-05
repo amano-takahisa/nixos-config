@@ -13,6 +13,7 @@
     pkg-config
     tree
     tree-sitter
+    unzip
     wl-clipboard
   ];
 }
