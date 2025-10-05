@@ -1,0 +1,30 @@
+{
+    // Notebook
+    // @jupyterlab/notebook-extension:tracker
+    // Notebook settings.
+    // **************************************
+
+    // Code Cell Configuration
+    // The configuration for all code cells; it will override the CodeMirror default configuration.
+    "codeCellConfig": {
+        "lineNumbers": false,
+        "lineWrap": false,
+        "autoClosingBrackets": true
+    },
+
+    // Markdown Cell Configuration
+    // The configuration for all markdown cells; it will override the CodeMirror default configuration.
+    "markdownCellConfig": {
+        "lineNumbers": false,
+        "matchBrackets": false,
+        "autoClosingBrackets": true
+    },
+
+    // Raw Cell Configuration
+    // The configuration for all raw cells; it will override the CodeMirror default configuration.
+    "rawCellConfig": {
+        "lineNumbers": false,
+        "matchBrackets": false,
+        "autoClosingBrackets": true
+    }
+}

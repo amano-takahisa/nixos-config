@@ -1,0 +1,20 @@
+{
+  "preferences": {
+    "default_formatter": {
+      "python": [
+        "ruff_format",
+        "ruffformat",
+        "isort"
+      ],
+      "r": "styler"
+    }
+  },
+  "isort": {
+    "line_length": 79
+  },
+  "ruffformat": {
+    "args": [
+      "--line-length=79"
+    ]
+  }
+}
