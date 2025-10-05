@@ -38,13 +38,22 @@
         '';
       };
       settings = {
-        indent.char = "┊";
-        whitespace.remove_blankline_trail = false;
-
+        # indent.char = "┊";
+        # indent.char = "│";
+        indent.char = "";
+        whitespace = {
+          remove_blankline_trail = false;
+          highlight = [ "CursorColumn" "WhiteSpace" ];
+        };
+        # "#3b4261"
+        # "#2B3147"
+        # "#1F2433"
+        # "#1D2230"
         scope = {
           enabled = true;
-          show_start = false;
-          show_exact_scope = true;
+          show_start = true;
+          show_end = true;
+          show_exact_scope = false;
           highlight = [
             "RainbowRed"
             "RainbowYellow"
