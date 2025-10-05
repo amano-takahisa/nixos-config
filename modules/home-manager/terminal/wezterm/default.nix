@@ -12,6 +12,7 @@
           window_frame = {
             font_size = 8.0,
           },
+          underline_position = "-0.13cell",
         }
     '';
   };

@@ -46,7 +46,7 @@
           highlight = [ "CursorColumn" "WhiteSpace" ];
         };
         scope = {
-          enabled = true;
+          enabled = false;
           show_start = true;
           show_end = true;
           show_exact_scope = false;
