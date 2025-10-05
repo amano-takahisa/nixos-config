@@ -7,13 +7,19 @@
 
     settings = {
       formatters_by_ft = {
-        # List of available formatters can be found here:
-        # https://github.com/stevearc/conform.nvim/#formatters
-        bash = [ "shellcheck" "shfmt" ];
-        javascript = [ "prettierd" ];
-        typescript = [ "prettierd" ];
+        # Use individual formatters for editor formatting
+        # This works across all projects without requiring treefmt.toml
+        # For nixos-config project, use `nix fmt` or pre-commit for treefmt integration
+        bash = [ "shfmt" ];
+        javascript = [ "prettier" ];
+        javascriptreact = [ "prettier" ];
+        typescript = [ "prettier" ];
+        typescriptreact = [ "prettier" ];
+        json = [ "prettier" ];
+        yaml = [ "prettier" ];
+        markdown = [ "prettier" ];
         nix = [ "nixpkgs_fmt" ];
-        python = [ "isort" "ruff_fix" "ruff_format" ];
+        python = [ "ruff_format" ];
       };
     };
   };

@@ -1,16 +1,19 @@
 # NixOS Multi-Host Configuration
 
 ## Overview
+
 This repository manages NixOS configurations for multiple environments using Nix flakes and home-manager.
 
 ## Host Configurations
 
 ### sx2 (Desktop - Full Featured)
+
 - **Target**: Complete desktop environment
 - **Modules**: common, development, editor, gui
 - **Includes**: All packages and applications
 
 ### msi (Desktop - Full Featured)
+
 - **Target**: Complete desktop environment
 - **Modules**: common, development, editor, graphics, office, gui
 - **Includes**: All packages and applications
@@ -41,6 +44,7 @@ nixos-config/
 ## Usage
 
 ### Applying changes to user environment (recommended for modules/home-manager/ changes):
+
 ```bash
 ./home-rebuild.sh takahisa@sx2 switch      # For sx2 host (recommended)
 ./home-rebuild.sh takahisa@msi switch      # For msi host (recommended)
@@ -66,6 +70,7 @@ sudo -E nixos-rebuild switch --flake .#wsl --impure
 ```
 
 ### Testing a configuration:
+
 ```bash
 ./rebuild.sh sx2 test        # Test without activation (recommended)
 
@@ -95,6 +100,7 @@ nix-shell -p git
 ### Post OS installation steps
 
 1. **Generate hardware configuration** for new hosts:
+
    ```bash
    sudo nixos-generate-config --dir hosts/HOST_NAME/
    ```
@@ -134,8 +140,9 @@ then search Mozc, and add Mozc.
 
 "System Settings" -> "Keyboard" -> "Key Bindings"
 Check "Configure keyboard options", and
+
 - Ctrl position
-    (x) Caps Lock as Ctrl
+  (x) Caps Lock as Ctrl
 
 ### Login services
 
@@ -160,6 +167,7 @@ ssh -T git@github.com
 ```
 :Copilot auth
 ```
+
 ### Docker
 
 ```bash
@@ -192,9 +200,11 @@ gh repo list "amano-takahisa" --limit 1000 --json sshUrl \
 When making changes to `modules/home-manager/` files:
 
 1. **Fast user-only updates** (recommended):
+
    ```bash
    ./home-rebuild.sh takahisa@sx2 switch
    ```
+
    - No `sudo` required
    - Only rebuilds user environment
    - Faster than full system rebuild
@@ -202,15 +212,18 @@ When making changes to `modules/home-manager/` files:
    - Automatically handles unfree packages and impure flags
 
 2. **Full system rebuild** (when system changes are needed):
+
    ```bash
    ./rebuild.sh sx2 switch
    ```
+
    - Requires `sudo` (handled by script)
    - Rebuilds entire system including user environment
    - Slower but comprehensive
    - Automatically handles unfree packages
 
 ## User Information
+
 - **Username**: takahisa (consistent across all hosts)
 - **Host names**: sx2, msi
 - **State version**: 25.05
@@ -246,11 +259,11 @@ The `home-rebuild.sh` script simplifies home-manager rebuilds:
 ```
 
 **Why use the scripts?**
+
 - Automatically sets `NIXPKGS_ALLOW_UNFREE=1` environment variable
 - Uses `--impure` flag required for unfree packages (e.g., copilot.vim)
 - Handles permissions correctly (`sudo` for system, no `sudo` for home-manager)
 - Simpler than remembering the full command with flags
-
 
 ## Tools
 
@@ -263,6 +276,7 @@ echo '["@github/copilot-language-server", "@anthropic-ai/claude-code", "sitemcp"
   >> node-packages.json
 node2nix -i node-packages.json
 ```
+
 https://www.takeokunn.org/posts/fleeting/20250622133346-how_to_use_node2nix/
 
 To update packages, run following in tool/node2nix/
@@ -270,10 +284,11 @@ To update packages, run following in tool/node2nix/
 ```bash
 nix-shell -p nodePackages.node2nix --run "node2nix -i node-packages.json -o node-packages.nix"
 ```
+
 then, run `./rebuild.sh` and `./home-rebuild.sh` to apply changes.
 
-
 ## Notes
+
 - All configurations use home-manager for user-level package management
 - Unfree packages are allowed in all configurations
 - Flakes are enabled for all hosts

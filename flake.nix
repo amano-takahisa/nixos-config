@@ -72,6 +72,9 @@
 
     in
     {
+      # Formatter for `nix fmt` - uses treefmt.toml in project root
+      formatter.${system} = pkgs.treefmt;
+
       nixosConfigurations = {
         # sx2: Desktop without graphics tools
         sx2 = nixpkgs.lib.nixosSystem {

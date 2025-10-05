@@ -1,23 +1,28 @@
 repos:
   - repo: local
     hooks:
-      - id: nixpkgs-fmt
-        name: nixpkgs-fmt
-        entry: nixpkgs-fmt
+      - id: treefmt
+        name: treefmt
+        entry: treefmt
+        args: ["--fail-on-change"]
         language: system
-        files: '\.nix$'
-        exclude: '^tools/node2nix/'
+        pass_filenames: false
       - id: trailing-whitespace
         name: Trim Trailing Whitespace
         entry: sed
-        args: ['-i', 's/[[:space:]]*$//']
+        args: ["-i", "s/[[:space:]]*$//"]
         language: system
         files: '\.(nix|yaml|yml|md)$'
-        exclude: '^tools/node2nix/'
+        exclude: "^tools/node2nix/"
       - id: end-of-file-fixer
         name: Fix End of Files
         entry: bash
-        args: ['-c', 'if [[ ! -s "$1" || $(tail -c1 "$1" | wc -l) -eq 0 ]]; then echo >> "$1"; fi', '--']
+        args:
+          [
+            "-c",
+            'if [[ ! -s "$1" || $(tail -c1 "$1" | wc -l) -eq 0 ]]; then echo >> "$1"; fi',
+            "--",
+          ]
         language: system
         files: '\.(nix|yaml|yml|md)$'
-        exclude: '^tools/node2nix/'
+        exclude: "^tools/node2nix/"

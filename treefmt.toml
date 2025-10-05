@@ -1,0 +1,24 @@
+# treefmt configuration file
+# This file is used by the treefmt CLI, conform.nvim in editors, and pre-commit hooks
+# treefmt.nix is separately used for `nix fmt` command
+
+[formatter.nixpkgs-fmt]
+command = "nixpkgs-fmt"
+includes = ["*.nix"]
+excludes = ["tools/node2nix/*"]
+
+[formatter.prettier]
+command = "prettier"
+options = ["--write"]
+includes = ["*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.yaml", "*.yml", "*.md"]
+excludes = ["tools/node2nix/*"]
+
+[formatter.shfmt]
+command = "shfmt"
+options = ["-i", "2", "-w"]
+includes = ["*.sh", "*.bash"]
+
+[formatter.ruff]
+command = "ruff"
+options = ["format"]
+includes = ["*.py"]
