@@ -11,6 +11,7 @@
         # https://github.com/stevearc/conform.nvim/#formatters
         bash = [ "shellcheck" "shfmt" ];
         javascript = [ "prettierd" ];
+        typescript = [ "prettierd" ];
         nix = [ "nixpkgs_fmt" ];
         python = [ "isort" "ruff_fix" "ruff_format" ];
       };
