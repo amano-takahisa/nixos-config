@@ -226,9 +226,9 @@ The `rebuild.sh` script is provided to simplify system rebuilds with proper unfr
 ./rebuild.sh [host] [operation]
 
 # Examples
-./rebuild.sh sx2 switch    # Rebuild and switch sx2 configuration
+./rebuild.sh msi switch    # Rebuild and switch sx2 configuration
 ./rebuild.sh msi test      # Test msi configuration without switching
-./rebuild.sh               # Defaults to: sx2 switch
+./rebuild.sh               # Defaults to: ${HOSTNAME} switch
 ```
 
 ### Home Manager Rebuild Script (`home-rebuild.sh`)
@@ -240,9 +240,9 @@ The `home-rebuild.sh` script simplifies home-manager rebuilds:
 ./home-rebuild.sh [user@host] [operation]
 
 # Examples
-./home-rebuild.sh takahisa@sx2 switch    # Rebuild and switch user configuration
+./home-rebuild.sh takahisa@msi switch    # Rebuild and switch user configuration
 ./home-rebuild.sh takahisa@msi test      # Test user configuration without switching
-./home-rebuild.sh                        # Defaults to: takahisa@sx2 switch
+./home-rebuild.sh                        # Defaults to: ${USER}@${HOSTNAME} switch
 ```
 
 **Why use the scripts?**
@@ -270,6 +270,7 @@ To update packages, run following in tool/node2nix/
 ```bash
 nix-shell -p nodePackages.node2nix --run "node2nix -i node-packages.json -o node-packages.nix"
 ```
+then, run `./rebuild.sh` and `./home-rebuild.sh` to apply changes.
 
 
 ## Notes
