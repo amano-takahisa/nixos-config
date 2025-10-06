@@ -41,5 +41,32 @@
         "ssh://git.eodc.eu" = { root = "~/ghq/work"; };
       };
     };
+    ignores = [
+      "*_taka.ipynb"
+      "*_taka.md"
+      "*_taka.py"
+      "*_taka.sh"
+      "*_taka.txt"
+      "*_taka/"
+      "worktree/"
+      ".back"
+
+      ### JupyterNotebooks ###
+      # gitignore template for Jupyter Notebooks
+      # website: http://jupyter.org/
+      ".ipynb_checkpoints"
+      "*/.ipynb_checkpoints/"
+      ".virtual_documents/"
+
+      # IPython
+      "profile_default/"
+      "ipython_config.py"
+      "Untitled.ipynb"
+      "Untitled*.ipynb"
+
+      # AI coding assistants
+      ".claude"
+      ".serena"
+    ];
   };
 }
