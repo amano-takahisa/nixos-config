@@ -19,7 +19,8 @@
         yaml = [ "prettier" ];
         markdown = [ "prettier" ];
         nix = [ "nixpkgs_fmt" ];
-        python = [ "ruff_format" ];
+        python = [ "isort" "ruff_fix" "ruff_format" ];
+        fish = [ "fish_indent" ];
       };
     };
   };
