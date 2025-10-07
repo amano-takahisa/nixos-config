@@ -76,6 +76,21 @@
       };
     };
 
+    # Python linting with ruff
+    ruff = {
+      enable = true;
+      extraOptions = {
+        init_options = {
+          settings = {
+            lineLength = 79;
+            lint = {
+              select = [ "E" "F" "W" ];
+            };
+          };
+        };
+      };
+    };
+
 
     # HTML/CSS
     html.enable = true;
