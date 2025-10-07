@@ -5,7 +5,7 @@
     globals.mapleader = " "; # Set leader key to space
 
     opts = {
-      colorcolumn = "79,120";
+      colorcolumn = "79,88,120";
       expandtab = true;
       number = true;
       relativenumber = true;
