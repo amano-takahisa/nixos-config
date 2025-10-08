@@ -299,3 +299,4 @@ then, run `./rebuild.sh` and `./home-rebuild.sh` to apply changes.
 ## TODO
 
 - https://github.com/numtide/treefmt-nix
+- https://github.com/maralorn/nix-output-monitor
