@@ -48,8 +48,8 @@
       "*_taka.sh"
       "*_taka.txt"
       "*_taka/"
-      "worktree/"
       ".back"
+      ".worktree/"
 
       ### JupyterNotebooks ###
       # gitignore template for Jupyter Notebooks
