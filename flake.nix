@@ -48,6 +48,7 @@
         ];
         wsl = commonModules ++ [
           ./modules/home-manager/editor-wsl
+          ./modules/home-manager/graphics-wsl
           ./modules/home-manager/terminal-wsl
         ];
       };
