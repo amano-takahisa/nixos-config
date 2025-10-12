@@ -222,6 +222,12 @@ When making changes to `modules/home-manager/` files:
    - Slower but comprehensive
    - Automatically handles unfree packages
 
+## Upgrade packages
+
+```bash
+sudo nix-channel --update
+```
+
 ## User Information
 
 - **Username**: takahisa (consistent across all hosts)
@@ -279,7 +285,7 @@ node2nix -i node-packages.json
 
 https://www.takeokunn.org/posts/fleeting/20250622133346-how_to_use_node2nix/
 
-To update packages, run following in tool/node2nix/
+To update packages, run following in `tool/node2nix/`
 
 ```bash
 nix-shell -p nodePackages.node2nix --run "node2nix -i node-packages.json -o node-packages.nix"
