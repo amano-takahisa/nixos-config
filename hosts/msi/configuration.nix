@@ -88,9 +88,10 @@
     #media-session.enable = true;
 
     # Fix sound wakeup issue
-    extraConfig.pipewire."context.properties" = {
-      "suspend.timeout-seconds" = 0;
-    };
+    # not work...
+    # extraConfig.pipewire."context.properties" = {
+    #   "suspend.timeout-seconds" = 0;
+    # };
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
