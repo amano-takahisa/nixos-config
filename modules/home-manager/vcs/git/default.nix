@@ -51,6 +51,10 @@
       ".back"
       ".worktree/"
 
+      ### Python ###
+      "__pycache__/"
+      "*.py[codz]"
+      "*$py.class"
       ### JupyterNotebooks ###
       # gitignore template for Jupyter Notebooks
       # website: http://jupyter.org/
