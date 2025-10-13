@@ -61,9 +61,10 @@
       #################
       # Set status bar position
       set-option -g status-position top
-      set -g status-justify centre
-      set -g status-fg white
-      set -g status-bg black
+      set-option -g status-justify centre
+      set-option -g status-fg "#aaaaaa"
+      set-option -g status-bg "#333333"
+      set-window-option -g window-status-current-style "bg=#aaaaaa,fg=#333333"
     '';
 
 
