@@ -65,6 +65,13 @@
       set-option -g status-fg "#aaaaaa"
       set-option -g status-bg "#333333"
       set-window-option -g window-status-current-style "bg=#aaaaaa,fg=#333333"
+
+
+      #################
+      # Others
+      #################
+      set -g base-index 1
+      setw -g pane-base-index 1
     '';
 
 
