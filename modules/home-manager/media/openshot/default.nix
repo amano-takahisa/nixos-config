@@ -8,7 +8,7 @@
     # instead of installing it directly, use it in a nix-shell by running:
     #
     # ```
-    # NIXPKGS_ALLOW_INSECURE=1 nix-shell -p openshot-qt --run openshot-qt
+    # nix run github:nixos/nixpkgs/b37576faa4efddb7a8e4394cb14821140bb6d1b2#openshot-qt
     # ```
     # #################
   ];
