@@ -2,7 +2,12 @@
 
 {
   home.packages = with pkgs; [
-    pre-commit
+    (buildFHSEnv {
+      name = "pre-commit";
+      runScript = "pre-commit";
+      targetPkgs = pkgs: with pkgs; [ pre-commit ];
+    })
+
     treefmt
 
     # Formatters used by treefmt
