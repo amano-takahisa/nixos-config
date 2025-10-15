@@ -18,9 +18,13 @@
       ".." = "cd ..";
     };
     interactiveShellInit = ''
-      set -g fish_prompt_pwd_dir_length 2
+      set -g fish_prompt_pwd_dir_length 3
       set -g fish_prompt_pwd_full_dirs 3
       source ${./fish_prompt.fish}
+      function fish_title
+        set -q argv[1]; or set argv fish
+        echo (prompt_pwd): $argv;
+      end
     '';
   };
 }
