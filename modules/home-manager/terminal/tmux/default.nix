@@ -52,7 +52,7 @@
 
       # keep pane title static
       set-option -g automatic-rename off
-      set-option -g pane-border-format "#{pane_index}:#T #{pane_current_path}"
+      set-option -g pane-border-format "#{pane_index}:#T"
       set-option -g status-interval 5
       set-option -g pane-border-status bottom
 
