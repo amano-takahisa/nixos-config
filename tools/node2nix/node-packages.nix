@@ -1162,10 +1162,10 @@ in
   "@github/copilot-language-server" = nodeEnv.buildNodePackage {
     name = "_at_github_slash_copilot-language-server";
     packageName = "@github/copilot-language-server";
-    version = "1.380.0";
+    version = "1.381.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.380.0.tgz";
-      sha512 = "iaaC0p6qkg4JQEcUJ28Es8zSjxxLhG4VT3NZlKOq9Ta93Dq5dZBEft+8HlQ/4w75+l5+qvR5D8Av+GM+U18jOQ==";
+      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.381.0.tgz";
+      sha512 = "SIqpmcnm//jdVMyAn6xL4yfIIyJ5/Gzuo8gil0LjAsTNSl02jWx9scyAQFHgn8DIb42elgpJRPNDBwbL/1+Gmw==";
     };
     dependencies = [
       sources."vscode-jsonrpc-8.2.0"
@@ -1185,10 +1185,10 @@ in
   "@anthropic-ai/claude-code" = nodeEnv.buildNodePackage {
     name = "_at_anthropic-ai_slash_claude-code";
     packageName = "@anthropic-ai/claude-code";
-    version = "2.0.14";
+    version = "2.0.15";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.14.tgz";
-      sha512 = "Q4A4Jo7WZ4aMUIu8CUIIo2Jt66kl2vrEjRg/kYzX6syuK0DiV3WhdMZceSvLAU0BFpX1L8aERhRWxLWDxX3fYg==";
+      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.15.tgz";
+      sha512 = "ZQFvnzBX7bQg5FaX9fvRDjS3JjUv0SLHDPXbKHIsrV3HBOMsNti9VtqGUI1MuPnV5hUHrthPe95mMSBWwdKh1w==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -1234,7 +1234,11 @@ in
       sources."css-what-6.2.2"
       sources."debug-4.4.3"
       sources."depd-2.0.0"
-      sources."dom-serializer-2.0.0"
+      (sources."dom-serializer-2.0.0" // {
+        dependencies = [
+          sources."entities-4.5.0"
+        ];
+      })
       sources."domelementtype-2.3.0"
       sources."domhandler-5.0.3"
       sources."domutils-3.2.2"
@@ -1242,7 +1246,7 @@ in
       sources."ee-first-1.1.1"
       sources."encodeurl-2.0.0"
       sources."encoding-sniffer-0.2.1"
-      sources."entities-4.5.0"
+      sources."entities-6.0.1"
       sources."es-define-property-1.0.1"
       sources."es-errors-1.3.0"
       sources."es-object-atoms-1.1.1"
@@ -1270,11 +1274,7 @@ in
       })
       sources."has-symbols-1.1.0"
       sources."hasown-2.0.2"
-      (sources."htmlparser2-10.0.0" // {
-        dependencies = [
-          sources."entities-6.0.1"
-        ];
-      })
+      sources."htmlparser2-10.0.0"
       (sources."http-errors-2.0.0" // {
         dependencies = [
           sources."statuses-2.0.1"
@@ -1300,11 +1300,7 @@ in
       sources."object-inspect-1.13.4"
       sources."on-finished-2.4.1"
       sources."once-1.4.0"
-      (sources."parse5-7.3.0" // {
-        dependencies = [
-          sources."entities-6.0.1"
-        ];
-      })
+      sources."parse5-7.3.0"
       sources."parse5-htmlparser2-tree-adapter-7.1.0"
       sources."parse5-parser-stream-7.1.2"
       sources."parseurl-1.3.3"
