@@ -226,9 +226,22 @@ When making changes to `modules/home-manager/` files:
 
 ## Upgrade packages
 
+### Packages from nixpkgs
+
 ```bash
 sudo nix-channel --update
 ```
+
+### Node packages (node2nix)
+
+```bash
+cd tool/node2nix
+nix-shell -p nodePackages.node2nix --run "node2nix -i node-packages.json -o node-packages.nix"
+```
+
+Then, run `./rebuild.sh` and `./home-rebuild.sh` to apply changes.
+
+### Packages from pkgs.fetchFromGitHub
 
 ## User Information
 
@@ -237,6 +250,14 @@ sudo nix-channel --update
 - **State version**: 25.05
 
 ## Rebuild Scripts
+
+```bash
+# nix-shell -p update-nix-fetchgit
+# fd --type file '.nix$' --exec update-nix-fetchgit
+nix-shell -p nix-prefetch-git --run 'nix-prefetch-git  https://github.com/lambdalisue/vim-gin.git'
+```
+
+Then, copy rev and hash to your nix file.
 
 ### System Rebuild Script (`rebuild.sh`)
 
@@ -287,14 +308,6 @@ node2nix -i node-packages.json
 
 https://www.takeokunn.org/posts/fleeting/20250622133346-how_to_use_node2nix/
 
-To update packages, run following in `tool/node2nix/`
-
-```bash
-nix-shell -p nodePackages.node2nix --run "node2nix -i node-packages.json -o node-packages.nix"
-```
-
-then, run `./rebuild.sh` and `./home-rebuild.sh` to apply changes.
-
 ## Notes
 
 - All configurations use home-manager for user-level package management
@@ -306,5 +319,6 @@ then, run `./rebuild.sh` and `./home-rebuild.sh` to apply changes.
 
 ## TODO
 
-- https://github.com/numtide/treefmt-nix
-- https://github.com/maralorn/nix-output-monitor
+- https://github.com/lambdalisue/vim-gin
+  - https://github.com/kuuote/dotvim/blob/version5/bundle/gin-preview.vim/plugin/gin_preview.vim
+    add this to plugin directory and :GinPreview
