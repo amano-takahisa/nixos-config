@@ -8,8 +8,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "lambdalisue";
           repo = "vim-gin";
-          rev = "xxxxxxx";
-          hash = "sha256-xxxxxxx=";
+          rev = "353e32d6e37228c0f51a6cf72c06210bb1340af9";
+          hash = "sha256-zlNdfm+oUwcvzExFvtTqnHnwE8uqdOlxeUOGmVOBwIg=";
         };
       })
     ];
