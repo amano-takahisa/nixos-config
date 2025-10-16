@@ -23,7 +23,7 @@
       source ${./fish_prompt.fish}
       function fish_title
         set -q argv[1]; or set argv fish
-        echo (prompt_pwd): $argv;
+        echo $argv: (prompt_pwd);
       end
     '';
   };
