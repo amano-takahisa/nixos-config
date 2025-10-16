@@ -5,6 +5,7 @@
     # packages for development, for all users
     bat # A cat(1) clone with syntax highlighting and Git integration.
     clang # C language family frontend for LLVM
+    deno # Secure runtime for JavaScript and TypeScript
     gcc # GNU Compiler Collection
     gnumake # GNU make utility to maintain groups of programs
     htop # An interactive process viewer for Unix systems
