@@ -4,7 +4,7 @@
   programs.nixvim = {
     extraPlugins = [
       (pkgs.vimUtils.buildVimPlugin {
-        pname = "chowcho.nvim";
+        name = "chowcho.nvim";
         version = "2024-11-11";
         src = pkgs.fetchFromGitHub {
           owner = "tkmpypy";
