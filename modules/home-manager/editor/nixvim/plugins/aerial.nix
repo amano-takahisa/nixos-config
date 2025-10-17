@@ -23,6 +23,7 @@
             '';
           };
         };
+        nav.autojump = true;
       };
     };
     keymaps = [
