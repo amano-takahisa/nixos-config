@@ -26,6 +26,7 @@
     extraConfig = {
       commit = { verbose = "true"; };
       core = { commentChar = ";"; };
+      fetch = { prune = "true"; };
       grep = { linenumber = "true"; };
       init = { defaultBranch = "main"; };
       log = { date = "iso-local"; };
