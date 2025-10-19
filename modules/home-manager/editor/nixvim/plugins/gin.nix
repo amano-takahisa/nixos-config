@@ -13,6 +13,10 @@
         };
       })
     ];
+
+    extraConfigVim = ''
+      source ${./plugins-extra/gin-preview.vim}
+    '';
   };
 }
 
