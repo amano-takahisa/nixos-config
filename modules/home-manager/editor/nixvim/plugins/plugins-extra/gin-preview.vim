@@ -25,7 +25,7 @@ function s:open(curwin) abort
   endif
 
   " cd to git root
-  call chdir(root, 'tabpage')
+  execute 'tcd' root
   " open status window
   GinStatus
   " remove previous handler
