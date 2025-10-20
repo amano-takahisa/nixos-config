@@ -60,12 +60,12 @@
       # Status Bar
       #################
       # Set status bar position
-      set-option -g status-position top
-      set-option -g status-justify centre
-      set-option -g status-fg "#aaaaaa"
+      set-option -g renumber-windows on
       set-option -g status-bg "#333333"
+      set-option -g status-fg "#aaaaaa"
+      set-option -g status-justify centre
+      set-option -g status-position top
       set-window-option -g window-status-current-style "bg=#aaaaaa,fg=#333333"
-
 
       #################
       # Others
