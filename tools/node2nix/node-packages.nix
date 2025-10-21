@@ -1182,13 +1182,13 @@ in
     bypassCache = true;
     reconstructLock = true;
   };
-  "@anthropic-ai/claude-code" = nodeEnv.buildNodePackage {
+  "@anthropic-ai/claude-code-2.0.15" = nodeEnv.buildNodePackage {
     name = "_at_anthropic-ai_slash_claude-code";
     packageName = "@anthropic-ai/claude-code";
-    version = "2.0.24";
+    version = "2.0.15";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.24.tgz";
-      sha512 = "6f/AXoTi3SmFYZl42l6L8brdPSkL+MDQWesRBJwgZy3enNI0LaVn1j/6RxQ7toPKnIyChCN0r6hZi61N8znzzQ==";
+      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.15.tgz";
+      sha512 = "ZQFvnzBX7bQg5FaX9fvRDjS3JjUv0SLHDPXbKHIsrV3HBOMsNti9VtqGUI1MuPnV5hUHrthPe95mMSBWwdKh1w==";
     };
     buildInputs = globalBuildInputs;
     meta = {
