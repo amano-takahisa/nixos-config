@@ -42,6 +42,31 @@
         filteredItems.hideDotfiles = false;
       };
     };
+    extraConfigLuaPost = ''
+      -- show git status only in ghq directories
+      local function update_neotree_git_status()
+        local cwd = vim.fn.getcwd()
+        local ghq_path = vim.fn.expand("~/ghq")
+
+        if cwd:match("^" .. vim.pesc(ghq_path)) then
+          require("neo-tree").setup({
+            enable_git_status = true
+          })
+        else
+          require("neo-tree").setup({
+            enable_git_status = false
+          })
+        end
+      end
+
+      update_neotree_git_status()
+
+      vim.api.nvim_create_autocmd("DirChanged", {
+        pattern = "*",
+        callback = update_neotree_git_status,
+        desc = "Update neo-tree git status on directory change"
+      })
+    '';
     keymaps = [
       {
         mode = "n";

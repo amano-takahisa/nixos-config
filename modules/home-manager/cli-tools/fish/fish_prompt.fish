@@ -174,8 +174,12 @@ function fish_prompt
     echo -n (date +%H:%M)
 
     # git
+    # Skip git status for network-mounted directories to avoid slowness
     set_color normal
-    set -l prompt_git (fish_git_prompt '%s')
+    set -l prompt_git
+    if string match -q "$HOME/ghq/*" $PWD
+        set prompt_git (fish_git_prompt '%s')
+    end
     test -n "$prompt_git"
     # and _nim_prompt_wrapper $retc G $prompt_git
     and echo -n " $prompt_git"
