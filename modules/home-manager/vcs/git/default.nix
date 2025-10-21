@@ -4,8 +4,6 @@
   # Git configuration
   programs.git = {
     enable = true;
-    userName = "Taka";
-    userEmail = "amano.takahisa@gmail.com";
     includes = [
       {
         condition = "gitdir:${config.home.homeDirectory}/ghq/work/";
@@ -13,17 +11,21 @@
         contents.user.name = "Taka";
       }
     ];
-    aliases = {
-      aliases = "config --get-regexp '^alias\\.'";
-      bl = "blame --abbrev=6";
-      lo = "log --graph --all --date=format:'%Y-%m-%d %H:%M' --format='%C(white dim) %h %Creset %s %C(cyan dim)(%ad)%Creset%C(green) <%an>%C(bold yellow)%d%Creset'";
-      loo = "log --stat --graph --decorate --all";
-      pushf = "push --force-with-lease --force-if-includes";
-      root = "rev-parse --show-toplevel";
-      sh = "show --color-words='[^[:space:]]'";
-      st = "status --short --branch";
-    };
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Taka";
+        email = "amano.takahisa@gmail.com";
+      };
+      alias = {
+        aliases = "config --get-regexp '^alias\\.'";
+        bl = "blame --abbrev=6";
+        lo = "log --graph --all --date=format:'%Y-%m-%d %H:%M' --format='%C(white dim) %h %Creset %s %C(cyan dim)(%ad)%Creset%C(green) <%an>%C(bold yellow)%d%Creset'";
+        loo = "log --stat --graph --decorate --all";
+        pushf = "push --force-with-lease --force-if-includes";
+        root = "rev-parse --show-toplevel";
+        sh = "show --color-words='[^[:space:]]'";
+        st = "status --short --branch";
+      };
       commit = { verbose = "true"; };
       core = { commentChar = ";"; };
       fetch = { prune = "true"; };

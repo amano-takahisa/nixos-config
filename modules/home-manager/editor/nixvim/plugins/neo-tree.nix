@@ -6,40 +6,42 @@
 
     plugins.neo-tree = {
       enable = true;
-      enableGitStatus = false;
-      extraOptions = {
-        default_component_configs.symlink_target.enabled = true;
-      };
-      window = {
-        width = 40;
-        mappings = {
-          "<space>" = "toggle_node";
-          "<cr>" = "open";
-          "<esc>" = "cancel";
-          "l" = "open";
-          "h" = "close_node";
-          "S" = "open_split";
-          "s" = "open_vsplit";
-          "t" = "open_tabnew";
-          "C" = "close_node";
-          "z" = "close_all_nodes";
-          "a" = "add";
-          "A" = "add_directory";
-          "d" = "delete";
-          "r" = "rename";
-          "y" = "copy_to_clipboard";
-          "x" = "cut_to_clipboard";
-          "p" = "paste_from_clipboard";
-          "c" = "copy";
-          "m" = "move";
-          "q" = "close_window";
-          "R" = "refresh";
-          "?" = "show_help";
+      settings = {
+        enable_git_status = false;
+        filesystem = {
+          filtered_items = {
+            hide_dotfiles = false;
+          };
+          use_libuv_file_watcher = true;
         };
-      };
-      filesystem = {
-        useLibuvFileWatcher = true;
-        filteredItems.hideDotfiles = false;
+        default_component_configs.symlink_target.enabled = true;
+        window = {
+          width = 40;
+          mappings = {
+            "<space>" = "toggle_node";
+            "<cr>" = "open";
+            "<esc>" = "cancel";
+            "l" = "open";
+            "h" = "close_node";
+            "S" = "open_split";
+            "s" = "open_vsplit";
+            "t" = "open_tabnew";
+            "C" = "close_node";
+            "z" = "close_all_nodes";
+            "a" = "add";
+            "A" = "add_directory";
+            "d" = "delete";
+            "r" = "rename";
+            "y" = "copy_to_clipboard";
+            "x" = "cut_to_clipboard";
+            "p" = "paste_from_clipboard";
+            "c" = "copy";
+            "m" = "move";
+            "q" = "close_window";
+            "R" = "refresh";
+            "?" = "show_help";
+          };
+        };
       };
     };
     extraConfigLuaPost = ''

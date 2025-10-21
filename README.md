@@ -230,6 +230,7 @@ When making changes to `modules/home-manager/` files:
 
 ```bash
 sudo nix-channel --update
+nix flake update
 ```
 
 ### Node packages (node2nix)
