@@ -300,7 +300,7 @@ The `home-rebuild.sh` script simplifies home-manager rebuilds:
 ### node2nix
 
 ```bash
-cd tool/node2nix
+cd tools/node2nix
 nix-shell -p nodePackages.node2nix
 echo '["@github/copilot-language-server", "@anthropic-ai/claude-code", "sitemcp"]' \
   >> node-packages.json
