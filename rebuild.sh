@@ -22,6 +22,6 @@ if [ "$HOST" == "wsl" ]; then
   export CARGO_BUILD_JOBS=2
 fi
 
-sudo -E nixos-rebuild $OPERATION --flake .#$HOST --impure
+sudo -E nixos-rebuild "$OPERATION" --flake .#"$HOST" --impure
 
 echo "Build complete!"
