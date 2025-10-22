@@ -82,7 +82,7 @@
       {
         mode = "n";
         key = "<C-n>%";
-        action = ":Neotree focus %<CR>";
+        action = ":Neotree reveal<CR>";
         options = {
           silent = true;
           desc = "Toggle Neo-tree current file";
