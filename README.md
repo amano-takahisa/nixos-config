@@ -320,6 +320,4 @@ https://www.takeokunn.org/posts/fleeting/20250622133346-how_to_use_node2nix/
 
 ## TODO
 
-- https://github.com/lambdalisue/vim-gin
-  - https://github.com/kuuote/dotvim/blob/version5/bundle/gin-preview.vim/plugin/gin_preview.vim
-    add this to plugin directory and :GinPreview
+- https://github.com/rickhowe/spotdiff.vim
