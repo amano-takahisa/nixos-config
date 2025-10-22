@@ -12,6 +12,6 @@ OPERATION=${2:-switch}
 echo "Run: NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager $OPERATION --flake .#$USER_HOST --impure"
 
 export NIXPKGS_ALLOW_UNFREE=1
-NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager "$OPERATION" --flake .#"$USER_HOST" --impureclaude
+NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager "$OPERATION" --flake .#"$USER_HOST" --impure
 
 echo "Build complete!"
