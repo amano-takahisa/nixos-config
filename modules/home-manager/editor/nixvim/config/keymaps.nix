@@ -66,6 +66,7 @@
         key = "j";
         action = "gj";
         options = {
+          silent = true;
           desc = "Move down by display line";
         };
       }
@@ -74,6 +75,7 @@
         key = "k";
         action = "gk";
         options = {
+          silent = true;
           desc = "Move up by display line";
         };
       }
