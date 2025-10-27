@@ -72,6 +72,8 @@
       #################
       set -g base-index 1
       setw -g pane-base-index 1
+      # send 'control + a' to applications
+      bind-key C-a send-prefix
     '';
 
 
