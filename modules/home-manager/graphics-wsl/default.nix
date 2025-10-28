@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
+let
+  libUtils = import ../../../lib { inherit lib; };
+in
 {
-  home.packages = with pkgs; [
-    # Image processing and editing
-    imagemagick
-    eog
-  ];
+  imports = libUtils.importSubdirectoriesWithDefault ./.;
 }
+

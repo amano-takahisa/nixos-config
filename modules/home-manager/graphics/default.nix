@@ -1,11 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
+let
+  libUtils = import ../../../lib { inherit lib; };
+in
 {
-  home.packages = with pkgs; [
-    # Image processing and editing
-    imagemagick
-    # gimp
-    # inkscape
-
-  ];
+  imports = libUtils.importSubdirectoriesWithDefault ./.;
 }
+
