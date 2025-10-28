@@ -6,8 +6,12 @@
     let
       # Read the specified directory
       dirContents = builtins.readDir currentDir;
-      # Filter for directories only
-      subdirectories = lib.filterAttrs (name: type: type == "directory") dirContents;
+      # Filter for directories and symlinks (symlinks can point to directories)
+      subdirectories = lib.filterAttrs
+        (name: type:
+          type == "directory" || type == "symlink"
+        )
+        dirContents;
       # Check if each subdirectory has default.nix and import it
       validSubdirs = lib.filterAttrs
         (name: type:
