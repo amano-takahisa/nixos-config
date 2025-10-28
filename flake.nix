@@ -22,12 +22,13 @@
 
       # Common modules for all hosts
       commonModules = [
-        ./modules/home-manager/common
         ./modules/home-manager/cli-tools
+        ./modules/home-manager/common
+        ./modules/home-manager/container
         ./modules/home-manager/misc
-        ./modules/home-manager/vcs
-        ./modules/home-manager/terminal
         ./modules/home-manager/programming
+        ./modules/home-manager/terminal
+        ./modules/home-manager/vcs
       ];
 
       # Host-specific module configurations
