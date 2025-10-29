@@ -7,8 +7,9 @@
     daemon.enable = true;
     settings = {
       theme.name = "catppuccin-mocha-blue";
-      style = "auto";
+      inline_height = 0;
       invert = false;
+      style = "auto";
     };
     themes = {
       "catppuccin-mocha-blue" = {
