@@ -1,3 +1,4 @@
+# MSI host configuration - Full-featured desktop environment
 # Edit this configuration file to define what should be installed on your
 # system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
@@ -5,15 +6,14 @@
 { pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/system/input/ime.nix
-      ../../modules/system/packages/development.nix
-      ../../modules/system/services/docker.nix
-      ../../modules/system/ui/fonts.nix
-    ];
+  imports = [
+    ../../modules/system/input/ime.nix
+    ../../modules/system/nix-gc.nix
+    ../../modules/system/packages/development.nix
+    ../../modules/system/services/docker.nix
+    ../../modules/system/ui/fonts.nix
+    ./hardware-configuration.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -130,8 +130,6 @@
     description = "takahisa";
     extraGroups = [ "networkmanager" "wheel" ]; # Enable ‘sudo’ for the user.
     shell = pkgs.fish;
-    packages = with pkgs; [
-    ];
   };
 
   # Allow unfree packages
