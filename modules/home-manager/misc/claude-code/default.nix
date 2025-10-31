@@ -16,7 +16,6 @@
       autoCompactEnabled = false;
       enableAllProjectMcpServers = true;
       feedbackSurveyState.lastShownTime = 1754089004345;
-      outputStyle = "Explanatory";
       permissions = {
         deny = [
           "Bash(rm -rf /*)"
