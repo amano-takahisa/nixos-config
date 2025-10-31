@@ -13,13 +13,13 @@ let
         sha512 = "Y28PR25bHXUg88kCV7nivXrP2Nj2RueZ3/l/jdx6J9f8J4nsEGcgX0Qe6lt7Pa+J79+kPiJU3LguR6O/6zrLOw==";
       };
     };
-    "@modelcontextprotocol/sdk-1.20.1" = {
+    "@modelcontextprotocol/sdk-1.20.2" = {
       name = "_at_modelcontextprotocol_slash_sdk";
       packageName = "@modelcontextprotocol/sdk";
-      version = "1.20.1";
+      version = "1.20.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.20.1.tgz";
-        sha512 = "j/P+yuxXfgxb+mW7OEoRCM3G47zCTDqUPivJo/VzpjbG8I9csTXtOprCf5FfOfHK4whOJny0aHuBEON+kS7CCA==";
+        url = "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.20.2.tgz";
+        sha512 = "6rqTdFt67AAAzln3NOKsXRmv5ZzPkgbfaebKBqUbts7vK1GZudqnrun5a8d3M/h955cam9RHZ6Jb4Y1XhnmFPg==";
       };
     };
     "@mozilla/readability-0.5.0" = {
@@ -994,13 +994,13 @@ let
         sha512 = "o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==";
       };
     };
-    "turndown-7.2.1" = {
+    "turndown-7.2.2" = {
       name = "turndown";
       packageName = "turndown";
-      version = "7.2.1";
+      version = "7.2.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/turndown/-/turndown-7.2.1.tgz";
-        sha512 = "7YiPJw6rLClQL3oUKN3KgMaXeJJ2lAyZItclgKDurqnH61so4k4IH/qwmMva0zpuJc/FhRExBBnk7EbeFANlgQ==";
+        url = "https://registry.npmjs.org/turndown/-/turndown-7.2.2.tgz";
+        sha512 = "1F7db8BiExOKxjSMU2b7if62D/XOyQyZbPKq/nUwopfgnHlqXHqQ0lvfUTeUIr1lZJzOPFn43dODyMSIfvWRKQ==";
       };
     };
     "turndown-plugin-gfm-1.0.2" = {
@@ -1162,10 +1162,10 @@ in
   "@github/copilot-language-server" = nodeEnv.buildNodePackage {
     name = "_at_github_slash_copilot-language-server";
     packageName = "@github/copilot-language-server";
-    version = "1.387.0";
+    version = "1.389.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.387.0.tgz";
-      sha512 = "QAFmB0VQZehU7L8luyKIkjPjfcyiW8y/im6FDGzAYsO0kc3P+qxf6V5R0KGweDfVVbOT5WgZOJrxonZMc6sIeg==";
+      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.389.0.tgz";
+      sha512 = "GLuqlJNesnA13OkijEaV/bATgRDnzFsp83TGYfhM8hbI+4Ilpb3GqrRpk9Z1jpvcLnZOk04fVqJ2+dK3brRgPg==";
     };
     dependencies = [
       sources."vscode-jsonrpc-8.2.0"
@@ -1182,13 +1182,13 @@ in
     bypassCache = true;
     reconstructLock = true;
   };
-  "@anthropic-ai/claude-code-2.0.15" = nodeEnv.buildNodePackage {
+  "@anthropic-ai/claude-code-2.0.30" = nodeEnv.buildNodePackage {
     name = "_at_anthropic-ai_slash_claude-code";
     packageName = "@anthropic-ai/claude-code";
-    version = "2.0.15";
+    version = "2.0.30";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.15.tgz";
-      sha512 = "ZQFvnzBX7bQg5FaX9fvRDjS3JjUv0SLHDPXbKHIsrV3HBOMsNti9VtqGUI1MuPnV5hUHrthPe95mMSBWwdKh1w==";
+      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.30.tgz";
+      sha512 = "DbRYVgsuKLFxrVtjEych5Eok+OwOumYj4rUJyXBy9UEIARS6ScGjU7JzTvWJSRjT+ZHV4vTUTrakGD9FJHrFtQ==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -1210,7 +1210,7 @@ in
     };
     dependencies = [
       sources."@mixmark-io/domino-2.2.0"
-      sources."@modelcontextprotocol/sdk-1.20.1"
+      sources."@modelcontextprotocol/sdk-1.20.2"
       sources."@mozilla/readability-0.5.0"
       sources."accepts-2.0.0"
       sources."ajv-6.12.6"
@@ -1332,7 +1332,7 @@ in
       sources."statuses-2.0.2"
       sources."to-regex-range-5.0.1"
       sources."toidentifier-1.0.1"
-      sources."turndown-7.2.1"
+      sources."turndown-7.2.2"
       sources."turndown-plugin-gfm-1.0.2"
       sources."type-is-2.0.1"
       sources."undici-7.16.0"
