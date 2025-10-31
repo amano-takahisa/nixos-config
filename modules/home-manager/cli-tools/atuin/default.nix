@@ -4,7 +4,7 @@
   programs.atuin = {
     enable = true;
     enableFishIntegration = true;
-    daemon.enable = true;
+    daemon.enable = false;
     settings = {
       theme.name = "catppuccin-mocha-blue";
       inline_height = 0;
