@@ -40,11 +40,20 @@ https://nix-community.github.io/NixOS-WSL/
 Clone this repository into your WSL2 instance
 
 ```bash
-nix-shell -p git --run "git clone https://github.com/amano-takahisa/nixos-config.git"
-cd nixos-config
+nix-shell -p wget --run "wget https://github.com/amano-takahisa/nixos-config/archive/main.zip"
+nix-shell -p unzip --run "unzip main.zip"
+cd nixos-config-main
 nix-shell -p git
 ./rebuild.sh wsl switch
 ```
+
+Re-login to the NixOS, restore `~/.ssh` from backup, and
+
+```
+ghq get git@github.com:amano-takahisa/nixos-config.git
+```
+
+and rebuild again.
 
 ### Native NixOS installation
 
