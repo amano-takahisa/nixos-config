@@ -6,7 +6,7 @@ let
 in
 {
   warnings = lib.optional (!caseTransformExists)
-    "zk_notebooks not found. Please run: ghq get git@github.com:amano-takahisa/zk_notebooks.git";
+    "case-transform not found. Please run: ghq get git@github.com:amano-takahisa/zk_notebooks.git";
 
   programs.nixvim = lib.mkIf caseTransformExists {
     extraPlugins = [

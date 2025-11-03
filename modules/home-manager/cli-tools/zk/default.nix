@@ -1,5 +1,9 @@
 { lib, ... }:
 
+# Usage example
+# :e `zk daily`
+# :e `zk touch 'Backup and restore WSL'`
+
 let
   zkNotebooksPath = /home/takahisa/ghq/personal/github.com/amano-takahisa/zk_notebooks;
   zkNotebooksExists = builtins.pathExists zkNotebooksPath;
