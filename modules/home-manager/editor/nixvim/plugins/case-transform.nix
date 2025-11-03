@@ -1,11 +1,14 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
   caseTransformPath = /home/takahisa/ghq/personal/github.com/amano-takahisa/case-transform.nvim;
   caseTransformExists = builtins.pathExists caseTransformPath;
 in
-if caseTransformExists then {
-  programs.nixvim = {
+{
+  warnings = lib.optional (!caseTransformExists)
+    "zk_notebooks not found. Please run: ghq get git@github.com:amano-takahisa/zk_notebooks.git";
+
+  programs.nixvim = lib.mkIf caseTransformExists {
     extraPlugins = [
       (pkgs.vimUtils.buildVimPlugin {
         pname = "case-transform.nvim";
@@ -20,6 +23,4 @@ if caseTransformExists then {
       require('case-transform').setup({ default_keymaps = true })
     '';
   };
-} else {
-  warnings = [ "case-transform.nvim not found. Please run: ghq get git@github.com:amano-takahisa/case-transform.nvim.git" ];
 }

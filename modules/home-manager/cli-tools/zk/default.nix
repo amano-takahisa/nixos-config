@@ -1,11 +1,14 @@
-{ pkgs, lib, ... }:
+{ lib, ... }:
 
 let
-  caseTransformPath = /home/takahisa/ghq/personal/github.com/amano-takahisa/zk_notebooks;
-  caseTransformExists = builtins.pathExists caseTransformPath;
+  zkNotebooksPath = /home/takahisa/ghq/personal/github.com/amano-takahisa/zk_notebooks;
+  zkNotebooksExists = builtins.pathExists zkNotebooksPath;
 in
-if caseTransformExists then {
-  programs.zk = {
+{
+  warnings = lib.optional (!zkNotebooksExists)
+    "zk_notebooks not found. Please run: ghq get git@github.com:amano-takahisa/zk_notebooks.git";
+
+  programs.zk = lib.mkIf zkNotebooksExists {
     enable = true;
     settings = {
       notebook = {
@@ -84,6 +87,4 @@ if caseTransformExists then {
       };
     };
   };
-} else {
-  warnings = [ "zk_notebooks not found. Please run: ghq get git@github.com:amano-takahisa/zk_notebooks.git" ];
 }
