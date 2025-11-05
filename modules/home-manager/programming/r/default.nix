@@ -3,6 +3,7 @@
 {
   home.packages = with pkgs; [
     R
+    rPackages.styler
   ];
 }
 
