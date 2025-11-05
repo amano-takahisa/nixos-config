@@ -23,6 +23,11 @@
         fish = [ "fish_indent" ];
         r = [ "styler" ];
       };
+
+      # Override styler to use rWrapper with styler package
+      formatters.styler.command = "${pkgs.rWrapper.override {
+        packages = with pkgs.rPackages; [ styler ];
+      }}/bin/R";
     };
   };
 
