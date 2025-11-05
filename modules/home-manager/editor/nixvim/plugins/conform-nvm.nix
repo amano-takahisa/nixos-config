@@ -21,6 +21,7 @@
         nix = [ "nixpkgs_fmt" ];
         python = [ "isort" "ruff_fix" "ruff_format" ];
         fish = [ "fish_indent" ];
+        r = [ "styler" ];
       };
     };
   };
