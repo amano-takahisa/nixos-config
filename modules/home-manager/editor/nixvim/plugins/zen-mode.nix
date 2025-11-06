@@ -4,6 +4,11 @@
   programs.nixvim = {
     plugins.zen-mode = {
       enable = true;
+      settings = {
+        window = {
+          width = 1.0;
+        };
+      };
     };
     keymaps = [
       {
