@@ -171,7 +171,7 @@ sudo nix-channel --update
 nix flake update
 ```
 
-### Node packages (node2nix)
+### Packages from nodePkgs
 
 ```bash
 cd tools/node2nix
@@ -190,7 +190,7 @@ nix-shell -p nix-prefetch-git --run 'nix-prefetch-git  https://github.com/lambda
 
 Then, copy rev and hash to your nix file.
 
-## node2nix
+## Packages from nodePkgs
 
 ```bash
 cd tools/node2nix
