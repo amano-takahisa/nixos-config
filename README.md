@@ -135,6 +135,149 @@ gh repo list "amano-takahisa" --limit 1000 --json sshUrl \
   | xargs -n1 ghq get --shallow
 ```
 
+## Waydroid (Android Container)
+
+Waydroid is configured for MSI host to run Android applications on NixOS using Wayland.
+
+### Initial Setup
+
+After rebuilding the system configuration, initialize Waydroid:
+
+**With Google Apps (Play Store, Gmail, etc.):**
+
+```bash
+sudo waydroid init -s GAPPS -f
+```
+
+If you have an error message about Google Play Certification,
+follow [FAQ Google Play Certification](https://docs.waydro.id/faq/google-play-certification).
+
+```bash
+sudo waydroid shell -- sh -c "sqlite3 /data/data/*/*/gservices.db 'select * from main where name = \"android_id\";'"
+```
+
+and access to (https://www.google.com/android/uncertified)
+
+and restart waydroid with
+
+```bash
+waydroid session stop
+```
+
+**Without Google Apps (vanilla Android):**
+
+```bash
+sudo waydroid init
+```
+
+### Starting Waydroid
+
+**1. Start the container:**
+
+```bash
+sudo systemctl start waydroid-container
+```
+
+**2. Start a user session:**
+
+```bash
+waydroid session start
+```
+
+**3. Launch the Android UI:**
+
+```bash
+waydroid show-full-ui
+```
+
+### Useful Commands
+
+**Launch a specific app:**
+
+```bash
+waydroid app launch <package-name>
+# Example: waydroid app launch com.android.settings
+```
+
+**List installed apps:**
+
+```bash
+waydroid app list
+```
+
+**Install an APK:**
+
+```bash
+waydroid app install /path/to/app.apk
+```
+
+**Stop Waydroid:**
+
+```bash
+waydroid session stop
+sudo systemctl stop waydroid-container
+```
+
+**Enable autostart on boot:**
+
+```bash
+sudo systemctl enable waydroid-container
+```
+
+### Upgrading Waydroid
+
+**Upgrade Android system images:**
+
+```bash
+sudo waydroid upgrade
+```
+
+**Force reinstall/upgrade:**
+
+```bash
+sudo waydroid upgrade -o
+```
+
+### Troubleshooting
+
+**Check container status:**
+
+```bash
+sudo systemctl status waydroid-container
+waydroid status
+```
+
+**View logs:**
+
+```bash
+waydroid log
+# Or system logs:
+sudo journalctl -u waydroid-container
+```
+
+**Reset Waydroid (removes all data):**
+
+```bash
+waydroid session stop
+sudo systemctl stop waydroid-container
+sudo rm -rf /var/lib/waydroid /home/.waydroid ~/waydroid
+sudo waydroid init -s GAPPS -f  # Reinitialize
+```
+
+**GPU/Performance issues:**
+
+```bash
+# Disable hardware acceleration if needed
+sudo waydroid prop set ro.hardware.gralloc default
+sudo waydroid prop set ro.hardware.egl swiftshader
+```
+
+### Features
+
+- **Location services**: Enabled via geoclue2 and adb
+- **Clipboard sharing**: Supported via wl-clipboard
+- **Wayland integration**: Native support for Plasma 6
+
 ## Rebuilding Instructions
 
 When making changes to `modules/home-manager/` files:
