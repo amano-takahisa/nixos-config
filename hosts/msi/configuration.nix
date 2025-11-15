@@ -11,6 +11,7 @@
     ../../modules/system/nix-gc.nix
     ../../modules/system/packages/development.nix
     ../../modules/system/services/docker.nix
+    ../../modules/system/services/waydroid.nix
     ../../modules/system/ui/fonts.nix
     ./hardware-configuration.nix
   ];
