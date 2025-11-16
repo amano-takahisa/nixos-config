@@ -149,6 +149,26 @@ After rebuilding the system configuration, initialize Waydroid:
 sudo waydroid init -s GAPPS -f
 ```
 
+To run ARM-based Android apps (like Kindle) on x86_64 systems, install the ARM translation layer after `waydroid init`:
+
+https://omemoji.com/articles/kindle_on_linux#user-content-fnref-5
+
+```
+git clone https://github.com/casualsnek/waydroid_script
+cd waydroid_script
+python3 -m venv venv
+venv/bin/pip install -r requirements.txt
+sudo venv/bin/python3 main.py
+```
+
+Verify ARM support:
+
+```bash
+sudo waydroid shell getprop ro.product.cpu.abilist
+```
+
+Expected output: `x86_64,x86,arm64-v8a,armeabi-v7a,armeabi`
+
 If you have an error message about Google Play Certification,
 follow [FAQ Google Play Certification](https://docs.waydro.id/faq/google-play-certification).
 
@@ -162,12 +182,6 @@ and restart waydroid with
 
 ```bash
 waydroid session stop
-```
-
-**Without Google Apps (vanilla Android):**
-
-```bash
-sudo waydroid init
 ```
 
 ### Starting Waydroid
@@ -264,19 +278,46 @@ sudo rm -rf /var/lib/waydroid /home/.waydroid ~/waydroid
 sudo waydroid init -s GAPPS -f  # Reinitialize
 ```
 
-**GPU/Performance issues:**
+### Old commands
+
+**1. Start the waydroid-monitor service:**
 
 ```bash
-# Disable hardware acceleration if needed
-sudo waydroid prop set ro.hardware.gralloc default
-sudo waydroid prop set ro.hardware.egl swiftshader
+systemctl --user start waydroid-monitor
 ```
+
+**2. Launch waydroid-helper:**
+
+```bash
+waydroid-helper
+```
+
+**3. In the GUI/TUI:**
+
+- Navigate to **Extensions** → **Install ARM Translation**
+- Select **libhoudini** (for Intel CPUs) or **libndk** (for AMD CPUs)
+- Wait for installation to complete
+
+**4. Restart Waydroid:**
+
+```bash
+sudo systemctl restart waydroid-container
+waydroid session stop
+waydroid show-full-ui
+```
+
+**Note:**
+
+- The waydroid-monitor service needs to be started after each reboot
+- Requires CPU with SSE4.2 support (Intel Core i3/i5/i7/i9 2008+, AMD Bulldozer 2011+/Ryzen)
+- libhoudini is recommended for broader app compatibility
 
 ### Features
 
 - **Location services**: Enabled via geoclue2 and adb
 - **Clipboard sharing**: Supported via wl-clipboard
 - **Wayland integration**: Native support for Plasma 6
+- **ARM translation**: Support for ARM Android apps on x86_64 via waydroid-helper
 
 ## Rebuilding Instructions
 

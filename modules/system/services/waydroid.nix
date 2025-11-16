@@ -8,10 +8,17 @@
   services.geoclue2.enable = true;
   programs.adb.enable = true;
 
-  # Add clipboard sharing support
+  # Add clipboard sharing support and ARM translation helper
   environment.systemPackages = with pkgs; [
     wl-clipboard
+    waydroid-helper # GUI/TUI for installing ARM translation (libhoudini/libndk)
   ];
+
+  # Enable waydroid-helper systemd service for ARM translation support
+  systemd = {
+    packages = [ pkgs.waydroid-helper ];
+    services.waydroid-mount.wantedBy = [ "multi-user.target" ];
+  };
 
   # Add user to adbusers group for location services
   users.users.takahisa.extraGroups = [ "adbusers" ];
