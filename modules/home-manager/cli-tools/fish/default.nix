@@ -18,6 +18,12 @@
       ".." = "cd ..";
     };
     interactiveShellInit = ''
+      # Add fish builtin completions to the completion path
+      set -l builtin_completions $__fish_data_dir/completions
+      if not contains $builtin_completions $fish_complete_path
+        set -gx fish_complete_path $builtin_completions $fish_complete_path
+      end
+
       set -g fish_prompt_pwd_dir_length 3
       set -g fish_prompt_pwd_full_dirs 3
       source ${./fish_prompt.fish}
