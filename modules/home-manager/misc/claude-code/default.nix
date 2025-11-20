@@ -1,14 +1,9 @@
-{ pkgs
-, mcp-servers-nix
-, nodePkgs ? null
-, ...
-}:
+{ pkgs, mcp-servers-nix, nodePkgs ? null, ... }:
 
 {
   programs.claude-code = {
     enable = true;
-    # package = nodePkgs."@anthropic-ai/claude-code";
-    package = nodePkgs."@anthropic-ai/claude-code-2.0.42";
+    package = nodePkgs."@anthropic-ai/claude-code-2.0.47";
     settings = {
       theme = "dark";
       autoUpdates = false;
