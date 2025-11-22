@@ -16,5 +16,6 @@
     tree-sitter # Parser generator tool and an incremental parsing library
     unzip # Extraction utility for archives compressed in .zip format
     wl-clipboard # Command-line copy/paste utilities for Wayland
+    zip # Archive utility for .zip files
   ];
 }
