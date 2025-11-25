@@ -3,6 +3,8 @@
 {
   programs.wezterm = {
     enable = true;
+    enableBashIntegration = false;
+    enableZshIntegration = false;
     extraConfig = ''
       -- Your lua code / config here
         return {
