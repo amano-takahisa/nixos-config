@@ -1,5 +1,5 @@
 [
   "@github/copilot-language-server",
-  { "@anthropic-ai/claude-code": "2.0.47" },
+  { "@anthropic-ai/claude-code": "2.0.55" },
   "sitemcp"
 ]

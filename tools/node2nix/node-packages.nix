@@ -22,13 +22,13 @@ let
         sha512 = "Y28PR25bHXUg88kCV7nivXrP2Nj2RueZ3/l/jdx6J9f8J4nsEGcgX0Qe6lt7Pa+J79+kPiJU3LguR6O/6zrLOw==";
       };
     };
-    "@modelcontextprotocol/sdk-1.22.0" = {
+    "@modelcontextprotocol/sdk-1.23.0" = {
       name = "_at_modelcontextprotocol_slash_sdk";
       packageName = "@modelcontextprotocol/sdk";
-      version = "1.22.0";
+      version = "1.23.0";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.22.0.tgz";
-        sha512 = "VUpl106XVTCpDmTBil2ehgJZjhyLY2QZikzF8NvTXtLRF1CvO5iEE2UNZdVIUer35vFOwMKYeUGbjJtvPWan3g==";
+        url = "https://registry.npmjs.org/@modelcontextprotocol/sdk/-/sdk-1.23.0.tgz";
+        sha512 = "MCGd4K9aZKvuSqdoBkdMvZNcYXCkZRYVs/Gh92mdV5IHbctX9H9uIvd4X93+9g8tBbXv08sxc/QHXTzf8y65bA==";
       };
     };
     "@mozilla/readability-0.5.0" = {
@@ -85,13 +85,13 @@ let
         sha512 = "+NAXNqgCrB95ya4Sr66i1CL2hqLVckAk7xwRYWdcm39/ELQ6YNn1aw5r0bdQtqNZgQpEWzc5yc/igXc7aL5SLA==";
       };
     };
-    "body-parser-2.2.0" = {
+    "body-parser-2.2.1" = {
       name = "body-parser";
       packageName = "body-parser";
-      version = "2.2.0";
+      version = "2.2.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/body-parser/-/body-parser-2.2.0.tgz";
-        sha512 = "02qvAaxv8tp7fBa/mw1ga98OGm+eCbqzJOKoRt70sLmfEEi+jyBYVTDGfCL/k06/4EMk/z01gCe7HoCH/f2LTg==";
+        url = "https://registry.npmjs.org/body-parser/-/body-parser-2.2.1.tgz";
+        sha512 = "nfDwkulwiZYQIGwxdy0RUmowMhKcFVcYXUU7m4QlKYim1rUtg83xm2yjZ40QjDuc291AJjjeSc9b++AWHSgSHw==";
       };
     };
     "boolbase-1.0.0" = {
@@ -553,15 +553,6 @@ let
         sha512 = "TwAZM+zE5Tq3lrEHvOlvwgj1XLWQCtaaibSN11Q+gGBAS7Y1uZSWwXXRe4iF6OXnaq1riyQAPFOBtYc77Mxq0g==";
       };
     };
-    "http-errors-2.0.0" = {
-      name = "http-errors";
-      packageName = "http-errors";
-      version = "2.0.0";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/http-errors/-/http-errors-2.0.0.tgz";
-        sha512 = "FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==";
-      };
-    };
     "http-errors-2.0.1" = {
       name = "http-errors";
       packageName = "http-errors";
@@ -823,13 +814,13 @@ let
         sha512 = "JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==";
       };
     };
-    "pkce-challenge-5.0.0" = {
+    "pkce-challenge-5.0.1" = {
       name = "pkce-challenge";
       packageName = "pkce-challenge";
-      version = "5.0.0";
+      version = "5.0.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/pkce-challenge/-/pkce-challenge-5.0.0.tgz";
-        sha512 = "ueGLflrrnvwB3xuo/uGob5pd5FN7l0MsLf0Z87o/UQmRtwjvfylfc9MurIxRAWywCYTgrvpXBcqjV4OfCYGCIQ==";
+        url = "https://registry.npmjs.org/pkce-challenge/-/pkce-challenge-5.0.1.tgz";
+        sha512 = "wQ0b/W4Fr01qtpHlqSqspcj3EhBvimsdh0KlHhH8HRZnMsEa0ea2fTULOXOS9ccQr3om+GcGRk4e+isrZWV8qQ==";
       };
     };
     "proxy-addr-2.0.7" = {
@@ -859,13 +850,13 @@ let
         sha512 = "Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==";
       };
     };
-    "raw-body-3.0.1" = {
+    "raw-body-3.0.2" = {
       name = "raw-body";
       packageName = "raw-body";
-      version = "3.0.1";
+      version = "3.0.2";
       src = fetchurl {
-        url = "https://registry.npmjs.org/raw-body/-/raw-body-3.0.1.tgz";
-        sha512 = "9G8cA+tuMS75+6G/TzW8OtLzmBDMo8p1JRxN5AZ+LAp8uxGA8V8GZm4GQ4/N5QNQEnLmg6SS7wyuSmbKepiKqA==";
+        url = "https://registry.npmjs.org/raw-body/-/raw-body-3.0.2.tgz";
+        sha512 = "K5zQjDllxWkf7Z5xJdV0/B0WTNqx6vxG70zJE4N0kBs4LovmEYWJzQGxC9bS9RAKu3bgM40lrd5zoLJ12MQ5BA==";
       };
     };
     "require-from-string-2.0.2" = {
@@ -974,15 +965,6 @@ let
       src = fetchurl {
         url = "https://registry.npmjs.org/side-channel-weakmap/-/side-channel-weakmap-1.0.2.tgz";
         sha512 = "WPS/HvHQTYnHisLo9McqBHOJk2FkHO/tlpvldyrnem4aeQp4hai3gythswg6p01oSoTl58rcpiFAjF2br2Ak2A==";
-      };
-    };
-    "statuses-2.0.1" = {
-      name = "statuses";
-      packageName = "statuses";
-      version = "2.0.1";
-      src = fetchurl {
-        url = "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz";
-        sha512 = "RwNA9Z/7PrK06rYLIzFMlaF+l73iwpzsqRIFgbMLbTcLD6cOao82TaWefPXQvB2fOC4AjuYSEndS7N/mTCbkdQ==";
       };
     };
     "statuses-2.0.2" = {
@@ -1171,10 +1153,10 @@ in
   "@github/copilot-language-server" = nodeEnv.buildNodePackage {
     name = "_at_github_slash_copilot-language-server";
     packageName = "@github/copilot-language-server";
-    version = "1.397.0";
+    version = "1.398.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.397.0.tgz";
-      sha512 = "W4tyfELe+a52hsDSPD+FpgWY94Gaho6GQp/wt3yvnHwaUwm1rGX6NsCLN1Co2kmXiUkO6iEdqgGHOYsHEbSwZw==";
+      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.398.0.tgz";
+      sha512 = "jxPSQTZ2cQtno5xKPpFN24XePcjr4PrN3YraZvADhaA2FFlEkKi0SRakq1bTEblXqZ3h5TMm/8AWQyZZ3NaMOQ==";
     };
     dependencies = [
       sources."vscode-jsonrpc-8.2.0"
@@ -1191,13 +1173,13 @@ in
     bypassCache = true;
     reconstructLock = true;
   };
-  "@anthropic-ai/claude-code-2.0.47" = nodeEnv.buildNodePackage {
+  "@anthropic-ai/claude-code-2.0.55" = nodeEnv.buildNodePackage {
     name = "_at_anthropic-ai_slash_claude-code";
     packageName = "@anthropic-ai/claude-code";
-    version = "2.0.47";
+    version = "2.0.55";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.47.tgz";
-      sha512 = "mF9J8zZkgzlMXHDtHnQciMjswrP+GxvNLTm4IVKs8cIbbHZqEJonIwHDkh3QeZd2bDso+1/DO41RcVm6ghsmNA==";
+      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.55.tgz";
+      sha512 = "IVY6J2KgTP5BiCbLmuP3kAl8jbXfd6yGoXtvc0L0eiZwxJUMa+cubUU0U8qHRnVkNmDAis+O4P00KmeuGzSLWg==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -1220,14 +1202,14 @@ in
     dependencies = [
       sources."@cfworker/json-schema-4.1.1"
       sources."@mixmark-io/domino-2.2.0"
-      sources."@modelcontextprotocol/sdk-1.22.0"
+      sources."@modelcontextprotocol/sdk-1.23.0"
       sources."@mozilla/readability-0.5.0"
       sources."accepts-2.0.0"
       sources."ajv-8.17.1"
       sources."ajv-formats-3.0.1"
       sources."async-function-1.0.0"
       sources."async-generator-function-1.0.0"
-      sources."body-parser-2.2.0"
+      sources."body-parser-2.2.1"
       sources."boolbase-1.0.0"
       sources."braces-3.0.3"
       sources."bytes-3.1.2"
@@ -1256,7 +1238,11 @@ in
       sources."dunder-proto-1.0.1"
       sources."ee-first-1.1.1"
       sources."encodeurl-2.0.0"
-      sources."encoding-sniffer-0.2.1"
+      (sources."encoding-sniffer-0.2.1" // {
+        dependencies = [
+          sources."iconv-lite-0.6.3"
+        ];
+      })
       sources."entities-6.0.1"
       sources."es-define-property-1.0.1"
       sources."es-errors-1.3.0"
@@ -1287,7 +1273,7 @@ in
       sources."hasown-2.0.2"
       sources."htmlparser2-10.0.0"
       sources."http-errors-2.0.1"
-      sources."iconv-lite-0.6.3"
+      sources."iconv-lite-0.7.0"
       sources."inherits-2.0.4"
       sources."ipaddr.js-1.9.1"
       sources."is-number-7.0.0"
@@ -1314,17 +1300,11 @@ in
       sources."path-key-3.1.1"
       sources."path-to-regexp-8.3.0"
       sources."picomatch-2.3.1"
-      sources."pkce-challenge-5.0.0"
+      sources."pkce-challenge-5.0.1"
       sources."proxy-addr-2.0.7"
       sources."qs-6.14.0"
       sources."range-parser-1.2.1"
-      (sources."raw-body-3.0.1" // {
-        dependencies = [
-          sources."http-errors-2.0.0"
-          sources."iconv-lite-0.7.0"
-          sources."statuses-2.0.1"
-        ];
-      })
+      sources."raw-body-3.0.2"
       sources."require-from-string-2.0.2"
       sources."router-2.2.0"
       sources."safer-buffer-2.1.2"
@@ -1347,7 +1327,11 @@ in
       sources."unpipe-1.0.0"
       sources."vary-1.1.2"
       sources."webidl-conversions-7.0.0"
-      sources."whatwg-encoding-3.1.1"
+      (sources."whatwg-encoding-3.1.1" // {
+        dependencies = [
+          sources."iconv-lite-0.6.3"
+        ];
+      })
       sources."whatwg-mimetype-4.0.0"
       sources."which-2.0.2"
       sources."wrappy-1.0.2"
