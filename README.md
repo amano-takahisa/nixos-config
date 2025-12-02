@@ -357,9 +357,16 @@ nix flake update
 
 ### Packages from nodePkgs
 
+Update versions in `node-packages.json` and related `default.nix` of the package.
+Then, run:
+
 ```bash
-cd tools/node2nix
-nix-shell -p nodePackages.node2nix --run "node2nix -i node-packages.json -o node-packages.nix"
+nix-shell -p nodePackages.node2nix --run \
+  'node2nix  \
+  -i tools/node2nix/node-packages.json  \
+  -o tools/node2nix/node-packages.nix \
+  -c tools/node2nix/default.nix \
+  -e tools/node2nix/node-env.nix'
 ```
 
 Then, run `./rebuild.sh` and `./home-rebuild.sh` to apply changes.
@@ -377,11 +384,10 @@ Then, copy rev and hash to your nix file.
 ## Packages from nodePkgs
 
 ```bash
-cd tools/node2nix
-nix-shell -p nodePackages.node2nix
 echo '["@github/copilot-language-server", "@anthropic-ai/claude-code", "sitemcp"]' \
   >> node-packages.json
-node2nix -i node-packages.json
+nix-shell -p nodePackages.node2nix --run \
+  'node2nix -i tools/node2nix/node-packages.json -o tools/node2nix/node-packages.nix'
 ```
 
 https://www.takeokunn.org/posts/fleeting/20250622133346-how_to_use_node2nix/
