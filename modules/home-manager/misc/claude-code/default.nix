@@ -3,7 +3,7 @@
 {
   programs.claude-code = {
     enable = true;
-    package = nodePkgs."@anthropic-ai/claude-code-2.0.55";
+    package = nodePkgs."@anthropic-ai/claude-code";
     settings = {
       theme = "dark";
       autoUpdates = false;
