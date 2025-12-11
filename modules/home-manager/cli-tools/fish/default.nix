@@ -34,6 +34,14 @@
         set -q argv[1]; or set argv fish
         echo $argv: (prompt_pwd);
       end
+      function we
+        if test -f /proc/version && string match -qi "*microsoft*" (cat /proc/version)
+          /mnt/c/Windows/explorer.exe (wslpath -w "$PWD")
+        else
+          echo "Error: 'we' command is only available on WSL (Windows Subsystem for Linux)"
+          return 1
+        end
+      end
     '';
   };
 }
