@@ -553,13 +553,13 @@ let
         sha512 = "0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==";
       };
     };
-    "hono-4.11.1" = {
+    "hono-4.11.3" = {
       name = "hono";
       packageName = "hono";
-      version = "4.11.1";
+      version = "4.11.3";
       src = fetchurl {
-        url = "https://registry.npmjs.org/hono/-/hono-4.11.1.tgz";
-        sha512 = "KsFcH0xxHes0J4zaQgWbYwmz3UPOOskdqZmItstUG93+Wk1ePBLkLGwbP9zlmh1BFUiL8Qp+Xfu9P7feJWpGNg==";
+        url = "https://registry.npmjs.org/hono/-/hono-4.11.3.tgz";
+        sha512 = "PmQi306+M/ct/m5s66Hrg+adPnkD5jiO6IjA7WhWw0gSBSo1EcRegwuI1deZ+wd5pzCGynCcn2DprnE4/yEV4w==";
       };
     };
     "htmlparser2-10.0.0" = {
@@ -1174,13 +1174,13 @@ let
         sha512 = "gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==";
       };
     };
-    "zod-to-json-schema-3.25.0" = {
+    "zod-to-json-schema-3.25.1" = {
       name = "zod-to-json-schema";
       packageName = "zod-to-json-schema";
-      version = "3.25.0";
+      version = "3.25.1";
       src = fetchurl {
-        url = "https://registry.npmjs.org/zod-to-json-schema/-/zod-to-json-schema-3.25.0.tgz";
-        sha512 = "HvWtU2UG41LALjajJrML6uQejQhNJx+JBO9IflpSja4R03iNWfKXrj6W2h7ljuLyc1nKS+9yDyL/9tD1U/yBnQ==";
+        url = "https://registry.npmjs.org/zod-to-json-schema/-/zod-to-json-schema-3.25.1.tgz";
+        sha512 = "pM/SU9d3YAggzi6MtR4h7ruuQlqKtad8e9S0fmxcMi+ueAK5Korys/aWcV9LIIHTVbj01NdzxcnXSN+O74ZIVA==";
       };
     };
   };
@@ -1189,10 +1189,10 @@ in
   "@github/copilot-language-server" = nodeEnv.buildNodePackage {
     name = "_at_github_slash_copilot-language-server";
     packageName = "@github/copilot-language-server";
-    version = "1.405.0";
+    version = "1.406.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.405.0.tgz";
-      sha512 = "C8inpLAgli1WmV1ygqvKZ7VIe6irMktQKNCvWW7hS3vrIf0AQCM+GFKzYmJMPVLAjdDawAPQSLdkbSR9cYyTHg==";
+      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.406.0.tgz";
+      sha512 = "yzWayzR707xuAMGS77c3G7jv0z1F1hx7Aesvp0+qBbxUJHVsrSMjUImJMIL/vWJ+kfo49rfjiTTksaxjUk1ujw==";
     };
     dependencies = [
       sources."vscode-jsonrpc-8.2.0"
@@ -1212,10 +1212,10 @@ in
   "@anthropic-ai/claude-code" = nodeEnv.buildNodePackage {
     name = "_at_anthropic-ai_slash_claude-code";
     packageName = "@anthropic-ai/claude-code";
-    version = "2.0.71";
+    version = "2.0.76";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.71.tgz";
-      sha512 = "3Fmawv2dapRd7jXDkrbx7HCTSJ4q7kelAPTwpul0yihzLBjCaqXwy7P2laBoS7SuIzixnyb/AfnlgdqxkDcfyQ==";
+      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.0.76.tgz";
+      sha512 = "BVwPez7Pst729gxHZNb7iUdjrn4UAzO49zC+Bxlyf0fMe3SsutxEhKTT16VMs2qInE9xhEBCxajCCa888mFPBg==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -1308,7 +1308,7 @@ in
       })
       sources."has-symbols-1.1.0"
       sources."hasown-2.0.2"
-      sources."hono-4.11.1"
+      sources."hono-4.11.3"
       sources."htmlparser2-10.0.0"
       sources."http-errors-2.0.1"
       sources."iconv-lite-0.7.1"
@@ -1376,7 +1376,7 @@ in
       sources."which-2.0.2"
       sources."wrappy-1.0.2"
       sources."zod-3.25.76"
-      sources."zod-to-json-schema-3.25.0"
+      sources."zod-to-json-schema-3.25.1"
     ];
     buildInputs = globalBuildInputs;
     meta = {
