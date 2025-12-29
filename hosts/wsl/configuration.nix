@@ -8,6 +8,7 @@
 {
   imports = [
     ../../modules/system/nix-gc.nix
+    ../../modules/system/nix-settings.nix
     ../../modules/system/packages/development.nix
     ../../modules/system/services/docker.nix
     ../../modules/system/ui/fonts.nix
@@ -125,8 +126,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
-
-  # Enable Flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "takahisa" ];
 }

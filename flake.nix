@@ -17,7 +17,10 @@
   outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, nixos-wsl, mcp-servers-nix, ... }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
       nodePkgs = pkgs.callPackage ./tools/node2nix { inherit pkgs; };
 
       # Common modules for all hosts
