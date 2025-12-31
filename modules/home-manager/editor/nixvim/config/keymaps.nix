@@ -96,6 +96,15 @@
           desc = "Disable native completion (use cmp instead)";
         };
       }
+      # Exit terminal mode <C-[>
+      {
+        mode = "t";
+        key = "<Esc><Esc>";
+        action = "<C-\\><C-n>";
+        options = {
+          desc = "Exit terminal mode";
+        };
+      }
     ];
   };
 }
