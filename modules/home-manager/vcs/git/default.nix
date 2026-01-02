@@ -4,6 +4,7 @@
   # Git configuration
   programs.git = {
     enable = true;
+    lfs.enable = true;
     includes = [
       {
         condition = "gitdir:${config.home.homeDirectory}/ghq/work/";
