@@ -37,6 +37,15 @@ This repository manages NixOS configurations for multiple environments using Nix
 Install NixOS on WSL2 by following the instructions at
 https://nix-community.github.io/NixOS-WSL/
 
+Add following to `%USERPROFILE%\.wslconfig` on Windows.
+
+```txt
+[wsl2]
+memory=16GB
+swap=16GB
+networkingMode=mirrored
+```
+
 Clone this repository into your WSL2 instance
 
 ```bash
