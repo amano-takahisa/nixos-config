@@ -45,7 +45,7 @@
         programs = {
           context7.enable = true;
           playwright.enable = true;
-          nixos.enable = true;
+          nixos.enable = false; # Disabled due to dependency conflict with mcp version
           serena = {
             enable = true;
             args = [
