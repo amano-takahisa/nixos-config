@@ -64,7 +64,7 @@ in
 
       tool = {
         editor = "nvim";
-        shell = "/home/takahisa/.nix-profile/bin/fish";
+        shell = "/etc/profiles/per-user/takahisa/bin/fish";
         pager = "less -FIRX";
         fzf-preview = "bat -p --color always {-1}";
       };
