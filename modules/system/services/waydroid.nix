@@ -6,12 +6,12 @@
 
   # Enable location services for Waydroid
   services.geoclue2.enable = true;
-  programs.adb.enable = true;
 
-  # Add clipboard sharing support and ARM translation helper
+  # Add clipboard sharing support, ARM translation helper, and ADB tools
   environment.systemPackages = with pkgs; [
     wl-clipboard
     waydroid-helper # GUI/TUI for installing ARM translation (libhoudini/libndk)
+    android-tools # Provides adb command (systemd 258+ handles uaccess rules automatically)
   ];
 
   # Enable waydroid-helper systemd service for ARM translation support
