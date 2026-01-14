@@ -173,9 +173,15 @@ function fish_prompt
     # Date
     echo -n (date +%H:%M)
 
+    # Nix shell environment
+    set_color normal
+
+    if string match -q "/nix/store*" $PATH
+        echo -n " [nix$SHLVL]"
+    end
+
     # git
     # Skip git status for network-mounted directories to avoid slowness
-    set_color normal
     set -l prompt_git
     if string match -q "$HOME/ghq/*" $PWD
         set prompt_git (fish_git_prompt '%s')
