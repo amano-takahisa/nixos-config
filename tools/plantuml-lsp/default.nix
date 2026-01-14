@@ -5,13 +5,13 @@
 
 buildGoModule rec {
   pname = "plantuml-lsp";
-  version = "0.5.3";
+  version = "unstable-2025-06-17";
 
   src = fetchFromGitHub {
     owner = "ptdewey";
     repo = "plantuml-lsp";
-    rev = "v${version}";
-    sha256 = "sha256-kI7FpCM0sGO/cjEaYPsKRc4+6d1s1SxDIGKs33ddxts=";
+    rev = "5000950f53d5c84da6d1b0805d2cfb39d3cd83d1";
+    sha256 = "0shrxqlinlgzh7lgsjvfpy0n248javh51v8zmmglb0pc489m640n";
   };
 
   vendorHash = null;
