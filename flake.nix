@@ -22,6 +22,7 @@
         config.allowUnfree = true;
       };
       nodePkgs = pkgs.callPackage ./tools/node2nix { inherit pkgs; };
+      plantumlLsp = pkgs.callPackage ./tools/plantuml-lsp { };
 
       # Common modules for all hosts
       commonModules = [
@@ -65,6 +66,7 @@
         home-manager.extraSpecialArgs = {
           pkgs = pkgs;
           nodePkgs = nodePkgs;
+          plantumlLsp = plantumlLsp;
           mcp-servers-nix = mcp-servers-nix;
         };
         home-manager.users.takahisa = {
@@ -123,6 +125,7 @@
           };
           extraSpecialArgs = {
             nodePkgs = nodePkgs;
+            plantumlLsp = plantumlLsp;
             mcp-servers-nix = mcp-servers-nix;
           };
           modules = hostModules.sx2 ++ [
@@ -140,6 +143,7 @@
           };
           extraSpecialArgs = {
             nodePkgs = nodePkgs;
+            plantumlLsp = plantumlLsp;
             mcp-servers-nix = mcp-servers-nix;
           };
           modules = hostModules.msi ++ [
@@ -157,6 +161,7 @@
           };
           extraSpecialArgs = {
             nodePkgs = nodePkgs;
+            plantumlLsp = plantumlLsp;
             mcp-servers-nix = mcp-servers-nix;
           };
           modules = hostModules.wsl ++ [

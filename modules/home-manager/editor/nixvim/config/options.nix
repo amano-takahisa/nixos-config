@@ -52,6 +52,11 @@
         pattern = [ "gitcommit" ];
         command = "setlocal spell spelllang=en";
       }
+      {
+        event = [ "BufRead" "BufNewFile" ];
+        pattern = [ "*.puml" "*.plantuml" "*.pu" "*.uml" ];
+        command = "setfiletype plantuml";
+      }
     ];
   };
 }

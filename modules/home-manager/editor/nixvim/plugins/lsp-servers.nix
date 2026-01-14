@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, plantumlLsp, ... }:
 
 {
   programs.nixvim.plugins.lsp.servers = {
@@ -113,4 +113,28 @@
     # Bash
     bashls.enable = true;
   };
+
+  # PlantUML LSP
+  programs.nixvim.plugins.lsp.preConfig = ''
+    local lspconfig = require('lspconfig')
+    local configs = require('lspconfig.configs')
+
+    if not configs.plantuml_lsp then
+      configs.plantuml_lsp = {
+        default_config = {
+          cmd = {
+            "${plantumlLsp}/bin/plantuml-lsp",
+            "--exec-path", "${pkgs.plantuml}/bin/plantuml"
+          },
+          filetypes = { 'plantuml', 'puml' },
+          root_dir = lspconfig.util.root_pattern('.git', '.plantuml'),
+          settings = {},
+        },
+      }
+    end
+  '';
+
+  programs.nixvim.plugins.lsp.postConfig = ''
+    require('lspconfig').plantuml_lsp.setup{}
+  '';
 }
