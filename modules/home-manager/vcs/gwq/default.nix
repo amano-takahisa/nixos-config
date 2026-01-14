@@ -14,6 +14,9 @@ let
 
     vendorHash = "sha256-c1vq9yETUYfY2BoXSEmRZj/Ceetu0NkIoVCM3wYy5iY=";
 
+    # Tests require git in PATH and a functional git environment
+    doCheck = false;
+
     meta = with pkgs.lib; {
       description = "Git worktree manager with fuzzy finder";
       homepage = "https://github.com/d-kuro/gwq";
