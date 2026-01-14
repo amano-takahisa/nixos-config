@@ -13,13 +13,13 @@ let
         sha512 = "gAmrUZSGtKc3AiBL71iNWxDsyUC5uMaKKGdvzYsBoTW/xi42JQHl7eKV2OYzCUqvc+D2RCcf7EXY2iCyFIk6og==";
       };
     };
-    "@hono/node-server-1.19.8" = {
+    "@hono/node-server-1.19.9" = {
       name = "_at_hono_slash_node-server";
       packageName = "@hono/node-server";
-      version = "1.19.8";
+      version = "1.19.9";
       src = fetchurl {
-        url = "https://registry.npmjs.org/@hono/node-server/-/node-server-1.19.8.tgz";
-        sha512 = "0/g2lIOPzX8f3vzW1ggQgvG5mjtFBDBHFAzI5SFAi2DzSqS9luJwqg9T6O/gKYLi+inS7eNxBeIFkkghIPvrMA==";
+        url = "https://registry.npmjs.org/@hono/node-server/-/node-server-1.19.9.tgz";
+        sha512 = "vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==";
       };
     };
     "@mixmark-io/domino-2.2.0" = {
@@ -553,13 +553,13 @@ let
         sha512 = "0hJU9SCPvmMzIBdZFqNPXWa6dqh7WdH0cII9y+CyS8rG3nL48Bclra9HmKhVVUHyPWNH5Y7xDwAB7bfgSjkUMQ==";
       };
     };
-    "hono-4.11.3" = {
+    "hono-4.11.4" = {
       name = "hono";
       packageName = "hono";
-      version = "4.11.3";
+      version = "4.11.4";
       src = fetchurl {
-        url = "https://registry.npmjs.org/hono/-/hono-4.11.3.tgz";
-        sha512 = "PmQi306+M/ct/m5s66Hrg+adPnkD5jiO6IjA7WhWw0gSBSo1EcRegwuI1deZ+wd5pzCGynCcn2DprnE4/yEV4w==";
+        url = "https://registry.npmjs.org/hono/-/hono-4.11.4.tgz";
+        sha512 = "U7tt8JsyrxSRKspfhtLET79pU8K+tInj5QZXs1jSugO1Vq5dFj3kmZsRldo29mTBfcjDRVRXrEZ6LS63Cog9ZA==";
       };
     };
     "htmlparser2-10.0.0" = {
@@ -1189,10 +1189,10 @@ in
   "@github/copilot-language-server" = nodeEnv.buildNodePackage {
     name = "_at_github_slash_copilot-language-server";
     packageName = "@github/copilot-language-server";
-    version = "1.408.0";
+    version = "1.409.0";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.408.0.tgz";
-      sha512 = "VJMTy9lrnwR81TOhF75t/+sob0IRHUdTIfRY6XbBrGrRbBdsSV39pD/7rFcCSACOwchV8+QRh/tdKIU8FRhz8g==";
+      url = "https://registry.npmjs.org/@github/copilot-language-server/-/copilot-language-server-1.409.0.tgz";
+      sha512 = "96b6z+DdJjYbA6ARC1mXkUXOEDoVYU4zBLFhJEZVxtdZlVhZsAYlAYMcgcJSdhKRy4o8ChtSTi9wfTm/wPOF0A==";
     };
     dependencies = [
       sources."vscode-jsonrpc-8.2.0"
@@ -1212,10 +1212,10 @@ in
   "@anthropic-ai/claude-code" = nodeEnv.buildNodePackage {
     name = "_at_anthropic-ai_slash_claude-code";
     packageName = "@anthropic-ai/claude-code";
-    version = "2.1.2";
+    version = "2.1.7";
     src = fetchurl {
-      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.1.2.tgz";
-      sha512 = "3hrHlSMkEbIjuDPLtwtZJeodP+KYNrPAB1yhnjyfpI522r7ug7jQypfdzUxfoREbxfvsJgKJhmlkOq+K3UJBRw==";
+      url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.1.7.tgz";
+      sha512 = "nETDGeuXk/pwUpja/dlVY8dch4doTtue381BjaNqWiMPSqpY4PPg8dDbTqAYpbkIi1sgli7met+okAeDsXVTpg==";
     };
     buildInputs = globalBuildInputs;
     meta = {
@@ -1237,7 +1237,7 @@ in
     };
     dependencies = [
       sources."@cfworker/json-schema-4.1.1"
-      sources."@hono/node-server-1.19.8"
+      sources."@hono/node-server-1.19.9"
       sources."@mixmark-io/domino-2.2.0"
       sources."@modelcontextprotocol/sdk-1.25.2"
       sources."@mozilla/readability-0.5.0"
@@ -1308,7 +1308,7 @@ in
       })
       sources."has-symbols-1.1.0"
       sources."hasown-2.0.2"
-      sources."hono-4.11.3"
+      sources."hono-4.11.4"
       sources."htmlparser2-10.0.0"
       sources."http-errors-2.0.1"
       sources."iconv-lite-0.7.2"
