@@ -4,6 +4,7 @@
   inputs = {
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
+    llm-agents.url = "github:numtide/llm-agents.nix";
     mcp-servers-nix = { url = "github:natsukium/mcp-servers-nix"; inputs.nixpkgs.follows = "nixpkgs"; };
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
@@ -14,14 +15,13 @@
     plasma-manager.url = "github:nix-community/plasma-manager";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, nixos-wsl, mcp-servers-nix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
-      nodePkgs = pkgs.callPackage ./tools/node2nix { inherit pkgs; };
       plantumlLsp = pkgs.callPackage ./tools/plantuml-lsp { };
 
       # Common modules for all hosts
@@ -65,7 +65,7 @@
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = {
           pkgs = pkgs;
-          nodePkgs = nodePkgs;
+          llm-agents = llm-agents;
           plantumlLsp = plantumlLsp;
           mcp-servers-nix = mcp-servers-nix;
         };
@@ -124,7 +124,7 @@
             config.allowUnfree = true;
           };
           extraSpecialArgs = {
-            nodePkgs = nodePkgs;
+            llm-agents = llm-agents;
             plantumlLsp = plantumlLsp;
             mcp-servers-nix = mcp-servers-nix;
           };
@@ -142,7 +142,7 @@
             config.allowUnfree = true;
           };
           extraSpecialArgs = {
-            nodePkgs = nodePkgs;
+            llm-agents = llm-agents;
             plantumlLsp = plantumlLsp;
             mcp-servers-nix = mcp-servers-nix;
           };
@@ -160,7 +160,7 @@
             config.allowUnfree = true;
           };
           extraSpecialArgs = {
-            nodePkgs = nodePkgs;
+            llm-agents = llm-agents;
             plantumlLsp = plantumlLsp;
             mcp-servers-nix = mcp-servers-nix;
           };

@@ -364,21 +364,12 @@ sudo nix-channel --update
 nix flake update
 ```
 
-### Packages from nodePkgs
+### Packages from llm-agents.nix
 
-Update versions in `node-packages.json` and related `default.nix` of the package.
-Then, run:
+LLM agents (Claude Code, etc.) are provided by [llm-agents.nix](https://github.com/numtide/llm-agents.nix).
+Packages are automatically updated daily and pre-built binaries are available from Numtide's cache.
 
-```bash
-nix-shell -p nodePackages.node2nix --run \
-  'node2nix  \
-  -i tools/node2nix/node-packages.json  \
-  -o tools/node2nix/node-packages.nix \
-  -c tools/node2nix/default.nix \
-  -e tools/node2nix/node-env.nix'
-```
-
-Then, run `./rebuild.sh` and `./home-rebuild.sh` to apply changes.
+To update, simply run `nix flake update llm-agents`.
 
 ### Packages from pkgs.fetchFromGitHub
 
@@ -389,17 +380,6 @@ nix-shell -p nix-prefetch-git --run 'nix-prefetch-git  https://github.com/lambda
 ```
 
 Then, copy rev and hash to your nix file.
-
-## Packages from nodePkgs
-
-```bash
-echo '["@github/copilot-language-server", "@anthropic-ai/claude-code", "sitemcp"]' \
-  >> node-packages.json
-nix-shell -p nodePackages.node2nix --run \
-  'node2nix -i tools/node2nix/node-packages.json -o tools/node2nix/node-packages.nix'
-```
-
-https://www.takeokunn.org/posts/fleeting/20250622133346-how_to_use_node2nix/
 
 ## TODO
 
