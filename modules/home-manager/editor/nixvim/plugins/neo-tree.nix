@@ -9,16 +9,20 @@
     };
     extraConfigLuaPost = ''
       local neotree_config = {
+        default_component_configs = {
+          indent = {
+            indent_marker = "┃",
+            last_indent_marker = "┗"
+          },
+          symlink_target = {
+            enabled = true,
+          },
+        },
         filesystem = {
           filtered_items = {
             hide_dotfiles = false,
           },
           use_libuv_file_watcher = true,
-        },
-        default_component_configs = {
-          symlink_target = {
-            enabled = true,
-          },
         },
       }
 
