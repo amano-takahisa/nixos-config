@@ -1,0 +1,30 @@
+# sops configuration file
+# See: https://github.com/getsops/sops#using-sopsyaml-conf-to-select-kms-pgp-for-new-files
+
+keys:
+  # User key (for editing secrets)
+  - &user_takahisa age18aq50n062dmnw8n333llkuv25aqcdt2eaflql6yktmjrhp8rcpsqc0jwge
+
+  # Host keys (add after running on each host):
+  #   nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+  # - &host_wsl age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  # - &host_msi age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  # - &host_sx2 age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+creation_rules:
+  # Secrets for all hosts
+  - path_regex: secrets/[^/]+\.(yaml|json|env)$
+    key_groups:
+      - age:
+          - *user_takahisa
+          # Add host keys here when available:
+          # - *host_wsl
+          # - *host_msi
+          # - *host_sx2
+
+  # Host-specific secrets (example)
+  # - path_regex: secrets/wsl/[^/]+\.(yaml|json|env)$
+  #   key_groups:
+  #     - age:
+  #       - *user_takahisa
+  #       - *host_wsl

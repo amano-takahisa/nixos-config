@@ -13,9 +13,10 @@
     plasma-manager.inputs.home-manager.follows = "home-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.url = "github:nix-community/plasma-manager";
+    sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, sops-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -90,6 +91,7 @@
           modules = [
             ./hosts/sx2/configuration.nix
             home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
             (mkHomeManager "sx2")
           ];
         };
@@ -100,6 +102,7 @@
           modules = [
             ./hosts/msi/configuration.nix
             home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
             (mkHomeManager "msi")
           ];
         };
@@ -111,6 +114,7 @@
             nixos-wsl.nixosModules.wsl
             ./hosts/wsl/configuration.nix
             home-manager.nixosModules.home-manager
+            sops-nix.nixosModules.sops
             (mkHomeManager "wsl")
           ];
         };

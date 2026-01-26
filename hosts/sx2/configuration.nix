@@ -12,6 +12,7 @@
     ../../modules/system/nix-settings.nix
     ../../modules/system/packages/development.nix
     ../../modules/system/services/docker.nix
+    ../../modules/system/sops
     ../../modules/system/ui/fonts.nix
     ./hardware-configuration.nix
   ];
