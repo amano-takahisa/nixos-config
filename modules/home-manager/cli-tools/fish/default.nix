@@ -27,6 +27,18 @@
       # pixi completion
       pixi completion --shell fish | source
 
+      # https://fishshell.com/docs/current/cmds/fish_git_prompt.html
+      set -g __fish_git_prompt_char_stateseparator '|'
+      set -g __fish_git_prompt_showdirtystate 1
+      set -g __fish_git_prompt_showuntrackedfiles 1
+      set -g __fish_git_prompt_showupstreamHEAD 1
+      set -g __fish_git_prompt_show_informative_status 1
+      # set -g __fish_git_prompt_char_cleanstate '_'
+      set -g __fish_git_prompt_char_dirtystate '*'
+      set -g __fish_git_prompt_char_invalidstate '#'
+      set -g __fish_git_prompt_char_stagedstate '+'
+      set -g __fish_git_prompt_char_stashstate '$'
+      set -g __fish_git_prompt_char_untrackedfiles '?'
       set -g fish_prompt_pwd_dir_length 3
       set -g fish_prompt_pwd_full_dirs 3
       source ${./fish_prompt.fish}
