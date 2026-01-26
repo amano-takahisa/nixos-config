@@ -381,6 +381,90 @@ nix-shell -p nix-prefetch-git --run 'nix-prefetch-git  https://github.com/lambda
 
 Then, copy rev and hash to your nix file.
 
+## Secret Management (sops-nix)
+
+This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing secrets.
+Secrets are encrypted with [age](https://github.com/FiloSottile/age) and stored in `secrets/`.
+
+### Key Setup (New Host)
+
+1. **Get the age secret key** from your password manager
+
+2. **Install the key on the host:**
+
+   ```bash
+   sudo mkdir -p /var/lib/sops-nix
+   # Paste the secret key (AGE-SECRET-KEY-...) into the file
+   sudo vim /var/lib/sops-nix/key.txt
+   sudo chmod 600 /var/lib/sops-nix/key.txt
+   ```
+
+3. **For editing secrets locally**, also save the key to:
+
+   ```bash
+   mkdir -p ~/.config/sops/age
+   cp /var/lib/sops-nix/key.txt ~/.config/sops/age/keys.txt
+   ```
+
+### Managing Secrets
+
+**Edit existing secrets:**
+
+```bash
+nix-shell -p sops --run 'sops secrets/example.yaml'
+```
+
+**Create a new secret file:**
+
+```bash
+# Create the file with your secrets
+echo 'my_secret: "secret-value"' > secrets/new-secret.yaml
+# Encrypt it
+nix-shell -p sops --run 'sops --encrypt --in-place secrets/new-secret.yaml'
+```
+
+**Add secrets to NixOS configuration:**
+
+Edit `modules/system/sops/default.nix`:
+
+```nix
+{
+  sops.defaultSopsFile = ../../../secrets/example.yaml;
+
+  # Simple secret
+  sops.secrets.my_secret = { };
+
+  # Secret with permissions
+  sops.secrets.db_password = {
+    owner = "postgres";
+    mode = "0400";
+  };
+}
+```
+
+### Accessing Secrets
+
+After `nixos-rebuild switch`, secrets are available at `/run/secrets/<name>`:
+
+```bash
+cat /run/secrets/example_secret
+```
+
+### Adding a New Host Key
+
+If you want to use SSH host keys instead of a shared age key:
+
+```bash
+# On the new host, get the age public key
+nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+```
+
+Add the public key to `.sops.yaml` and re-encrypt secrets:
+
+```bash
+nix-shell -p sops --run 'sops updatekeys secrets/example.yaml'
+```
+
 ## TODO
 
 - https://github.com/rickhowe/spotdiff.vim
