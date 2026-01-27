@@ -74,6 +74,7 @@
           imports = hostModules.${hostName} ++ [
             nixvim.homeModules.nixvim
             plasma-manager.homeModules.plasma-manager
+            sops-nix.homeManagerModules.sops
           ];
           home.stateVersion = "25.05";
         };
@@ -135,6 +136,7 @@
           modules = hostModules.sx2 ++ [
             nixvim.homeModules.nixvim
             plasma-manager.homeModules.plasma-manager
+            sops-nix.homeManagerModules.sops
             {
               home.stateVersion = "25.05";
             }
@@ -153,6 +155,7 @@
           modules = hostModules.msi ++ [
             nixvim.homeModules.nixvim
             plasma-manager.homeModules.plasma-manager
+            sops-nix.homeManagerModules.sops
             {
               home.stateVersion = "25.05";
             }
@@ -170,6 +173,7 @@
           };
           modules = hostModules.wsl ++ [
             nixvim.homeModules.nixvim
+            sops-nix.homeManagerModules.sops
             {
               home.stateVersion = "25.05";
             }

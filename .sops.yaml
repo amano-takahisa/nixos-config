@@ -12,7 +12,13 @@ keys:
   # - &host_sx2 age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 creation_rules:
-  # Secrets for all hosts
+  # User-specific secrets (Home-Manager) - must be before general rule
+  - path_regex: secrets/user/[^/]+\.(yaml|json|env)$
+    key_groups:
+      - age:
+          - *user_takahisa
+
+  # System secrets (NixOS)
   - path_regex: secrets/[^/]+\.(yaml|json|env)$
     key_groups:
       - age:

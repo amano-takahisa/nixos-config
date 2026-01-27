@@ -395,7 +395,7 @@ Secrets are encrypted with [age](https://github.com/FiloSottile/age) and stored 
    ```bash
    sudo mkdir -p /var/lib/sops-nix
    # Paste the secret key (AGE-SECRET-KEY-...) into the file
-   sudo vim /var/lib/sops-nix/key.txt
+   sudo nvim /var/lib/sops-nix/key.txt
    sudo chmod 600 /var/lib/sops-nix/key.txt
    ```
 
@@ -403,7 +403,8 @@ Secrets are encrypted with [age](https://github.com/FiloSottile/age) and stored 
 
    ```bash
    mkdir -p ~/.config/sops/age
-   cp /var/lib/sops-nix/key.txt ~/.config/sops/age/keys.txt
+   sudo cp /var/lib/sops-nix/key.txt ~/.config/sops/age/keys.txt
+   sudo chown $(id -u):$(id -g) ~/.config/sops/age/keys.txt
    ```
 
 ### Managing Secrets
@@ -448,6 +449,47 @@ After `nixos-rebuild switch`, secrets are available at `/run/secrets/<name>`:
 
 ```bash
 cat /run/secrets/example_secret
+```
+
+### User-Specific Secrets (Home-Manager)
+
+User secrets are managed separately from system secrets and are decrypted by the sops-nix Home-Manager module.
+
+**Location:**
+
+| Type   | Storage Path                        | Use Case          |
+| ------ | ----------------------------------- | ----------------- |
+| System | `/run/secrets/<name>`               | NixOS services    |
+| User   | `~/.config/sops-nix/secrets/<name>` | User applications |
+
+**Managing user secrets:**
+
+```bash
+# Edit user secrets
+nix-shell -p sops --run 'sops secrets/user/takahisa.yaml'
+```
+
+**Add secrets to Home-Manager configuration:**
+
+Edit `modules/home-manager/common/default.nix`:
+
+```nix
+{
+  sops.secrets.my_secret = { };
+
+  # With custom path
+  sops.secrets.api_key = {
+    path = "${config.home.homeDirectory}/.config/myapp/api_key";
+  };
+}
+```
+
+**Verify user secrets after rebuild:**
+
+```bash
+./home-rebuild.sh takahisa@<host> switch
+ls -la ~/.config/sops-nix/secrets/
+systemctl --user status sops-nix.service
 ```
 
 ### Adding a New Host Key
