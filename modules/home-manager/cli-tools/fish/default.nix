@@ -10,7 +10,7 @@
       llt = "eza --long --classify --all --time-style=long-iso --group-directories-first --sort=changed";
       treee = "eza --tree --classify=auto";
       treel = "eza --tree --classify=auto --long";
-      gitstats = "fzf --preview 'git -C {} status -s && echo ----- && git -C {} lo -n 5 --oneline' --bind 'enter:execute(cd {} && $SHELL)+reload(ghq list -p)'";
+      # gitstats = "fzf --preview 'git -C {} status -s && echo ----- && git -C {} lo -n 5 --oneline' --bind 'enter:execute(cd {} && $SHELL)+reload(ghq list -p)'";
 
 
       # Safe file operations
