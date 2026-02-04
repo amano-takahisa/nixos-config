@@ -14,13 +14,13 @@
     [table.columns.tracking]
     command = "git ls-files --exclude-standard | wc -l"
     title   = "Tracking"
-    type    = "int"      # string|int|size|duration (controls sorting/format)
+    type    = "int"       # string|int|size|duration (controls sorting/format)
     width   = 8           # optional column width
-    timeout = "2s"       # optional per-command timeout (falls back to CLI timeout)
+    timeout = "2s"        # optional per-command timeout (falls back to CLI timeout)
     # env    = { FOO = "bar" } # optional extra env vars
 
     [detail.commands.default]
-    command = "git log"
-    title   = "git log -n 5"
+    command = "git log -n 5"
+    title   = "git log"
   '';
 }
