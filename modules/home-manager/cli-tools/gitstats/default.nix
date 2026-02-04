@@ -20,7 +20,7 @@
     # env    = { FOO = "bar" } # optional extra env vars
 
     [detail.commands.default]
-    command = "git log -n 5"
-    title   = "git log"
+    command = "git status --short && echo --- stash --- && git stash list"
+    title   = "Status"
   '';
 }
