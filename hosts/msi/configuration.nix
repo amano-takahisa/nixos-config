@@ -13,6 +13,7 @@
     ../../modules/system/packages/development.nix
     ../../modules/system/services/docker.nix
     ../../modules/system/services/kind.nix
+    ../../modules/system/services/podman.nix
     ../../modules/system/services/waydroid.nix
     ../../modules/system/sops
     ../../modules/system/ui/fonts.nix

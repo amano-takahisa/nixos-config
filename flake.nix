@@ -30,7 +30,6 @@
         ./modules/home-manager/cli-tools
         ./modules/home-manager/common
         ./modules/home-manager/container
-        ./modules/home-manager/misc
         ./modules/home-manager/programming
         ./modules/home-manager/terminal
         ./modules/home-manager/vcs
@@ -49,6 +48,7 @@
           ./modules/home-manager/editor
           ./modules/home-manager/graphics
           ./modules/home-manager/geospatial
+          ./modules/home-manager/misc
           ./modules/home-manager/media
           ./modules/home-manager/office
         ];
@@ -56,6 +56,7 @@
           ./modules/home-manager/editor-wsl
           ./modules/home-manager/geospatial-wsl
           ./modules/home-manager/graphics-wsl
+          ./modules/home-manager/misc-wsl
           ./modules/home-manager/terminal-wsl
         ];
       };
