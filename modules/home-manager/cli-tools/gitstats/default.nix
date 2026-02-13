@@ -48,7 +48,7 @@
 
     [table.columns.stash]
     command = "git rev-list --walk-reflogs --count refs/stash 2>/dev/null || echo 0"
-    title   = ""
+    title   = "s"
     width   = 2
     type    = "int"
 
