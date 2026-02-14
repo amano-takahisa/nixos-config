@@ -61,8 +61,6 @@
   # Host-specific user groups
   users.users.takahisa.extraGroups = [ "networkmanager" "wheel" ];
 
-  nixpkgs.config.cudaSupport = true;
-
   environment.systemPackages = with pkgs; [
     cudatoolkit
   ];

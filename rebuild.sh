@@ -20,6 +20,10 @@ if [ "$HOST" == "wsl" ]; then
   export NIX_MAX_JOBS=2
   export NIX_BUILD_CORES=2
   export CARGO_BUILD_JOBS=2
+elif [ "$HOST" == "msi" ]; then
+  export NIX_MAX_JOBS=4
+  export NIX_BUILD_CORES=4
+  export CARGO_BUILD_JOBS=4
 fi
 
 sudo -E nixos-rebuild "$OPERATION" --flake .#"$HOST" --impure
