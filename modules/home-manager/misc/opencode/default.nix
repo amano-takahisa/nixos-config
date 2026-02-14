@@ -3,6 +3,6 @@
 {
   programs.opencode = {
     enable = true;
-    package = llm-agents.packages.${pkgs.system}.opencode;
+    package = llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
   };
 }

@@ -104,8 +104,8 @@
       nixosConfigurations = {
         # sx2: Desktop without graphics tools
         sx2 = nixpkgs.lib.nixosSystem {
-          inherit system;
           modules = [
+            { nixpkgs.hostPlatform = system; }
             ./hosts/sx2/configuration.nix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
@@ -115,8 +115,8 @@
 
         # msi: Full-featured desktop
         msi = nixpkgs.lib.nixosSystem {
-          inherit system;
           modules = [
+            { nixpkgs.hostPlatform = system; }
             ./hosts/msi/configuration.nix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
@@ -126,8 +126,8 @@
 
         # wsl: Terminal-focused WSL environment
         wsl = nixpkgs.lib.nixosSystem {
-          inherit system;
           modules = [
+            { nixpkgs.hostPlatform = system; }
             nixos-wsl.nixosModules.wsl
             ./hosts/wsl/configuration.nix
             home-manager.nixosModules.home-manager
