@@ -21,7 +21,7 @@ This repository manages NixOS configurations for multiple environments using Nix
 ```bash
 ./rebuild.sh sx2 switch      # For sx2 host
 ./rebuild.sh msi switch      # For msi host
-./rebuild.sh wsl switch      # For msi host
+./rebuild.sh wsl switch      # For wsl host
 ```
 
 ### Testing a configuration:
@@ -360,7 +360,6 @@ When making changes to `modules/home-manager/` files:
 ### Packages from nixpkgs
 
 ```bash
-sudo nix-channel --update
 nix flake update
 ```
 

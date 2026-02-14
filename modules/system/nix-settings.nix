@@ -46,4 +46,7 @@
     # Reduce warnings for git-tracked flakes
     warn-dirty = false;
   };
+
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 }

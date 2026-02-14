@@ -61,24 +61,39 @@
         ];
       };
 
-      # Helper function to create home-manager configuration
+      lib = nixpkgs.lib;
+
+      # Common extraSpecialArgs for home-manager
+      hmExtraSpecialArgs = {
+        inherit llm-agents plantumlLsp mcp-servers-nix;
+      };
+
+      # Common home-manager modules
+      hmCommonModules = hostName:
+        hostModules.${hostName} ++ [
+          nixvim.homeModules.nixvim
+          sops-nix.homeManagerModules.sops
+        ] ++ lib.optionals (hostName != "wsl") [
+          plasma-manager.homeModules.plasma-manager
+        ] ++ [{
+          home.stateVersion = "25.05";
+        }];
+
+      # Helper function to create NixOS home-manager integration
       mkHomeManager = hostName: {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = {
-          pkgs = pkgs;
-          llm-agents = llm-agents;
-          plantumlLsp = plantumlLsp;
-          mcp-servers-nix = mcp-servers-nix;
-        };
+        home-manager.extraSpecialArgs = hmExtraSpecialArgs // { inherit pkgs; };
         home-manager.users.takahisa = {
-          imports = hostModules.${hostName} ++ [
-            nixvim.homeModules.nixvim
-            plasma-manager.homeModules.plasma-manager
-            sops-nix.homeManagerModules.sops
-          ];
-          home.stateVersion = "25.05";
+          imports = hmCommonModules hostName;
         };
+      };
+
+      # Helper function to create standalone home-manager configuration
+      mkHomeManagerConfiguration = hostName: home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        extraSpecialArgs = hmExtraSpecialArgs;
+        modules = hmCommonModules hostName;
       };
 
     in
@@ -122,64 +137,11 @@
         };
       };
 
-      # Standalone home-manager configurations (optional)
+      # Standalone home-manager configurations
       homeConfigurations = {
-        "takahisa@sx2" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          extraSpecialArgs = {
-            llm-agents = llm-agents;
-            plantumlLsp = plantumlLsp;
-            mcp-servers-nix = mcp-servers-nix;
-          };
-          modules = hostModules.sx2 ++ [
-            nixvim.homeModules.nixvim
-            plasma-manager.homeModules.plasma-manager
-            sops-nix.homeManagerModules.sops
-            {
-              home.stateVersion = "25.05";
-            }
-          ];
-        };
-        "takahisa@msi" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          extraSpecialArgs = {
-            llm-agents = llm-agents;
-            plantumlLsp = plantumlLsp;
-            mcp-servers-nix = mcp-servers-nix;
-          };
-          modules = hostModules.msi ++ [
-            nixvim.homeModules.nixvim
-            plasma-manager.homeModules.plasma-manager
-            sops-nix.homeManagerModules.sops
-            {
-              home.stateVersion = "25.05";
-            }
-          ];
-        };
-        "takahisa@wsl" = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-          extraSpecialArgs = {
-            llm-agents = llm-agents;
-            plantumlLsp = plantumlLsp;
-            mcp-servers-nix = mcp-servers-nix;
-          };
-          modules = hostModules.wsl ++ [
-            nixvim.homeModules.nixvim
-            sops-nix.homeManagerModules.sops
-            {
-              home.stateVersion = "25.05";
-            }
-          ];
-        };
+        "takahisa@sx2" = mkHomeManagerConfiguration "sx2";
+        "takahisa@msi" = mkHomeManagerConfiguration "msi";
+        "takahisa@wsl" = mkHomeManagerConfiguration "wsl";
       };
     };
 }
