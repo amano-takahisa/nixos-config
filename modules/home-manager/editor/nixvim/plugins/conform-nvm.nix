@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
   programs.nixvim.plugins.conform-nvim = {
@@ -11,6 +11,7 @@
         # This works across all projects without requiring treefmt.toml
         # For nixos-config project, use `nix fmt` or pre-commit for treefmt integration
         bash = [ "shfmt" ];
+        go = [ "goimports" "gofmt" ];
         javascript = [ "prettier" ];
         javascriptreact = [ "prettier" ];
         typescript = [ "prettier" ];
@@ -20,14 +21,10 @@
         markdown = [ "prettier" ];
         nix = [ "nixpkgs_fmt" ];
         python = [ "isort" "ruff_fix" "ruff_format" ];
+        rust = [ "rustfmt" ];
+        toml = [ "taplo" ];
         fish = [ "fish_indent" ];
-        r = [ "styler" ];
       };
-
-      # Override styler to use rWrapper with styler package
-      formatters.styler.command = "${pkgs.rWrapper.override {
-        packages = with pkgs.rPackages; [ styler ];
-      }}/bin/R";
     };
   };
 

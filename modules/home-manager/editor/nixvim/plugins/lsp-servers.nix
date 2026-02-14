@@ -42,9 +42,9 @@
 
     # Rust
     rust_analyzer = {
-      enable = false;
-      installCargo = true;
-      installRustc = true;
+      enable = true;
+      installCargo = false;
+      installRustc = false;
       settings = {
         cargo = {
           allFeatures = true;
@@ -96,6 +96,41 @@
       };
     };
 
+
+    # Go
+    gopls = {
+      enable = true;
+      settings = {
+        gopls = {
+          analyses = {
+            unusedparams = true;
+            shadow = true;
+          };
+          staticcheck = true;
+          gofumpt = true;
+          hints = {
+            assignVariableTypes = true;
+            compositeLiteralFields = true;
+            compositeLiteralTypes = true;
+            constantValues = true;
+            functionTypeParameters = true;
+            parameterNames = true;
+            rangeVariableTypes = true;
+          };
+        };
+      };
+    };
+
+    # TypeScript/JavaScript
+    vtsls = {
+      enable = true;
+      filetypes = [
+        "javascript"
+        "javascriptreact"
+        "typescript"
+        "typescriptreact"
+      ];
+    };
 
     # HTML/CSS
     html.enable = true;

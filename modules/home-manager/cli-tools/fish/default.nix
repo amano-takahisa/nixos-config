@@ -26,9 +26,6 @@
         set -gx fish_complete_path $builtin_completions $fish_complete_path
       end
 
-      # pixi completion
-      pixi completion --shell fish | source
-
       # https://fishshell.com/docs/current/cmds/fish_git_prompt.html
       set -g __fish_git_prompt_char_stateseparator ' '
       set -g __fish_git_prompt_showdirtystate 1

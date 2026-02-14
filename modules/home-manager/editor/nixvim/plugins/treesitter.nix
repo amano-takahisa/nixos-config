@@ -11,6 +11,10 @@
         diff
         git_rebase
         gitcommit
+        go
+        gomod
+        gosum
+        gowork
         html
         javascript
         json
@@ -21,6 +25,7 @@
         query
         regex
         rust
+        toml
         tsx
         typescript
         vim
