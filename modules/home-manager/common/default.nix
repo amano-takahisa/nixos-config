@@ -10,6 +10,9 @@
   # Enable home-manager
   programs.home-manager.enable = true;
 
+  # Enable font configuration
+  fonts.fontconfig.enable = true;
+
   # Enable XDG user directories
   xdg.userDirs = {
     enable = true;

@@ -5,7 +5,4 @@ let
 in
 {
   imports = libUtils.importSubdirectoriesWithDefault ./.;
-
-  # Enable font configuration
-  fonts.fontconfig.enable = true;
 }
