@@ -83,7 +83,7 @@
       mkHomeManager = hostName: {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = hmExtraSpecialArgs // { inherit pkgs; };
+        home-manager.extraSpecialArgs = hmExtraSpecialArgs;
         home-manager.users.takahisa = {
           imports = hmCommonModules hostName;
         };

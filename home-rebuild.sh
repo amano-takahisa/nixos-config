@@ -9,9 +9,9 @@ set -e
 USER_HOST=${1:-$USER@$HOSTNAME}
 OPERATION=${2:-switch}
 
-echo "Run: NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager $OPERATION --flake .#$USER_HOST --impure"
+echo "Run: NIXPKGS_ALLOW_UNFREE=1 nix run nixpkgs#home-manager -- $OPERATION --flake .#$USER_HOST --impure"
 
 export NIXPKGS_ALLOW_UNFREE=1
-NIXPKGS_ALLOW_UNFREE=1 nix shell nixpkgs#home-manager -c home-manager "$OPERATION" --flake .#"$USER_HOST" --impure
+NIXPKGS_ALLOW_UNFREE=1 nix run nixpkgs#home-manager -- "$OPERATION" --flake .#"$USER_HOST" --impure
 
 echo "Build complete!"
