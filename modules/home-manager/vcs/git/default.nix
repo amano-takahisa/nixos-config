@@ -29,7 +29,6 @@
         wt = "!f() { if [ -z \"$1\" ]; then echo \"Create a new branch as a worktree.\nUsage:\n  $ git wt <new-branch-name>\"; return 1; fi; ROOT=\"$(git rev-parse --show-toplevel)\"; WORKTREE_PATH=\"$(dirname \"$ROOT\")/$(basename \"$ROOT\")=$1\"; git worktree add --quiet \"$WORKTREE_PATH\" -b \"$1\" && echo \"$WORKTREE_PATH\"; }; f";
       };
       commit = { verbose = "true"; };
-      core = { commentChar = "auto"; };
       fetch = { prune = "true"; };
       grep = { linenumber = "true"; };
       init = { defaultBranch = "main"; };
