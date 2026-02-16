@@ -55,6 +55,8 @@
       "*_taka/"
       ".back"
       ".worktree/"
+      ".envrc"
+      ".direnv/"
 
       ### Python ###
       "__pycache__/"
