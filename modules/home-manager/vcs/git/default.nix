@@ -54,7 +54,6 @@
       "*_taka/"
       ".back"
       ".worktree/"
-      ".envrc"
       ".direnv/"
 
       ### Python ###
