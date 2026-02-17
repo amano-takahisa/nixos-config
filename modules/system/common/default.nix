@@ -42,6 +42,15 @@
     shell = pkgs.fish;
   };
 
+  # OpenSSH
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 }

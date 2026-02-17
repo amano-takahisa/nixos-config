@@ -6,8 +6,8 @@
   # Copy ~/.config/sops/age/keys.txt to /var/lib/sops-nix/key.txt on each host
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
-  # Alternatively, use SSH host keys as age keys (if available)
-  # sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  # Also use SSH host keys as age keys for automatic decryption
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   # Default sops file for secrets
   sops.defaultSopsFile = ../../../secrets/example.yaml;

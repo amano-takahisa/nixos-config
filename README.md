@@ -387,23 +387,44 @@ Secrets are encrypted with [age](https://github.com/FiloSottile/age) and stored 
 
 ### Key Setup (New Host)
 
-1. **Get the age secret key** from your password manager
+System secrets are decrypted using SSH host keys (automatically available after OpenSSH is enabled).
+User secrets require the age key file for editing.
 
-2. **Install the key on the host:**
+1. **Build the system** to generate SSH host keys:
 
    ```bash
-   sudo mkdir -p /var/lib/sops-nix
-   # Paste the secret key (AGE-SECRET-KEY-...) into the file
-   sudo nvim /var/lib/sops-nix/key.txt
-   sudo chmod 600 /var/lib/sops-nix/key.txt
+   ./rebuild.sh HOST_NAME switch
    ```
 
-3. **For editing secrets locally**, also save the key to:
+2. **Register the host key** in `.sops.yaml`:
+
+   ```bash
+   nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+   ```
+
+   Add the output to the `keys` section in `.sops.yaml` and uncomment the host anchor in `creation_rules`.
+
+3. **Re-encrypt secrets** with the new host key:
+
+   ```bash
+   nix-shell -p sops --run 'sops updatekeys secrets/example.yaml'
+   ```
+
+4. **For editing secrets locally**, install the age secret key:
 
    ```bash
    mkdir -p ~/.config/sops/age
-   sudo cp /var/lib/sops-nix/key.txt ~/.config/sops/age/keys.txt
-   sudo chown $(id -u):$(id -g) ~/.config/sops/age/keys.txt
+   # Paste the secret key (AGE-SECRET-KEY-...) from your password manager
+   nvim ~/.config/sops/age/keys.txt
+   chmod 600 ~/.config/sops/age/keys.txt
+   ```
+
+5. **(Optional) Install the age key for system-level fallback:**
+
+   ```bash
+   sudo mkdir -p /var/lib/sops-nix
+   sudo cp ~/.config/sops/age/keys.txt /var/lib/sops-nix/key.txt
+   sudo chmod 600 /var/lib/sops-nix/key.txt
    ```
 
 ### Managing Secrets
@@ -493,17 +514,19 @@ systemctl --user status sops-nix.service
 
 ### Adding a New Host Key
 
-If you want to use SSH host keys instead of a shared age key:
+Each host uses its SSH host key (derived from `/etc/ssh/ssh_host_ed25519_key`) for automatic secret decryption.
+When setting up a new host, register its key:
 
 ```bash
 # On the new host, get the age public key
 nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
 ```
 
-Add the public key to `.sops.yaml` and re-encrypt secrets:
+Add the public key to `.sops.yaml` under the `keys` section and uncomment/add the host anchor in `creation_rules`, then re-encrypt:
 
 ```bash
 nix-shell -p sops --run 'sops updatekeys secrets/example.yaml'
+nix-shell -p sops --run 'sops updatekeys secrets/user/takahisa.yaml'
 ```
 
 ## TODO

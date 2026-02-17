@@ -8,7 +8,7 @@ keys:
   # Host keys (add after running on each host):
   #   nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
   # - &host_wsl age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  # - &host_msi age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  - &host_msi age16a57s0esd7t7gp7g7nd43qjxk8quf8lr8f80ea6tltjfac5ks5fs9vncra
   # - &host_sx2 age1xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 creation_rules:
@@ -25,7 +25,7 @@ creation_rules:
           - *user_takahisa
           # Add host keys here when available:
           # - *host_wsl
-          # - *host_msi
+          - *host_msi
           # - *host_sx2
 
   # Host-specific secrets (example)
