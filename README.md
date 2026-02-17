@@ -427,6 +427,37 @@ User secrets require the age key file for editing.
    sudo chmod 600 /var/lib/sops-nix/key.txt
    ```
 
+### Restore after reinstall (keys from backup)
+
+1. **Restore SSH host key** (used for system secret decryption):
+
+   ```bash
+   sudo install -m600 -o root -g root /path/to/backup/ssh_host_ed25519_key /etc/ssh/ssh_host_ed25519_key
+   sudo install -m644 -o root -g root /path/to/backup/ssh_host_ed25519_key.pub /etc/ssh/ssh_host_ed25519_key.pub
+   ```
+
+2. **Restore age user key** (used for editing/user secrets):
+
+   ```bash
+   install -m600 -D /path/to/backup/age-key.txt ~/.config/sops/age/keys.txt
+   ```
+
+3. **(Optional) Restore system fallback age key**:
+
+   ```bash
+   sudo install -m600 -D /path/to/backup/age-key.txt /var/lib/sops-nix/key.txt
+   ```
+
+4. **Rebuild**:
+
+   ```bash
+   ./rebuild.sh HOST_NAME switch
+   ./home-rebuild.sh takahisa@HOST_NAME switch
+   ```
+
+Passphrases for the above keys are stored separately from the repository, so
+please test that `nixos-rebuild`/`sops` works after restoration.
+
 ### Managing Secrets
 
 **Edit existing secrets:**
