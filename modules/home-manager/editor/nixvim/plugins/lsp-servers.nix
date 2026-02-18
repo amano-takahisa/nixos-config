@@ -69,7 +69,7 @@
 
     # Python
     pyright = {
-      enable = true;
+      enable = false;
       settings = {
         python = {
           analysis = {
@@ -80,7 +80,9 @@
         };
       };
     };
-
+    pyrefly = {
+      enable = true;
+    };
     # Python linting with ruff
     ruff = {
       enable = true;
