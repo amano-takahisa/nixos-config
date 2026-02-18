@@ -63,7 +63,7 @@
     [detail.commands.default]
     command = """
     echo $ git status && \
-    git status --short && \
+    git status --short --branch && \
     echo ------------ && \
     echo $ git stash list && \
     git stash list && \
