@@ -51,6 +51,9 @@
     };
   };
 
+  # Enable nix-ld for running dynamically linked binaries
+  programs.nix-ld.enable = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 }
