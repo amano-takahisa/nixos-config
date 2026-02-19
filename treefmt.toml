@@ -11,7 +11,7 @@ excludes = ["tools/node2nix/*"]
 command = "prettier"
 options = ["--write"]
 includes = ["*.js", "*.jsx", "*.ts", "*.tsx", "*.json", "*.yaml", "*.yml", "*.md"]
-excludes = ["tools/node2nix/*"]
+excludes = ["tools/node2nix/*", "secrets/*"]
 
 [formatter.shfmt]
 command = "shfmt"
