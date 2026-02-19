@@ -2,42 +2,44 @@
 
 # NixOS Multi-Host Configuration
 
-## Overview
+Multi-host NixOS configuration managed with Nix flakes and home-manager.
 
-This repository manages NixOS configurations for multiple environments using Nix flakes and home-manager.
+## Hosts
 
-## Usage
+| Host | Type    | Desktop      | Notable Features                                |
+| ---- | ------- | ------------ | ----------------------------------------------- |
+| msi  | Desktop | KDE Plasma 6 | NVIDIA/CUDA, Waydroid, Podman, Geospatial tools |
+| sx2  | Desktop | KDE Plasma 6 | Lightweight desktop                             |
+| wsl  | WSL2    | None         | Terminal-focused                                |
 
-### Applying changes to user environment (recommended for modules/home-manager/ changes):
+## Quick Start
 
-```bash
-./home-rebuild.sh takahisa@sx2 switch      # For sx2 host
-./home-rebuild.sh takahisa@msi switch      # For msi host
-./home-rebuild.sh takahisa@wsl switch      # For wsl host
-```
+### User environment (no sudo)
 
-### Applying system-wide changes:
-
-```bash
-./rebuild.sh sx2 switch      # For sx2 host
-./rebuild.sh msi switch      # For msi host
-./rebuild.sh wsl switch      # For wsl host
-```
-
-### Testing a configuration:
+Rebuilds only user environment via home-manager. Defaults to `$USER@$HOSTNAME` and `switch`.
 
 ```bash
-./rebuild.sh sx2 test        # Test without activation
+./home-rebuild.sh                    # current user@host, switch
+./home-rebuild.sh takahisa@msi switch
 ```
 
-## Setup Instructions
+### System-wide (requires sudo)
+
+Full NixOS system rebuild. Defaults to `$HOSTNAME` and `switch`.
+
+```bash
+./rebuild.sh                         # current host, switch
+./rebuild.sh msi switch
+./rebuild.sh msi test                # test without making it the boot default
+```
+
+## Setup
 
 ### WSL2
 
-Install NixOS on WSL2 by following the instructions at
-https://nix-community.github.io/NixOS-WSL/
+Install NixOS on WSL2 following [NixOS-WSL](https://nix-community.github.io/NixOS-WSL/).
 
-Add following to `%USERPROFILE%\.wslconfig` on Windows.
+Add to `%USERPROFILE%\.wslconfig` on Windows:
 
 ```txt
 [wsl2]
@@ -46,7 +48,7 @@ swap=16GB
 networkingMode=mirrored
 ```
 
-Clone this repository into your WSL2 instance
+Bootstrap the configuration:
 
 ```bash
 nix-shell -p wget --run "wget https://github.com/amano-takahisa/nixos-config/archive/main.zip"
@@ -56,113 +58,229 @@ nix-shell -p git
 ./rebuild.sh wsl switch
 ```
 
-Re-login to the NixOS, restore `~/.ssh` from backup, and
+After re-login, restore `~/.ssh` from backup and clone properly:
 
-```
+```bash
 ghq get git@github.com:amano-takahisa/nixos-config.git
 ```
 
-and rebuild again.
+Then rebuild again from the cloned repository.
 
-### Native NixOS installation
+### Native NixOS
 
-Use NixOS installer and follow installer's guide.
+Use the NixOS installer and follow its guide.
 
-#### Post OS installation steps
+#### Post-installation
 
-1. **Generate hardware configuration** for new hosts:
+1. Generate hardware configuration:
 
    ```bash
    sudo nixos-generate-config --dir hosts/HOST_NAME/
    ```
 
-2. **Update timezone and locale** in each host's `configuration.nix`
+2. Update timezone/locale in `hosts/HOST_NAME/configuration.nix`.
 
-3. **Adjust hardware-specific settings** in `hardware-configuration.nix`
+3. Build and switch:
 
-4. **Build and switch** to your configuration:
    ```bash
    ./rebuild.sh HOST_NAME switch
    ```
 
-Following configrations are not integrated nix-config yet.
+4. **Disable 5 GHz Wi-Fi** (if authentication fails repeatedly):
 
-#### Disable 5GHz wifi
+   ```bash
+   nix-shell -p networkmanagerapplet --run nm-connection-editor
+   ```
 
-If your wi-fi authentication fails repeatedly, try disabling 5 GHz band.
+   Select Band B/G (2.4 GHz) for your Wi-Fi connection.
+
+5. **Japanese input (Fcitx 5 / Mozc)**:
+   - System Settings > Virtual keyboard > select "Fcitx 5"
+     (see [Fcitx 5 on Wayland](https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma))
+   - System Settings > Input Method > Add Input Method > search and add Mozc
+
+6. **Caps Lock as Ctrl**:
+
+   System Settings > Keyboard > Key Bindings > Configure keyboard options > Ctrl position > Caps Lock as Ctrl
+
+7. **Login to services**:
+
+   ```bash
+   # GitHub CLI
+   gh auth login -p ssh -h github.com -w
+   ssh -T git@github.com
+
+   # Neovim Copilot
+   # :Copilot auth
+
+   # Docker (rootless)
+   systemctl --user enable --now docker
+   docker run hello-world
+   ```
+
+8. **Clone repositories**:
+
+   ```bash
+   gh repo list "amano-takahisa" --limit 1000 --json sshUrl \
+     | jq -r '.[].sshUrl' \
+     | xargs -n1 ghq get --shallow
+   ```
+
+## Package Management
+
+### nixpkgs
 
 ```bash
-nix-shell -p networkmanagerapplet --run nm-connection-editor
+nix flake update
 ```
 
-Then, select Band B/G (2.4 GHz) for your wifi.
+### llm-agents.nix
 
-#### Japanese environment
-
-Go to "System Settings" -> "Virtual keyboard" and select "Fcitx 5" from it.
-For more details see https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland#KDE_Plasma
-
-Go to "System Settings" -> "Input Method" -> "Add Input Method",
-then search Mozc, and add Mozc.
-
-#### Key bindings
-
-"System Settings" -> "Keyboard" -> "Key Bindings"
-Check "Configure keyboard options", and
-
-- Ctrl position
-  (x) Caps Lock as Ctrl
-
-#### Login services
-
-- Firefox
-- Claude code
-- gh-cli
-  ```bash
-  gh auth login -p ssh -h github.com -w
-  # test connection
-  ssh -T git@github.com
-  ```
-- Neovim Copilot
-  ```
-  :Copilot auth
-  ```
-- Docker
-  ```bash
-  systemctl --user enable --now docker
-  # test docker
-  docker run hello-world
-  ```
-
-#### Clone repositories
-
-The following command clones all repositories from GitHub user "amano-takahisa"
+LLM agents (Claude Code, etc.) are provided by [llm-agents.nix](https://github.com/numtide/llm-agents.nix) with daily updates and pre-built binaries.
 
 ```bash
-gh repo list "amano-takahisa" --limit 1000 --json sshUrl \
-  | jq -r '.[].sshUrl' \
-  | xargs -n1 ghq get --shallow
+nix flake update llm-agents
+```
+
+### fetchFromGitHub packages
+
+```bash
+nix-shell -p nix-prefetch-git --run 'nix-prefetch-git https://github.com/USER/REPO.git'
+```
+
+Copy `rev` and `hash` from the output to the corresponding nix file.
+
+## Secret Management (sops-nix)
+
+Secrets are encrypted with [age](https://github.com/FiloSottile/age) via [sops-nix](https://github.com/Mic92/sops-nix). System secrets are decrypted using SSH host keys; user secrets use an age key file.
+
+| Type   | Decryption Key                                 | Runtime Path                        |
+| ------ | ---------------------------------------------- | ----------------------------------- |
+| System | SSH host key (`/etc/ssh/ssh_host_ed25519_key`) | `/run/secrets/<name>`               |
+| User   | Age key (`~/.config/sops/age/keys.txt`)        | `~/.config/sops-nix/secrets/<name>` |
+
+### New Host Setup
+
+1. Build the system to generate SSH host keys:
+
+   ```bash
+   ./rebuild.sh HOST_NAME switch
+   ```
+
+2. Get the host's age public key:
+
+   ```bash
+   nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
+   ```
+
+3. Add the key to `.sops.yaml` under `keys` and uncomment the host anchor in `creation_rules`.
+
+4. Re-encrypt secrets with the new key:
+
+   ```bash
+   nix-shell -p sops --run 'sops updatekeys secrets/example.yaml'
+   nix-shell -p sops --run 'sops updatekeys secrets/user/takahisa.yaml'
+   ```
+
+5. Install the age secret key for editing:
+
+   ```bash
+   mkdir -p ~/.config/sops/age
+   nvim ~/.config/sops/age/keys.txt   # paste AGE-SECRET-KEY-... from password manager
+   chmod 600 ~/.config/sops/age/keys.txt
+   ```
+
+6. (Optional) Install system-level fallback key:
+
+   ```bash
+   sudo mkdir -p /var/lib/sops-nix
+   sudo cp ~/.config/sops/age/keys.txt /var/lib/sops-nix/key.txt
+   sudo chmod 600 /var/lib/sops-nix/key.txt
+   ```
+
+### Restore after Reinstall
+
+```bash
+# Restore SSH host key
+sudo install -m600 -o root -g root /path/to/backup/ssh_host_ed25519_key /etc/ssh/ssh_host_ed25519_key
+sudo install -m644 -o root -g root /path/to/backup/ssh_host_ed25519_key.pub /etc/ssh/ssh_host_ed25519_key.pub
+
+# Restore age user key
+install -m600 -D /path/to/backup/age-key.txt ~/.config/sops/age/keys.txt
+
+# (Optional) Restore system fallback age key
+sudo install -m600 -D /path/to/backup/age-key.txt /var/lib/sops-nix/key.txt
+
+# Rebuild
+./rebuild.sh HOST_NAME switch
+./home-rebuild.sh takahisa@HOST_NAME switch
+```
+
+Test that `nixos-rebuild` and `sops` work after restoration.
+
+### Editing Secrets
+
+```bash
+# Edit system secrets
+nix-shell -p sops --run 'sops secrets/example.yaml'
+
+# Edit user secrets
+nix-shell -p sops --run 'sops secrets/user/takahisa.yaml'
+
+# Create and encrypt a new secret file
+echo 'my_secret: "secret-value"' > secrets/new-secret.yaml
+nix-shell -p sops --run 'sops --encrypt --in-place secrets/new-secret.yaml'
+```
+
+Add system secrets in `modules/system/sops/default.nix`:
+
+```nix
+{
+  sops.defaultSopsFile = ../../../secrets/example.yaml;
+  sops.secrets.my_secret = { };
+  sops.secrets.db_password = {
+    owner = "postgres";
+    mode = "0400";
+  };
+}
+```
+
+### User Secrets (Home-Manager)
+
+Add user secrets in `modules/home-manager/common/default.nix`:
+
+```nix
+{
+  sops.secrets.my_secret = { };
+  sops.secrets.api_key = {
+    path = "${config.home.homeDirectory}/.config/myapp/api_key";
+  };
+}
+```
+
+Verify after rebuild:
+
+```bash
+./home-rebuild.sh takahisa@HOST_NAME switch
+ls -la ~/.config/sops-nix/secrets/
+systemctl --user status sops-nix.service
 ```
 
 ## Waydroid (Android Container)
 
-Waydroid is configured for MSI host to run Android applications on NixOS using Wayland.
+Android container for msi host. Supports location services (geoclue2), clipboard sharing (wl-clipboard), and ARM translation for x86_64.
 
-### Initial Setup
+### Setup
 
-After rebuilding the system configuration, initialize Waydroid:
-
-**With Google Apps (Play Store, Gmail, etc.):**
+Initialize with Google Apps:
 
 ```bash
 sudo waydroid init -s GAPPS -f
 ```
 
-To run ARM-based Android apps (like Kindle) on x86_64 systems, install the ARM translation layer after `waydroid init`:
+Install ARM translation layer for ARM apps (e.g. Kindle) on x86_64:
 
-https://omemoji.com/articles/kindle_on_linux#user-content-fnref-5
-
-```
+```bash
 git clone https://github.com/casualsnek/waydroid_script
 cd waydroid_script
 python3 -m venv venv
@@ -174,392 +292,69 @@ Verify ARM support:
 
 ```bash
 sudo waydroid shell getprop ro.product.cpu.abilist
+# Expected: x86_64,x86,arm64-v8a,armeabi-v7a,armeabi
 ```
 
-Expected output: `x86_64,x86,arm64-v8a,armeabi-v7a,armeabi`
-
-If you have an error message about Google Play Certification,
-follow [FAQ Google Play Certification](https://docs.waydro.id/faq/google-play-certification).
+For Google Play certification errors, see [FAQ](https://docs.waydro.id/faq/google-play-certification):
 
 ```bash
 sudo waydroid shell -- sh -c "sqlite3 /data/data/*/*/gservices.db 'select * from main where name = \"android_id\";'"
 ```
 
-and access to (https://www.google.com/android/uncertified)
-
-and restart waydroid with
+Register the ID at <https://www.google.com/android/uncertified>, then restart:
 
 ```bash
 waydroid session stop
 ```
 
-### Starting Waydroid
-
-**1. Start the container:**
+### Usage
 
 ```bash
+# Start
 sudo systemctl start waydroid-container
-```
-
-**2. Start a user session:**
-
-```bash
 waydroid session start
-```
-
-**3. Launch the Android UI:**
-
-```bash
 waydroid show-full-ui
-```
 
-### Useful Commands
-
-**Launch a specific app:**
-
-```bash
+# Launch a specific app
 waydroid app launch <package-name>
-# Example: waydroid app launch com.android.settings
-```
 
-**List installed apps:**
-
-```bash
+# List / install apps
 waydroid app list
-```
-
-**Install an APK:**
-
-```bash
 waydroid app install /path/to/app.apk
-```
 
-**Stop Waydroid:**
-
-```bash
+# Stop
 waydroid session stop
 sudo systemctl stop waydroid-container
-```
 
-**Enable autostart on boot:**
-
-```bash
+# Enable autostart
 sudo systemctl enable waydroid-container
 ```
 
-### Upgrading Waydroid
-
-**Upgrade Android system images:**
+### Upgrading
 
 ```bash
-sudo waydroid upgrade
-```
-
-**Force reinstall/upgrade:**
-
-```bash
-sudo waydroid upgrade -o
+sudo waydroid upgrade        # upgrade system images
+sudo waydroid upgrade -o     # force reinstall
 ```
 
 ### Troubleshooting
 
-**Check container status:**
-
 ```bash
+# Check status
 sudo systemctl status waydroid-container
 waydroid status
-```
 
-**View logs:**
-
-```bash
+# View logs
 waydroid log
-# Or system logs:
 sudo journalctl -u waydroid-container
-```
 
-**Reset Waydroid (removes all data):**
-
-```bash
+# Full reset (removes all data)
 waydroid session stop
 sudo systemctl stop waydroid-container
 sudo rm -rf /var/lib/waydroid /home/.waydroid ~/waydroid
-sudo waydroid init -s GAPPS -f  # Reinitialize
-```
-
-### Old commands
-
-**1. Start the waydroid-monitor service:**
-
-```bash
-systemctl --user start waydroid-monitor
-```
-
-**2. Launch waydroid-helper:**
-
-```bash
-waydroid-helper
-```
-
-**3. In the GUI/TUI:**
-
-- Navigate to **Extensions** → **Install ARM Translation**
-- Select **libhoudini** (for Intel CPUs) or **libndk** (for AMD CPUs)
-- Wait for installation to complete
-
-**4. Restart Waydroid:**
-
-```bash
-sudo systemctl restart waydroid-container
-waydroid session stop
-waydroid show-full-ui
-```
-
-**Note:**
-
-- The waydroid-monitor service needs to be started after each reboot
-- Requires CPU with SSE4.2 support (Intel Core i3/i5/i7/i9 2008+, AMD Bulldozer 2011+/Ryzen)
-- libhoudini is recommended for broader app compatibility
-
-### Features
-
-- **Location services**: Enabled via geoclue2 and adb
-- **Clipboard sharing**: Supported via wl-clipboard
-- **Wayland integration**: Native support for Plasma 6
-- **ARM translation**: Support for ARM Android apps on x86_64 via waydroid-helper
-
-## Rebuilding Instructions
-
-When making changes to `modules/home-manager/` files:
-
-1. **Fast user-only updates** (recommended):
-
-   ```bash
-   ./home-rebuild.sh takahisa@sx2 switch
-   ```
-
-   - No `sudo` required
-   - Only rebuilds user environment
-   - Faster than full system rebuild
-   - Uses temporary home-manager to avoid package conflicts
-   - Automatically handles unfree packages and impure flags
-
-2. **Full system rebuild** (when system changes are needed):
-
-   ```bash
-   ./rebuild.sh sx2 switch
-   ```
-
-   - Requires `sudo` (handled by script)
-   - Rebuilds entire system including user environment
-   - Slower but comprehensive
-   - Automatically handles unfree packages
-
-## Upgrade packages
-
-### Packages from nixpkgs
-
-```bash
-nix flake update
-```
-
-### Packages from llm-agents.nix
-
-LLM agents (Claude Code, etc.) are provided by [llm-agents.nix](https://github.com/numtide/llm-agents.nix).
-Packages are automatically updated daily and pre-built binaries are available from Numtide's cache.
-
-To update, simply run `nix flake update llm-agents`.
-
-### Packages from pkgs.fetchFromGitHub
-
-```bash
-# nix-shell -p update-nix-fetchgit
-# fd --type file '.nix$' --exec update-nix-fetchgit
-nix-shell -p nix-prefetch-git --run 'nix-prefetch-git  https://github.com/lambdalisue/vim-gin.git'
-```
-
-Then, copy rev and hash to your nix file.
-
-## Secret Management (sops-nix)
-
-This repository uses [sops-nix](https://github.com/Mic92/sops-nix) for managing secrets.
-Secrets are encrypted with [age](https://github.com/FiloSottile/age) and stored in `secrets/`.
-
-### Key Setup (New Host)
-
-System secrets are decrypted using SSH host keys (automatically available after OpenSSH is enabled).
-User secrets require the age key file for editing.
-
-1. **Build the system** to generate SSH host keys:
-
-   ```bash
-   ./rebuild.sh HOST_NAME switch
-   ```
-
-2. **Register the host key** in `.sops.yaml`:
-
-   ```bash
-   nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
-   ```
-
-   Add the output to the `keys` section in `.sops.yaml` and uncomment the host anchor in `creation_rules`.
-
-3. **Re-encrypt secrets** with the new host key:
-
-   ```bash
-   nix-shell -p sops --run 'sops updatekeys secrets/example.yaml'
-   ```
-
-4. **For editing secrets locally**, install the age secret key:
-
-   ```bash
-   mkdir -p ~/.config/sops/age
-   # Paste the secret key (AGE-SECRET-KEY-...) from your password manager
-   nvim ~/.config/sops/age/keys.txt
-   chmod 600 ~/.config/sops/age/keys.txt
-   ```
-
-5. **(Optional) Install the age key for system-level fallback:**
-
-   ```bash
-   sudo mkdir -p /var/lib/sops-nix
-   sudo cp ~/.config/sops/age/keys.txt /var/lib/sops-nix/key.txt
-   sudo chmod 600 /var/lib/sops-nix/key.txt
-   ```
-
-### Restore after reinstall (keys from backup)
-
-1. **Restore SSH host key** (used for system secret decryption):
-
-   ```bash
-   sudo install -m600 -o root -g root /path/to/backup/ssh_host_ed25519_key /etc/ssh/ssh_host_ed25519_key
-   sudo install -m644 -o root -g root /path/to/backup/ssh_host_ed25519_key.pub /etc/ssh/ssh_host_ed25519_key.pub
-   ```
-
-2. **Restore age user key** (used for editing/user secrets):
-
-   ```bash
-   install -m600 -D /path/to/backup/age-key.txt ~/.config/sops/age/keys.txt
-   ```
-
-3. **(Optional) Restore system fallback age key**:
-
-   ```bash
-   sudo install -m600 -D /path/to/backup/age-key.txt /var/lib/sops-nix/key.txt
-   ```
-
-4. **Rebuild**:
-
-   ```bash
-   ./rebuild.sh HOST_NAME switch
-   ./home-rebuild.sh takahisa@HOST_NAME switch
-   ```
-
-Passphrases for the above keys are stored separately from the repository, so
-please test that `nixos-rebuild`/`sops` works after restoration.
-
-### Managing Secrets
-
-**Edit existing secrets:**
-
-```bash
-nix-shell -p sops --run 'sops secrets/example.yaml'
-```
-
-**Create a new secret file:**
-
-```bash
-# Create the file with your secrets
-echo 'my_secret: "secret-value"' > secrets/new-secret.yaml
-# Encrypt it
-nix-shell -p sops --run 'sops --encrypt --in-place secrets/new-secret.yaml'
-```
-
-**Add secrets to NixOS configuration:**
-
-Edit `modules/system/sops/default.nix`:
-
-```nix
-{
-  sops.defaultSopsFile = ../../../secrets/example.yaml;
-
-  # Simple secret
-  sops.secrets.my_secret = { };
-
-  # Secret with permissions
-  sops.secrets.db_password = {
-    owner = "postgres";
-    mode = "0400";
-  };
-}
-```
-
-### Accessing Secrets
-
-After `nixos-rebuild switch`, secrets are available at `/run/secrets/<name>`:
-
-```bash
-cat /run/secrets/example_secret
-```
-
-### User-Specific Secrets (Home-Manager)
-
-User secrets are managed separately from system secrets and are decrypted by the sops-nix Home-Manager module.
-
-**Location:**
-
-| Type   | Storage Path                        | Use Case          |
-| ------ | ----------------------------------- | ----------------- |
-| System | `/run/secrets/<name>`               | NixOS services    |
-| User   | `~/.config/sops-nix/secrets/<name>` | User applications |
-
-**Managing user secrets:**
-
-```bash
-# Edit user secrets
-nix-shell -p sops --run 'sops secrets/user/takahisa.yaml'
-```
-
-**Add secrets to Home-Manager configuration:**
-
-Edit `modules/home-manager/common/default.nix`:
-
-```nix
-{
-  sops.secrets.my_secret = { };
-
-  # With custom path
-  sops.secrets.api_key = {
-    path = "${config.home.homeDirectory}/.config/myapp/api_key";
-  };
-}
-```
-
-**Verify user secrets after rebuild:**
-
-```bash
-./home-rebuild.sh takahisa@<host> switch
-ls -la ~/.config/sops-nix/secrets/
-systemctl --user status sops-nix.service
-```
-
-### Adding a New Host Key
-
-Each host uses its SSH host key (derived from `/etc/ssh/ssh_host_ed25519_key`) for automatic secret decryption.
-When setting up a new host, register its key:
-
-```bash
-# On the new host, get the age public key
-nix-shell -p ssh-to-age --run 'cat /etc/ssh/ssh_host_ed25519_key.pub | ssh-to-age'
-```
-
-Add the public key to `.sops.yaml` under the `keys` section and uncomment/add the host anchor in `creation_rules`, then re-encrypt:
-
-```bash
-nix-shell -p sops --run 'sops updatekeys secrets/example.yaml'
-nix-shell -p sops --run 'sops updatekeys secrets/user/takahisa.yaml'
+sudo waydroid init -s GAPPS -f
 ```
 
 ## TODO
 
-- https://github.com/rickhowe/spotdiff.vim
+- <https://github.com/rickhowe/spotdiff.vim>
