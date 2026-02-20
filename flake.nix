@@ -143,5 +143,20 @@
         "takahisa@msi" = mkHomeManagerConfiguration "msi";
         "takahisa@wsl" = mkHomeManagerConfiguration "wsl";
       };
+
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs; [
+          # pre-commit and formatters
+          pre-commit
+          treefmt
+          nixpkgs-fmt
+          nodePackages.prettier
+          shfmt
+          ruff
+
+          # Nix LSP
+          nixd
+        ];
+      };
     };
 }
