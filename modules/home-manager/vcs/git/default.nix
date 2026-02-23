@@ -56,6 +56,7 @@
       ".worktree/"
       ".direnv/"
       ".env"
+      ".envrc"
 
       ### Python ###
       "__pycache__/"
