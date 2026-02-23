@@ -55,6 +55,7 @@
       ".back"
       ".worktree/"
       ".direnv/"
+      ".env"
 
       ### Python ###
       "__pycache__/"
