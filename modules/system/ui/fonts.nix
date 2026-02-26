@@ -11,7 +11,6 @@
       font-awesome_5
       hackgen-nf-font
       ipafont
-      jetbrains-mono
       liberation_ttf
       nerd-fonts.dejavu-sans-mono
       nerd-fonts.fira-code
