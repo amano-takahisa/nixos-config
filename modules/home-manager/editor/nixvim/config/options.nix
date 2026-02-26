@@ -46,6 +46,10 @@
       winblend = 20;
     };
 
+    extraConfigLua = ''
+      vim.opt.formatoptions:append({ m = true, M = true })
+    '';
+
     autoCmd = [
       {
         event = [ "FileType" ];
