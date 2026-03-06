@@ -71,6 +71,7 @@
 
   environment.systemPackages = with pkgs; [
     cudatoolkit
+    kdePackages.partitionmanager
   ];
 
   # This settings enables Ozone/Wayland support for Electron apps like
