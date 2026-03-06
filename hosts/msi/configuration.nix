@@ -6,6 +6,7 @@
     ../../modules/system/common
     ../../modules/system/input/ime.nix
     ../../modules/system/services/kind.nix
+    ../../modules/system/services/openvpn.nix
     ../../modules/system/services/podman.nix
     ../../modules/system/services/waydroid.nix
     ./hardware-configuration.nix

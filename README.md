@@ -355,6 +355,33 @@ sudo rm -rf /var/lib/waydroid /home/.waydroid ~/waydroid
 sudo waydroid init -s GAPPS -f
 ```
 
+## OpenVPN (msi)
+
+OpenVPN client for msi host. DNS is automatically updated on connect/disconnect via `updateResolvConf`.
+
+### Setup
+
+Place your `.ovpn` file:
+
+```bash
+sudo cp your-client.ovpn /etc/openvpn/client.ovpn
+sudo chmod 600 /etc/openvpn/client.ovpn
+```
+
+### Usage
+
+```bash
+# Start
+sudo systemctl start openvpn-client
+
+# Stop
+sudo systemctl stop openvpn-client
+
+# Check status / logs
+sudo systemctl status openvpn-client
+sudo journalctl -u openvpn-client
+```
+
 ## TODO
 
 - <https://github.com/rickhowe/spotdiff.vim>
