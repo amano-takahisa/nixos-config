@@ -48,6 +48,9 @@
   };
   services.blueman.enable = true;
 
+  # Enable flatpack to be able to use the latest libreoffice
+  services.flatpak.enable = true;
+
   # NVIDIA GPU
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
