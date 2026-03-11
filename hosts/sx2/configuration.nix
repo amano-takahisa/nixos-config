@@ -35,7 +35,7 @@
   };
 
   # Host-specific user groups
-  users.users.takahisa.extraGroups = [ "networkmanager" "wheel" ];
+  users.users.takahisa.extraGroups = [ "networkmanager" "uucp" "wheel" ];
 
   # This settings enables Ozone/Wayland support for Electron apps like
   # Slack and Discord.

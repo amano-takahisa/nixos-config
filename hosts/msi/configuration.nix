@@ -63,7 +63,7 @@
   hardware.graphics.enable = true;
 
   # Host-specific user groups
-  users.users.takahisa.extraGroups = [ "networkmanager" "wheel" ];
+  users.users.takahisa.extraGroups = [ "networkmanager" "uucp" "wheel" ];
 
   programs.kdeconnect.enable = true;
 
