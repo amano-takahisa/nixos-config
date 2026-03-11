@@ -62,7 +62,8 @@
   };
   hardware.graphics.enable = true;
 
-  # Host-specific user groups
+  # Host-specific user groups for keyboard firmware config
+  services.udev.packages = [ pkgs.qmk-udev-rules ];
   users.users.takahisa.extraGroups = [ "networkmanager" "uucp" "wheel" ];
 
   programs.kdeconnect.enable = true;
