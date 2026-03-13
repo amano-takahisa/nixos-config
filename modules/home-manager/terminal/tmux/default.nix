@@ -56,6 +56,9 @@
       set-option -g status-interval 5
       set-option -g pane-border-status bottom
 
+      # Disable layout change with <space>
+      unbind-key Space
+
       #################
       # Status Bar
       #################
