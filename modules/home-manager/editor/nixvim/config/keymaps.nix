@@ -14,7 +14,16 @@
         key = "<leader>y";
         action = "<cmd>let @+ = expand('%')<cr>";
         options = {
-          desc = "Copy file path to clipboard";
+          desc = "Copy relative file path to clipboard";
+        };
+      }
+      # Copy absolute file path to clipboard
+      {
+        mode = "n";
+        key = "<leader>Y";
+        action = "<cmd>let @+ = expand('%:p')<cr>";
+        options = {
+          desc = "Copy absolute file path to clipboard";
         };
       }
       # Toggle relative line numbers
