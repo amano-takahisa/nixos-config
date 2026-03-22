@@ -31,7 +31,6 @@
         ./modules/home-manager/common
         ./modules/home-manager/container
         ./modules/home-manager/programming
-        ./modules/home-manager/terminal
         ./modules/home-manager/vcs
       ];
 
@@ -42,15 +41,17 @@
           ./modules/home-manager/desktop
           ./modules/home-manager/editor
           ./modules/home-manager/media
+          ./modules/home-manager/terminal
         ];
         msi = commonModules ++ [
           ./modules/home-manager/desktop
           ./modules/home-manager/editor
-          ./modules/home-manager/graphics
           ./modules/home-manager/geospatial
-          ./modules/home-manager/misc
+          ./modules/home-manager/graphics
           ./modules/home-manager/media
+          ./modules/home-manager/misc
           ./modules/home-manager/office
+          ./modules/home-manager/terminal
         ];
         wsl = commonModules ++ [
           ./modules/home-manager/editor-wsl
