@@ -15,7 +15,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Timezone
-  time.timeZone = "Europe/Vienna";
+  time.timeZone = "Asia/Tokyo";
 
   # Internationalisation
   i18n.defaultLocale = "en_US.UTF-8";
