@@ -2,6 +2,7 @@
 
 {
   home.packages = with pkgs; [
+    libreoffice
     thunderbird
     evince # PDF viewer
     # okular        # KDE PDF viewer
@@ -10,20 +11,6 @@
     # hunspellDicts.de_DE
   ];
 
-  # User-level fontconfig to prefer CJK fonts for Japanese text.
-  # This is placed in ~/.config/fontconfig/conf.d/ which is read by both
-  # the system and Flatpak sandboxes (via 50-user.conf inside Flatpak).
-  # Make CJK fonts accessible to Flatpak sandboxes.
-  # Flatpak has default read access to ~/.local/share/fonts
-  # (mounted at /run/host/user-fonts inside the sandbox).
-  xdg.dataFile."fonts/noto-cjk-sans".source =
-    "${pkgs.noto-fonts-cjk-sans}/share/fonts/opentype";
-  xdg.dataFile."fonts/noto-cjk-serif".source =
-    "${pkgs.noto-fonts-cjk-serif}/share/fonts/opentype";
-
-  # User-level fontconfig to prefer CJK fonts for Japanese text.
-  # This is placed in ~/.config/fontconfig/conf.d/ which is read by both
-  # the system and Flatpak sandboxes (via 50-user.conf inside Flatpak).
   xdg.configFile."fontconfig/conf.d/60-japanese.conf".text = ''
     <?xml version="1.0"?>
     <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
@@ -50,7 +37,7 @@
         </prefer>
       </alias>
       <!-- Fallback from specific Latin Noto font names to CJK variants.
-           GTK apps (including LibreOffice Flatpak) request "Noto Sans" by
+           GTK apps (including LibreOffice) request "Noto Sans" by
            name rather than the generic "sans-serif", so fontconfig would not
            reach the rules above. These append rules ensure Japanese glyphs
            are found even when a specific font name is requested. -->
