@@ -5,6 +5,7 @@
   imports = [
     ../../modules/system/common
     ../../modules/system/input/ime.nix
+    ../../modules/system/services/geoclue2.nix
     ../../modules/system/services/kind.nix
     ../../modules/system/services/openvpn.nix
     ../../modules/system/services/podman.nix
