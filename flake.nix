@@ -150,12 +150,13 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
           # pre-commit and formatters
-          pre-commit
-          treefmt
           nixpkgs-fmt
           nodePackages.prettier
-          shfmt
+          pre-commit
           ruff
+          shfmt
+          sops
+          treefmt
 
           # Nix LSP
           nixd
