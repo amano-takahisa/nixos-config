@@ -79,6 +79,7 @@
   environment.systemPackages = with pkgs; [
     cudatoolkit
     kdePackages.partitionmanager
+    kdePackages.plasma-browser-integration
   ];
 
   # This settings enables Ozone/Wayland support for Electron apps like
