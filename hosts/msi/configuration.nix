@@ -27,6 +27,11 @@
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
+  };
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
