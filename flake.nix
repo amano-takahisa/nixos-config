@@ -151,7 +151,7 @@
         packages = with pkgs; [
           # pre-commit and formatters
           nixpkgs-fmt
-          nodePackages.prettier
+          prettier
           pre-commit
           ruff
           shfmt
