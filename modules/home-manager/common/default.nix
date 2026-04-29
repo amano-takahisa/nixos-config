@@ -13,10 +13,14 @@
   # Enable font configuration
   fonts.fontconfig.enable = true;
 
+  # Enable XDG base directories (sets XDG_CONFIG_HOME, XDG_DATA_HOME, etc.)
+  xdg.enable = true;
+
   # Enable XDG user directories
   xdg.userDirs = {
     enable = true;
     createDirectories = true;
+    setSessionVariables = true;
   };
 
   # sops-nix configuration for user secrets
