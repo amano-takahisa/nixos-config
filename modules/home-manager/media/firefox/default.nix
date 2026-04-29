@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
+  };
 
   xdg.mimeApps = {
     enable = true;
