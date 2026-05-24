@@ -1,6 +1,10 @@
 { pkgs, mcp-servers-nix, llm-agents, ... }:
 
 {
+  xdg.mimeApps.defaultApplications = {
+    "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
+  };
+
   programs.claude-code = {
     enable = true;
     package = llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
