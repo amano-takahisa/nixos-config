@@ -149,6 +149,9 @@
 
     # Bash
     bashls.enable = true;
+
+    # Typst
+    tinymist.enable = true;
   };
 
   # PlantUML LSP
