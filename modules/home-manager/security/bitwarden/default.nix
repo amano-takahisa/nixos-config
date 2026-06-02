@@ -8,7 +8,7 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "x-scheme-handler/bitwarden" = [ "bitwarden.desktop" "Bitwarden.desktop" ];
+      "x-scheme-handler/bitwarden" = "bitwarden.desktop";
     };
   };
 }
