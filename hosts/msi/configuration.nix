@@ -82,6 +82,11 @@
     kdePackages.plasma-browser-integration
   ];
 
+  # Slack depends on electron-39 which is EOL; allow until nixpkgs updates it
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
+  ];
+
   # This settings enables Ozone/Wayland support for Electron apps like
   # Slack and Discord.
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
