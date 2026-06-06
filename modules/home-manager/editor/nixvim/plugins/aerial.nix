@@ -1,6 +1,14 @@
 { ... }:
 
 {
+  programs.nixvim.extraFiles."queries/typst/aerial.scm".text = ''
+    ; Typst headings
+    (section
+      (heading
+        (text) @name)
+      (#set! "kind" "Module")) @symbol
+  '';
+
   programs.nixvim = {
     plugins.aerial = {
       enable = true;
