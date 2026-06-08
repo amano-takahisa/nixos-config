@@ -13,16 +13,18 @@ let
     skillNames);
 in
 {
-  home.activation.registerClaudeCodeUrlHandler = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if [ -L "$HOME/.config/mimeapps.list" ]; then
-      $DRY_RUN_CMD unlink "$HOME/.config/mimeapps.list"
+  # Apps (Slack, Claude Code, etc.) sometimes replace the home-manager symlink with a
+  # regular file. This runs before home-manager writes symlinks to restore the correct state.
+  home.activation.fixMimeappsList = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+    if [ -f "$HOME/.config/mimeapps.list" ] && [ ! -L "$HOME/.config/mimeapps.list" ]; then
+      $DRY_RUN_CMD rm "$HOME/.config/mimeapps.list"
     fi
-    $DRY_RUN_CMD ${pkgs.xdg-utils}/bin/xdg-mime default claude-code-url-handler.desktop x-scheme-handler/claude-cli
   '';
 
   xdg.mimeApps.defaultApplications = {
     "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
   };
+
   home.file = skillFileEntries;
 
   programs.claude-code = {
