@@ -1,18 +1,29 @@
-{ pkgs, mcp-servers-nix, llm-agents, ... }:
+{ lib, pkgs, mcp-servers-nix, llm-agents, ... }:
 
+let
+  skillsDir = ./skills;
+  skillNames = builtins.attrNames (
+    lib.filterAttrs (_: type: type == "directory") (builtins.readDir skillsDir)
+  );
+  skillFileEntries = builtins.listToAttrs (map
+    (name: {
+      name = ".claude/skills/${name}";
+      value.source = skillsDir + "/${name}";
+    })
+    skillNames);
+in
 {
-  home.file.".claude/skills/grill-me/SKILL.md".text = ''
-    ---
-    name: grill-me
-    description: 計画やデザインについて、共通理解に達するまでユーザーに徹底的にインタビューし、意思決定ツリーの各分岐を解決する。
-    ---
-
-    共通理解に達するまで、この計画のあらゆる側面について徹底的にインタビューしてください。意思決定ツリーの各分岐を順にたどり、決定事項間の依存関係を一つずつ解決してください。各質問には、あなたの推奨回答も提示してください。質問は一度に一つずつ行ってください。
+  home.activation.registerClaudeCodeUrlHandler = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ -L "$HOME/.config/mimeapps.list" ]; then
+      $DRY_RUN_CMD unlink "$HOME/.config/mimeapps.list"
+    fi
+    $DRY_RUN_CMD ${pkgs.xdg-utils}/bin/xdg-mime default claude-code-url-handler.desktop x-scheme-handler/claude-cli
   '';
 
   xdg.mimeApps.defaultApplications = {
     "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
   };
+  home.file = skillFileEntries;
 
   programs.claude-code = {
     enable = true;
