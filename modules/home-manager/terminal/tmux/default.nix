@@ -73,6 +73,9 @@
       #################
       # Others
       #################
+      # Required for Kitty image protocol (image.nvim) to work through tmux
+      set -g allow-passthrough on
+
       # start window/pane index from 1
       set -g base-index 1
       setw -g pane-base-index 1

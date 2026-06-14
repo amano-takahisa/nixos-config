@@ -24,6 +24,18 @@
           },
           use_libuv_file_watcher = true,
         },
+        window = {
+          mappings = {
+            ["P"] = {
+              "toggle_preview",
+              config = {
+                use_float = false,
+                use_snacks_image = false,
+                use_image_nvim = true,
+              },
+            },
+          },
+        },
       }
 
       -- show git status only in ghq directories
