@@ -43,7 +43,7 @@
         sx2 = commonModules ++ [
           ./modules/home-manager/desktop
           ./modules/home-manager/editor
-          ./modules/home-manager/media
+          ./modules/home-manager/browser
           ./modules/home-manager/security
           ./modules/home-manager/terminal
         ];
@@ -52,7 +52,7 @@
           ./modules/home-manager/editor
           ./modules/home-manager/geospatial
           ./modules/home-manager/graphics
-          ./modules/home-manager/media
+          ./modules/home-manager/browser
           ./modules/home-manager/misc
           ./modules/home-manager/office
           ./modules/home-manager/security
