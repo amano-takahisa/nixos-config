@@ -41,18 +41,19 @@
       hostModules = {
         # sx2 = commonModules; # No graphics for sx2
         sx2 = commonModules ++ [
+          ./modules/home-manager/browser
           ./modules/home-manager/desktop
           ./modules/home-manager/editor
-          ./modules/home-manager/browser
           ./modules/home-manager/security
           ./modules/home-manager/terminal
         ];
         msi = commonModules ++ [
+          ./modules/home-manager/browser
           ./modules/home-manager/desktop
           ./modules/home-manager/editor
           ./modules/home-manager/geospatial
           ./modules/home-manager/graphics
-          ./modules/home-manager/browser
+          ./modules/home-manager/llm
           ./modules/home-manager/misc
           ./modules/home-manager/office
           ./modules/home-manager/security
