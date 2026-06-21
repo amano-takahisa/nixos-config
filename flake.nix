@@ -4,8 +4,10 @@
   inputs = {
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
-    llm-agents = { url = "github:numtide/llm-agents.nix"; inputs.nixpkgs.follows = "nixpkgs"; };
-    mcp-servers-nix = { url = "github:natsukium/mcp-servers-nix"; inputs.nixpkgs.follows = "nixpkgs"; };
+    llm-agents.inputs.nixpkgs.follows = "nixpkgs";
+    llm-agents.url = "github:numtide/llm-agents.nix";
+    mcp-servers-nix.inputs.nixpkgs.follows = "nixpkgs";
+    mcp-servers-nix.url = "github:natsukium/mcp-servers-nix";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -13,7 +15,8 @@
     plasma-manager.inputs.home-manager.follows = "home-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.url = "github:nix-community/plasma-manager";
-    sops-nix = { url = "github:Mic92/sops-nix"; inputs.nixpkgs.follows = "nixpkgs"; };
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
   outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, sops-nix, ... }@inputs:
