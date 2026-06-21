@@ -12,6 +12,10 @@
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixvim.url = "github:nix-community/nixvim";
+    # Personal Nixvim configuration, extracted to its own repo (ADR 0001).
+    # Provides homeModules.default (used here) and a standalone `nix run` package.
+    nvim-config.inputs.nixpkgs.follows = "nixpkgs";
+    nvim-config.url = "github:amano-takahisa/nixvim-config";
     plasma-manager.inputs.home-manager.follows = "home-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.url = "github:nix-community/plasma-manager";
@@ -19,7 +23,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixvim, nvim-config, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, sops-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -29,7 +33,6 @@
           "electron-39.8.10"
         ];
       };
-      plantumlLsp = pkgs.callPackage ./tools/plantuml-lsp { };
 
       # Common modules for all hosts
       commonModules = [
@@ -47,6 +50,7 @@
           ./modules/home-manager/browser
           ./modules/home-manager/desktop
           ./modules/home-manager/editor
+          nvim-config.homeModules.default
           ./modules/home-manager/security
           ./modules/home-manager/terminal
         ];
@@ -54,6 +58,7 @@
           ./modules/home-manager/browser
           ./modules/home-manager/desktop
           ./modules/home-manager/editor
+          nvim-config.homeModules.default
           ./modules/home-manager/geospatial
           ./modules/home-manager/graphics
           ./modules/home-manager/llm
@@ -75,13 +80,12 @@
 
       # Common extraSpecialArgs for home-manager
       hmExtraSpecialArgs = {
-        inherit llm-agents plantumlLsp mcp-servers-nix;
+        inherit llm-agents mcp-servers-nix;
       };
 
       # Common home-manager modules
       hmCommonModules = hostName:
         hostModules.${hostName} ++ [
-          nixvim.homeModules.nixvim
           sops-nix.homeManagerModules.sops
         ] ++ lib.optionals (hostName != "wsl") [
           plasma-manager.homeModules.plasma-manager
