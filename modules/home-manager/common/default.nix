@@ -1,6 +1,10 @@
 { config, ... }:
 
 {
+  imports = [
+    ./nix-gc-user.nix
+  ];
+
   # Common settings for all environments
   home = {
     username = "takahisa";
