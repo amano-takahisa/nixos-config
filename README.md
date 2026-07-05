@@ -144,11 +144,46 @@ nix flake update llm-agents
 
 ### fetchFromGitHub packages
 
-```bash
-nix-shell -p nix-prefetch-git --run 'nix-prefetch-git https://github.com/USER/REPO.git'
-```
+Hashes need to be updated manually when bumping a pinned `rev`/`version`.
 
-Copy `rev` and `hash` from the output to the corresponding nix file.
+Don't trust `nix-prefetch-git`'s hash blindly: it hashes a plain `git clone`, while
+`fetchFromGitHub` hashes a GitHub tarball, and the two don't always agree (they can
+also just go stale between nixpkgs releases). Verify with a real build using the
+`fakeHash` trick instead:
+
+1. Bump `rev`/`version` in the package's `default.nix`, and temporarily set
+   `hash = pkgs.lib.fakeHash;` (also `vendorHash = pkgs.lib.fakeHash;` for
+   `buildGoModule` packages).
+2. Build it. Rebuilding the affected home-manager config works:
+
+   ```bash
+   ./home-rebuild.sh takahisa@HOST_NAME switch
+   ```
+
+   Or test the derivation in isolation, e.g. for `gwq`:
+
+   ```bash
+   nix-build --no-out-link -E '
+   with import <nixpkgs> {};
+   buildGoModule rec {
+     pname = "gwq";
+     version = "0.1.1";
+     src = fetchFromGitHub {
+       owner = "d-kuro";
+       repo = "gwq";
+       rev = "v${version}";
+       hash = lib.fakeHash;
+     };
+     vendorHash = lib.fakeHash;
+     doCheck = false;
+   }
+   '
+   ```
+
+3. Nix fails with `error: hash mismatch ... got: sha256-...` - copy that value into
+   `hash`, then rebuild. If `vendorHash` also needs updating, the next build fails
+   the same way for it; repeat once more.
+4. Confirm the final build succeeds before committing.
 
 ## Secret Management (sops-nix)
 
