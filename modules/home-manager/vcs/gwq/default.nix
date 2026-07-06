@@ -3,16 +3,16 @@
 let
   gwq = pkgs.buildGoModule rec {
     pname = "gwq";
-    version = "0.0.7";
+    version = "0.1.1"; # released on May 2, 2026
 
     src = pkgs.fetchFromGitHub {
       owner = "d-kuro";
       repo = "gwq";
       rev = "v${version}";
-      hash = "sha256-CvfAxTd7/AK98TSJDM+iNJTUALMKMk8esXEn7Fuumik=";
+      hash = "sha256-MfCYFbODWnfPxx+6sLlcMT6tqghgILHB13+ccYqVjBA=";
     };
 
-    vendorHash = "sha256-c1vq9yETUYfY2BoXSEmRZj/Ceetu0NkIoVCM3wYy5iY=";
+    vendorHash = "sha256-4K01Xf1EXl/NVX1loQ76l1bW8QglBAQdvlZSo7J4NPI=";
 
     # Tests require git in PATH and a functional git environment
     doCheck = false;

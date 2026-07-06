@@ -144,21 +144,41 @@ nix flake update llm-agents
 
 ### fetchFromGitHub packages
 
-Hashes need to be updated manually when bumping a pinned `rev`/`version`.
+Hashes need to be updated manually when bumping a pinned `rev`/`version`. Two
+patterns are used in this repo:
+
+- **Tagged releases** — e.g. `gwq`
+  (`modules/home-manager/vcs/gwq/default.nix`):
+  - `version` is the upstream release version (e.g. `"0.1.1"`).
+  - `rev` is derived from it: `rev = "v${version}"`.
+  - `hash` is the sha256 of the GitHub source tarball at that `rev`.
+  - `vendorHash` (Go modules only, via `buildGoModule`) is the sha256 of the
+    vendored Go module dependencies. It changes independently of `hash`
+    whenever upstream's `go.mod`/`go.sum` changes, so it must be bumped
+    separately.
+
+- **Rolling/unstable pins** — e.g. `mplus-outline-fonts-latest`
+  (`modules/system/ui/fonts.nix`):
+  - `rev` is a specific commit SHA (there's no release tag being tracked).
+  - `version` is `"unstable-YYYY-MM-DD"`, set to the commit date of `rev`
+    (not the date of the bump), so it's clear at a glance which upstream
+    state is pinned.
+  - There is no `vendorHash` since it's a plain `stdenvNoCC.mkDerivation`,
+    not a Go build.
 
 Don't trust `nix-prefetch-git`'s hash blindly: it hashes a plain `git clone`, while
 `fetchFromGitHub` hashes a GitHub tarball, and the two don't always agree (they can
 also just go stale between nixpkgs releases). Verify with a real build using the
 `fakeHash` trick instead:
 
-1. Bump `rev`/`version` in the package's `default.nix`, and temporarily set
-   `hash = pkgs.lib.fakeHash;` (also `vendorHash = pkgs.lib.fakeHash;` for
-   `buildGoModule` packages).
-2. Build it. Rebuilding the affected home-manager config works:
-
-   ```bash
-   ./home-rebuild.sh takahisa@HOST_NAME switch
-   ```
+1. Bump `rev`/`version` in the package's `default.nix` (for a tagged release,
+   bump `version` and let `rev` follow; for a rolling pin, bump `rev` to the
+   new commit SHA and set `version` to that commit's date), and temporarily
+   set `hash = pkgs.lib.fakeHash;` (also `vendorHash = pkgs.lib.fakeHash;` for
+   `buildGoModule` packages like `gwq`).
+2. Build it. Rebuilding the affected config works, e.g. `./home-rebuild.sh
+takahisa@HOST_NAME switch` for a home-manager package like `gwq`, or
+   `./rebuild.sh HOST_NAME switch` for a system module like `fonts.nix`.
 
    Or test the derivation in isolation, e.g. for `gwq`:
 
