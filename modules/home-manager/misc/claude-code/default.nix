@@ -11,6 +11,17 @@ let
       value.source = skillsDir + "/${name}";
     })
     skillNames);
+
+  hooksDir = ./hooks;
+  hookNames = builtins.attrNames (
+    lib.filterAttrs (_: type: type == "regular") (builtins.readDir hooksDir)
+  );
+  hookFileEntries = builtins.listToAttrs (map
+    (name: {
+      name = ".claude/hooks/${name}";
+      value.source = hooksDir + "/${name}";
+    })
+    hookNames);
 in
 {
   # Apps (Slack, Claude Code, etc.) sometimes replace the home-manager symlink with a
@@ -25,7 +36,9 @@ in
     "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
   };
 
-  home.file = skillFileEntries;
+  home.file = skillFileEntries // hookFileEntries // {
+    ".claude/CLAUDE.md".source = ./CLAUDE.md;
+  };
 
   programs.claude-code = {
     enable = true;
@@ -61,6 +74,46 @@ in
           "Bash(rm -rf $HOME:*)"
           "Bash(rm -rf ~/.ssh*)"
           "Bash(rm -rf ~/.config*)"
+        ];
+        # flake.nix の新規作成・更新は常にユーザー確認を求める。
+        # ただし acceptEdits/bypassPermissions/Auto mode ではこの一覧だけでは
+        # 確認が省略され得るため、真の強制力は hooks.PreToolUse 側で担保する。
+        ask = [
+          "Edit(**/flake.nix)"
+          "Write(**/flake.nix)"
+        ];
+      };
+
+      # Auto mode の分類器にも、flake.nix の変更はユーザーの明示的な確認なしに
+      # 進めてはいけないことを伝える(ユーザー意図によって解除されない領域)。
+      autoMode.hard_deny = [
+        "$defaults"
+        "flake.nix の新規作成・更新は、ユーザーが事前に一括承認していても、その都度明示的な確認を必ず取ること。"
+      ];
+
+      hooks = {
+        PreToolUse = [
+          {
+            matcher = "Write|Edit";
+            hooks = [
+              {
+                type = "command";
+                command = ''bash "$HOME/.claude/hooks/guard-flake-nix.sh"'';
+                timeout = 10;
+              }
+            ];
+          }
+        ];
+        SessionStart = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = ''bash "$HOME/.claude/hooks/remind-dev-env.sh"'';
+                timeout = 10;
+              }
+            ];
+          }
         ];
       };
     };
