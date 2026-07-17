@@ -36,11 +36,11 @@ implementer/reviewerサブエージェントを並列起動して、タスクの
 
 ### マイルストーン 2: エージェント定義
 
-- [ ] 2-1: `implementer`エージェントを定義する（model: haiku, tools: Read/Write/Edit/Bash/Glob/Grep, isolation: worktree）
+- [x] 2-1: `implementer`エージェントを定義する（model: haiku, tools: Read/Write/Edit/Bash/Glob/Grep, isolation: worktree）
   - 受け入れ条件: `agents/implementer.md`が存在し、frontmatterが仕様通りで`nix flake check`が通る
   - 変更ファイル: modules/home-manager/misc/claude-code/agents/implementer.md
   - 依存: 1-2
-- [ ] 2-2: `reviewer`エージェントを定義する（model: sonnet, tools: Read/Grep/Glob/Bashのみ）
+- [x] 2-2: `reviewer`エージェントを定義する（model: sonnet, tools: Read/Grep/Glob/Bashのみ）
   - 受け入れ条件: `agents/reviewer.md`が存在し、Write/Edit権限を持たないことが確認できる
   - 変更ファイル: modules/home-manager/misc/claude-code/agents/reviewer.md
   - 依存: 1-2
@@ -72,3 +72,14 @@ implementer/reviewerサブエージェントを並列起動して、タスクの
   `NIXPKGS_ALLOW_INSECURE=1 nix flake check --impure`で実施（このリポジトリの
   `nix flake check`は本タスクと無関係な既存のelectron insecureパッケージ問題で
   素のままでは失敗するため）。
+- 2026-07-17: 2-1・2-2完了。`fanout`スキル(3-1)がまだ存在しないため、ADR-0004の
+  プロトコルに沿って親（このセッション）が直接2つのgeneral-purposeサブエージェント
+  を`isolation: worktree`で並列起動し、それぞれ`task/0001-2-1`/`task/0001-2-2`
+  ブランチに実装・コミットさせた。reviewer.md自身がまだ無いため、レビューは親が
+  手動で代行（内容照合 + `NIXPKGS_ALLOW_INSECURE=1 nix flake check --impure`）し、
+  両ブランチを`git merge --no-ff`でmainに取り込んでworktree/ブランチを削除した。
+  分かった点: `isolation: worktree`で作られるworktreeは、Agent呼び出し時点の
+  最新HEADではなく、セッション開始時点のコミットから分岐した（merge-baseが
+  `314439e`になった）。派生元コミットが古くても`git merge`自体は問題なく解決
+  できたが、fanoutスキル(3-1)ではこの分岐元がどの時点かを前提にしないよう
+  設計する必要がある。
