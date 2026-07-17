@@ -29,7 +29,7 @@ implementer/reviewerサブエージェントを並列起動して、タスクの
   - 受け入れ条件: `plan/SKILL.md`のテンプレートと粒度ルールに新フィールドの記法と判定基準が明記されている
   - 変更ファイル: modules/home-manager/misc/claude-code/skills/plan/SKILL.md
   - 依存: なし
-- [ ] 1-2: `.claude/agents/`をNix宣言的に管理する仕組みを追加する（`skills`と同じ`home.file`シンボリックリンクパターン）
+- [x] 1-2: `.claude/agents/`をNix宣言的に管理する仕組みを追加する（`skills`と同じ`home.file`シンボリックリンクパターン）
   - 受け入れ条件: `modules/home-manager/misc/claude-code/agents/`配下のmarkdownが`.claude/agents/`にリンクされ、`nix flake check`が通る
   - 変更ファイル: modules/home-manager/misc/claude-code/default.nix
   - 依存: なし
@@ -65,3 +65,10 @@ implementer/reviewerサブエージェントを並列起動して、タスクの
 - 2026-07-17: 1-1完了。`plan/SKILL.md`に「変更ファイル」「依存」フィールドと
   並列可否判定ルール（依存完了 かつ 書き込み対象globが互いに素、読み取り専用は
   除外）を追記した。このPLAN-0001自体が新フィールドを使う最初の実例になっている。
+- 2026-07-17: 1-2完了。`default.nix`に`agentsDir`/`agentFileEntries`を追加し、
+  `skillFileEntries`と同じパターンで`.claude/agents/`にシンボリックリンクする
+  ようにした。`agents/`ディレクトリは2-1/2-2でファイルが追加されるまで存在
+  しないため、`builtins.pathExists`でガードしている。検証は
+  `NIXPKGS_ALLOW_INSECURE=1 nix flake check --impure`で実施（このリポジトリの
+  `nix flake check`は本タスクと無関係な既存のelectron insecureパッケージ問題で
+  素のままでは失敗するため）。
