@@ -2,7 +2,7 @@
 
 ## ステータス
 
-進行中（2026-07-17 開始）
+完了（2026-07-18）
 
 ## 関連ADR
 
@@ -54,7 +54,7 @@ implementer/reviewerサブエージェントを並列起動して、タスクの
 
 ### マイルストーン 4: 検証
 
-- [ ] 4-1: 小規模な計画で`fanout`を実際に動かし、独立タスク2件以上を並列実装→reviewer承認→自動マージまで完走させる
+- [x] 4-1: 小規模な計画で`fanout`を実際に動かし、独立タスク2件以上を並列実装→reviewer承認→自動マージまで完走させる
   - 受け入れ条件: タスク仕様ファイルの粒度がimplementerにとって十分であることを確認し、マージまで人手を介さず完走する
   - 依存: 3-1
 
@@ -89,3 +89,17 @@ implementer/reviewerサブエージェントを並列起動して、タスクの
   担保する方針に変更）、その修正後の方針をfanoutスキルに反映した。また、
   reviewerが`task/NNNN-X`をチェックアウトできるよう、reviewer委譲前に
   implementer側のworktreeを削除する手順を明記した。
+- 2026-07-18: 4-1完了。[PLAN-0002](0002-fanout-dry-run.md)（`docs/adr/README.md`・
+  `docs/plans/README.md`の2独立タスク）で`fanout`を実地検証し、
+  implementer並列実行→reviewer承認→`nix flake check`成功→`git merge --no-ff`
+  自動マージまで完走した。同時に**重大な安全上の発見**があった:
+  implementerが、指示した作業ブランチの作成・コミット・マージを自分の
+  worktree内ではなく親のメイン作業ディレクトリ側で実行してしまい、親の
+  カレントブランチが一時的に切り替わる事故が発生した（実害はなく復旧済み）。
+  `isolation: worktree`は「サブエージェントが自分のworktree内でのみ動く」
+  ことを強制しないため、委譲プロンプトに「最初に`pwd`/
+  `git rev-parse --show-toplevel`で自分のworktreeパスを確認し、そこから
+  出ない」という安全ルールを明記する必要がある（reviewer側ではこのルールを
+  明記して問題なく機能した）。この安全ルールをADR-0004・
+  `implementer`/`reviewer`エージェント定義・`fanout`スキル本文に反映する
+  フォローアップが必要（詳細は[PLAN-0002作業メモ](0002-fanout-dry-run.md)参照）。
