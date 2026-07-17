@@ -47,7 +47,7 @@ implementer/reviewerサブエージェントを並列起動して、タスクの
 
 ### マイルストーン 3: fanoutスキル
 
-- [ ] 3-1: `fanout`スキルを新設する（並列可能タスクの抽出、仕様ファイル生成・コミット、承認取得、implementer並列委譲、reviewer委譲、`nix flake check`ゲート、`--no-ff`マージとworktree削除、エスカレーション規則を手順として記述）
+- [x] 3-1: `fanout`スキルを新設する（並列可能タスクの抽出、仕様ファイル生成・コミット、承認取得、implementer並列委譲、reviewer委譲、`nix flake check`ゲート、`--no-ff`マージとworktree削除、エスカレーション規則を手順として記述）
   - 受け入れ条件: `fanout/SKILL.md`にADR-0004/0005の手順が過不足なく反映されている
   - 変更ファイル: modules/home-manager/misc/claude-code/skills/fanout/SKILL.md
   - 依存: 1-1, 2-1, 2-2
@@ -83,3 +83,9 @@ implementer/reviewerサブエージェントを並列起動して、タスクの
   `314439e`になった）。派生元コミットが古くても`git merge`自体は問題なく解決
   できたが、fanoutスキル(3-1)ではこの分岐元がどの時点かを前提にしないよう
   設計する必要がある。
+- 2026-07-17: 3-1完了。`fanout/SKILL.md`を新設した。2-1/2-2で発覚した
+  worktree分岐タイミングの問題を受けて先にADR-0004を修正し（仕様ファイルは
+  監査証跡、実行の正しさはimplementerへの委譲プロンプトへの全文埋め込みで
+  担保する方針に変更）、その修正後の方針をfanoutスキルに反映した。また、
+  reviewerが`task/NNNN-X`をチェックアウトできるよう、reviewer委譲前に
+  implementer側のworktreeを削除する手順を明記した。
