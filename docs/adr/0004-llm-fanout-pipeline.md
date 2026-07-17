@@ -42,18 +42,28 @@ PRをレビューする体制にしたい。親モデルとの対話でまとめ
    `（読み取りのみ）` と注記）と「依存」（依存タスクID）を追加する。並列可否は
    「依存タスクが全て完了」かつ「書き込み対象globが互いに素（読み取り専用は無視）」で判定する。
 2. **fanout スキルの新設**（`next` の並列版）: 条件を満たすタスク群を抽出し、各タスクについて
-   ADR・計画書から自己完結した仕様ファイルを `docs/plans/NNNN-tasks/<タスク番号>.md` に生成する。
-   このファイルは **worktree作成前に現在の作業ブランチ（main）へ直接コミット**する
-   （`git worktree` はHEADのコミット状態から作られ、未コミットの変更を引き継がないため）。
+   ADR・計画書から自己完結した仕様ファイルを `docs/plans/NNNN-tasks/<タスク番号>.md` に生成し、
+   監査証跡として現在の作業ブランチ（main）へコミットする。ただし、Claude Codeの
+   `isolation: worktree` が作るworktreeは**Agent呼び出し時点のHEADではなく、セッション開始時点の
+   コミットから分岐する**ことが実測で確認されており、直前にコミットした仕様ファイルを
+   worktreeが必ず見られるとは限らない（PLAN-0001作業メモ参照）。そのため、
+   **implementerへの委譲プロンプトにはタスク内容・受け入れ条件・変更してよいファイル・
+   検証コマンドを全文埋め込む**（ファイルパス参照だけに頼らない）。仕様ファイルは監査証跡
+   としての役割に位置づけ、実行の正しさはプロンプト本文の自己完結性で担保する。
    実行前に並列実行するタスク一覧をユーザーに提示し承認を得る。
 3. **エージェント定義**: `.claude/agents/implementer.md`（model: haiku, tools: Read/Write/Edit/
    Bash/Glob/Grep, isolation: worktree）と `.claude/agents/reviewer.md`（model: sonnet, tools:
    Read/Grep/Glob/Bash のみ、Write/Edit権限なし）を、既存の `skills/` と同じ要領で
    `modules/home-manager/misc/claude-code/agents/` 配下に置き、home-managerの `home.file` で
    `.claude/agents/` にシンボリックリンクして宣言的に管理する。
-4. **ブランチ/マージ戦略**: implementerはworktree内で `task/NNNN-X` ブランチにコミットする。
+4. **ブランチ/マージ戦略**: `isolation: worktree` が自動で割り当てるブランチ名
+   （`worktree-agent-<id>`）はそのままでは使わず、implementerへの委譲プロンプトで
+   `git checkout -b task/NNNN-X` を明示的に指示し、`task/NNNN-X` ブランチにコミットさせる。
    マージ条件・自動化の是非は [ADR-0005](0005-fanout-auto-merge-without-human-approval.md) に分離する。
    承認された場合、親が `git merge --no-ff` でmainに取り込み、worktreeとブランチを削除する。
+   reviewerも独自のworktreeで動くため、implementerの`task/NNNN-X`ブランチをreviewer側で
+   チェックアウトするには、先にimplementer側のworktreeを削除して当該ブランチを解放して
+   おく必要がある（同一ブランチは複数worktreeで同時にチェックアウトできないため）。
 5. **エスカレーション規則**: implementerが同一タスクで2回失敗したらリトライを止めて親に
    エスカレーションする。reviewerの差し戻しは1往復までとし、差し戻しは新規エージェントではなく
    同一implementerインスタンスをSendMessageで文脈ごと再開して行う。2回目のNGも親にエスカレーション
@@ -74,6 +84,9 @@ PRをレビューする体制にしたい。親モデルとの対話でまとめ
   コミットが増える（計画書本体とは別に `docs/plans/NNNN-tasks/` 配下が肥大化する）
 - Agent Teamsのような密な協調（動的なタスク再割り当て等）はスコープ外とし、当面は静的な
   事前分割に依存する
+- `isolation: worktree`の分岐元コミットがAgent呼び出し時点のHEADと一致する保証がないため、
+  仕様ファイルとプロンプト埋め込みの内容が二重管理になる（仕様ファイルを更新してもプロンプト
+  側の埋め込みを更新し忘れると齟齬が生じうる）
 
 ## 参考
 
