@@ -43,15 +43,15 @@
            are found even when a specific font name is requested. -->
       <alias>
         <family>Noto Sans</family>
-        <append>
+        <accept>
           <family>Noto Sans CJK JP</family>
-        </append>
+        </accept>
       </alias>
       <alias>
         <family>Noto Serif</family>
-        <append>
+        <accept>
           <family>Noto Serif CJK JP</family>
-        </append>
+        </accept>
       </alias>
     </fontconfig>
   '';
