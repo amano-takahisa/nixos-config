@@ -14,6 +14,10 @@
   # Use latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # exFAT support for reading/writing external media (USB drives, SD cards, etc.)
+  boot.supportedFilesystems = [ "exfat" ];
+  environment.systemPackages = [ pkgs.exfatprogs ];
+
   # Timezone
   time.timeZone = "Asia/Tokyo";
 
