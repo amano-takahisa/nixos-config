@@ -71,6 +71,13 @@
       set-window-option -g window-status-current-style "bg=#aaaaaa,fg=#333333"
 
       #################
+      # Mouse
+      #################
+      # Reduce mouse wheel scroll amount (tmux default is 5 lines per notch)
+      bind-key -T copy-mode-vi WheelUpPane   send-keys -X -N 2 scroll-up
+      bind-key -T copy-mode-vi WheelDownPane send-keys -X -N 2 scroll-down
+
+      #################
       # Others
       #################
       # Required for Kitty image protocol (image.nvim) to work through tmux
