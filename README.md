@@ -142,6 +142,18 @@ LLM agents (Claude Code, etc.) are provided by [llm-agents.nix](https://github.c
 nix flake update llm-agents
 ```
 
+### oh-my-pi (omp)
+
+[oh-my-pi](https://github.com/can1357/oh-my-pi) (`omp`) is pinned as a flake input
+and installed on the msi host through its home-manager module
+(`modules/home-manager/misc/oh-my-pi/default.nix`). The package is built from
+source (Bun + Rust) with no binary cache, so the first build after a lock update
+takes a while. Declarative settings go in `programs.omp.settings`.
+
+```bash
+nix flake update oh-my-pi
+```
+
 ### fetchFromGitHub packages
 
 Hashes need to be updated manually when bumping a pinned `rev`/`version`. Two

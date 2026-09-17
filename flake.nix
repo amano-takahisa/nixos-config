@@ -16,6 +16,9 @@
     # Provides homeModules.default (used here) and a standalone `nix run` package.
     nvim-config.inputs.nixpkgs.follows = "nixpkgs";
     nvim-config.url = "github:amano-takahisa/nixvim-config";
+    # oh-my-pi (omp) coding agent; provides the `programs.omp` home-manager module.
+    oh-my-pi.inputs.nixpkgs.follows = "nixpkgs";
+    oh-my-pi.url = "github:can1357/oh-my-pi";
     plasma-manager.inputs.home-manager.follows = "home-manager";
     plasma-manager.inputs.nixpkgs.follows = "nixpkgs";
     plasma-manager.url = "github:nix-community/plasma-manager";
@@ -23,7 +26,7 @@
     sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { self, nixpkgs, home-manager, nixvim, nvim-config, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, sops-nix, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nixvim, nvim-config, oh-my-pi, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, sops-nix, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -80,7 +83,7 @@
 
       # Common extraSpecialArgs for home-manager
       hmExtraSpecialArgs = {
-        inherit llm-agents mcp-servers-nix;
+        inherit llm-agents mcp-servers-nix oh-my-pi;
       };
 
       # Common home-manager modules
