@@ -77,6 +77,13 @@
     allowedUDPPortRanges = allowedTCPPortRanges;
   };
 
+  # Tailscale: reach this host from the phone (tailnet) without port forwarding.
+  # `openFirewall` (default true) puts tailscale0 in the firewall's trusted
+  # interfaces, so sshd (22) and mosh (60000-61000) are reachable over the tailnet.
+  # Run `sudo tailscale up --ssh` once to join; --ssh enables Tailscale SSH
+  # (tailnet identity auth, no authorized_keys needed on the phone).
+  services.tailscale.enable = true;
+
   environment.systemPackages = with pkgs; [
     cudatoolkit
     kdePackages.partitionmanager
