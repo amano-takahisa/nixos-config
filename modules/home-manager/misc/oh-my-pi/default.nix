@@ -65,8 +65,10 @@ in
         plan = "opencode-go/deepseek-v4-pro:high";
         # 軽量なバックグラウンド処理 (タイトル生成など)。
         smol = "opencode-go/deepseek-v4.1-flash";
-        # implementer サブエージェント (コード特化)。
-        worker = "opencode-go/kimi-k2.7-code:high";
+        # implementer サブエージェント。Kimi K2.7 Code は cache read $0.19/M・
+        # output $4.00/M で高くつくため、Flash 帯 ($0.003/M・$0.60/M) に落とす。
+        # 品質が足りなければ gpt-5.6-luna (0.02/1.20) や deepseek-v4-pro (0.022/1.98) へ。
+        worker = "opencode-go/deepseek-v4.1-flash:high";
         # reviewer サブエージェント (推論重視)。
         review = "opencode-go/deepseek-v4-pro:high";
       };
