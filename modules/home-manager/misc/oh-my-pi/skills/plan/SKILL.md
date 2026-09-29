@@ -114,5 +114,6 @@ description: 承認済みADRや壁打ち結果から、セッションを跨い�
 - モデル切り替えは不要。oh-my-pi ではサブエージェントのモデルが
   `modelRoles.worker` / `modelRoles.review` で固定されており (implementer /
   reviewer の frontmatter `model: "@worker"` / `"@review"`)、親は調整役のままでよい。
-  壁打ちを強いモデルで行いたい場合のみ、`/model @plan` に切り替えてから
-  grill-me / plan を実行する。
+  設計フェーズは `/grill-me` を使えば送信時に `modelRoles.plan` へ自動で切り替わり
+  (`extensions/grill-me-plan.ts`)、同一セッションで plan まで進めばそのまま plan 級で
+  実行される。`/skill:plan` を単独で始める場合だけ `/model @plan` を手で打つ。
