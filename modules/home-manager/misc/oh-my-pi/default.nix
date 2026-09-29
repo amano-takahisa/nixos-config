@@ -13,13 +13,17 @@
 #   ~/.omp/agent/agents/*.md          task subagent definitions (`task` tool)
 #   ~/.omp/agent/skills/*/SKILL.md    skills (`/skill:<name>`, `skill://` URLs)
 #   ~/.omp/agent/commands/*.md        bare `/name` slash commands
+#   ~/.omp/agent/extensions/*.ts      TypeScript extensions (events, commands, tools)
 #   ~/.omp/agent/hooks/pre/*.ts       tool_call / before_agent_start hooks
 #
-# The first four go through `home.file` (store symlinks). Hooks must be real
+# The first five go through `home.file` (store symlinks). Hooks must be real
 # files: omp's native hook discovery enumerates `hooks/pre` with
 # `Dirent.isFile()`, which is false for a symlink, so a `home.file` hook is
 # silently ignored. They are installed by an activation script instead, the
-# same way the upstream module installs config.yml.
+# same way the upstream module installs config.yml. Extension discovery globs
+# `*.{ts,js}` with a File-type filter that resolves a symlink's target type, so
+# a symlinked extension file *is* discovered (see `discoverExtensionModulePaths`
+# in omp's `src/discovery/helpers.ts`).
 #
 # `.claude/agents` is deliberately not reused: omp skips foreign agent roots
 # because their frontmatter is not the OMP task-agent contract.
@@ -106,6 +110,11 @@ in
     // entriesFromDir {
       dir = ./commands;
       prefix = ".omp/agent/commands";
+      kind = "regular";
+    }
+    // entriesFromDir {
+      dir = ./extensions;
+      prefix = ".omp/agent/extensions";
       kind = "regular";
     };
 

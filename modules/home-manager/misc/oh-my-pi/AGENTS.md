@@ -30,13 +30,16 @@
   plan スキルは `/skill:plan` で呼ぶ。両者は別物:
   組み込み plan mode は「その場で計画してから実行する」モード、
   plan スキルは `docs/plans/NNNN-*.md` に永続的な計画書を作る作業。
+- `/grill-me` / `/skill:grill-me` は送信時 (input イベント) に `modelRoles.plan` の
+  モデルと thinking レベルへ自動で切り替わる (`extensions/grill-me-plan.ts`)。
+  切り替えはセッション中は維持され、`/clear` (新セッション) か `/model @default` で戻る。
 - スキル本文は `skill://<name>` で読める。サブエージェントは `autoloadSkills`
   で明示しない限りスキル本文を自動では持たないので、委譲時は必要な仕様を
   プロンプト本文に書くこと。
 
 ## 標準の開発フロー
 
-1. `/grill-me` で仕様を対話的に決定する (必要なモデル: `modelRoles.plan` 級)
+1. `/grill-me` で仕様を対話的に決定する (送信時に `modelRoles.plan` へ自動で切り替わる)
 2. `/adr` で決定を `docs/adr/` に記録する
 3. `/skill:plan` で実装計画書を `docs/plans/` に作る
 4. `/clear` して親コンテキストを捨てる (仕様はすべてファイルに永続化済み)
