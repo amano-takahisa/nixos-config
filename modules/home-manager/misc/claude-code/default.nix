@@ -42,8 +42,11 @@ let
 in
 {
   # Apps (Slack, Claude Code, etc.) sometimes replace the home-manager symlink with a
-  # regular file. This runs before home-manager writes symlinks to restore the correct state.
-  home.activation.fixMimeappsList = lib.hm.dag.entryBefore [ "writeBoundary" ] ''
+  # regular file. `checkLinkTargets` aborts activation when it finds such a file in the
+  # way, so the removal must be ordered *before that check*, not merely before
+  # `writeBoundary` (`checkLinkTargets` is itself `entryBefore [ "writeBoundary" ]`, and
+  # the DAG tie-break happens to run it first).
+  home.activation.fixMimeappsList = lib.hm.dag.entryBefore [ "checkLinkTargets" ] ''
     if [ -f "$HOME/.config/mimeapps.list" ] && [ ! -L "$HOME/.config/mimeapps.list" ]; then
       $DRY_RUN_CMD rm "$HOME/.config/mimeapps.list"
     fi
