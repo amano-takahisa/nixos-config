@@ -38,10 +38,11 @@
       bind-key l select-pane -R
 
       # Use Alt-arrow keys without prefix key to switch panes
-      bind-key -n M-Left select-pane -L
-      bind-key -n M-Right select-pane -R
-      bind-key -n M-Up select-pane -U
-      bind-key -n M-Down select-pane -D
+      # disabled. conflict with oh-my-pi. Use hjkl or arrow keys with prefix.
+      # bind-key -n M-Left select-pane -L
+      # bind-key -n M-Right select-pane -R
+      # bind-key -n M-Up select-pane -U
+      # bind-key -n M-Down select-pane -D
 
       # Change pane border colors
       set-option -g pane-border-style "bg=#333333,fg=#aaaaaa"
