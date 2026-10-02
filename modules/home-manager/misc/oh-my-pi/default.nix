@@ -78,6 +78,15 @@ in
       # 親ツリーへ適用する (fanout スキルの前提)。
       task.isolation.enabled = true;
 
+      # NixOS には chrome/chromium が無く、omp 同梱の Chromium も共有ライブラリを
+      # 解決できず起動しない (NixOS は FHS を持たないため)。そこで Eval の
+      # browser prelude は、nix-shell で起動した Chrome へ CDP で接続させる
+      # (起動手順は AGENTS.md)。screenshotDir は人間が確認できる場所に置く。
+      browser = {
+        cdpUrl = "http://127.0.0.1:9222";
+        screenshotDir = "~/Pictures/omp-shots";
+      };
+
       # 以下は omp 側で `/settings` から設定していた UI 設定。
       symbolPreset = "nerd";
       composer.shape = "band";

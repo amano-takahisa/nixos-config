@@ -15,6 +15,46 @@
   この確認は hook (`hooks/pre/guard-flake-nix.ts`) によって強制される
   (UI が無いセッションではブロックされる)。
 
+## ブラウザでの動作確認 (NixOS ホスト)
+
+このホストには google-chrome / chromium を意図的に入れていない
+(`modules/home-manager/browser` にも chromium は無い)。PATH 上に
+`chromium` / `google-chrome` は存在しない。
+
+omp 同梱の Chromium (Eval の `browser` prelude が既定で使うバイナリ) も NixOS では
+共有ライブラリ (`libglib-2.0.so.0`) を解決できず起動しない。そのため素の
+`browser.open()` は `Shared browser daemon unavailable (broker start or Chromium
+launch failed)` で失敗する。
+
+ブラウザで挙動を確認するときは、`bash` ツールのサービス (`ready` にポート 9222) として
+nix-shell 経由で Chrome を起動する (`--headless=new` の代わりに
+`--ozone-platform=wayland` を付けると、人間が GUI で確認できるウィンドウになる。必要な
+環境では `env WAYLAND_DISPLAY=wayland-0 XDG_RUNTIME_DIR=/run/user/1000` を前置する):
+
+```bash
+env NIXPKGS_ALLOW_UNFREE=1 nix-shell -p google-chrome --run \
+  'google-chrome --headless=new --remote-debugging-port=9222 --user-data-dir="$HOME/.cache/omp-chrome"'
+```
+
+`~/.omp/agent/config.yml` には `browser.cdpUrl = http://127.0.0.1:9222` を宣言済み
+(nixos-config の `programs.omp.settings`) なので、`app.cdp_url` を渡さなくても
+`browser.open()` はこの Chrome に接続する。別ポートの Chrome を使うときだけ
+`app: { cdp_url: "..." }` を明示する。`browser.screenshotDir` も宣言済みで、
+スクリーンショットは `~/Pictures/omp-shots` に保存される。
+
+```js
+// Eval (js): 起動済みの Chrome に接続する
+const tab = await browser.open({ name: "main", url: "http://localhost:3000" });
+await tab.screenshot(); // ~/Pictures/omp-shots に画像として保存される
+await browser.close({ all: true });
+```
+
+- Chrome を起動する前に `browser.open()` を呼ぶと
+  `Timed out waiting for CDP endpoint http://127.0.0.1:9222` で失敗する。起動は
+  `bash` ツールのサービス (`ready` ポート 9222) に任せ、起動してから呼ぶ。
+- `browser.close` は接続先の Chrome を閉じない。確認が終わったらサービスを停止する。
+- 静的なページの内容確認はブラウザを起動せず `read` ツールで足りる。
+
 ## スキルとスラッシュコマンド
 
 | 呼び出し                         | スキル     | 用途                                          |
