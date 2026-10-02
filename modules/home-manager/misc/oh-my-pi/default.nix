@@ -62,15 +62,15 @@ in
         # 対話・調整役 (親エージェント)。設計を厚くしたいときは `/model @plan`。
         default = "opencode-go/deepseek-v4.1-flash";
         # 設計・壁打ち (grill-me / plan スキル)。
-        plan = "opencode-go/deepseek-v4-pro:high";
+        plan = "opencode-go/deepseek-v4.1-flash";
         # 軽量なバックグラウンド処理 (タイトル生成など)。
         smol = "opencode-go/deepseek-v4.1-flash";
         # implementer サブエージェント。Kimi K2.7 Code は cache read $0.19/M・
         # output $4.00/M で高くつくため、Flash 帯 ($0.003/M・$0.60/M) に落とす。
-        # 品質が足りなければ gpt-5.6-luna (0.02/1.20) や deepseek-v4-pro (0.022/1.98) へ。
+        # 品質が足りなければ gpt-5.6-luna (0.02/1.20)へ。
         worker = "opencode-go/deepseek-v4.1-flash:high";
         # reviewer サブエージェント (推論重視)。
-        review = "opencode-go/deepseek-v4-pro:high";
+        review = "opencode-go/deepseek-v4.1-flash:high";
       };
       defaultThinkingLevel = "auto";
 
