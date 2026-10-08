@@ -2,7 +2,9 @@
 
 ## ステータス
 
-承認済み（2026-07-18）
+差し替え済み（2026-10-08）
+
+現在のPR・マージ方針は[ADR-0007](0007-shared-coding-agent-workflow.md)を参照。
 
 ## コンテキストと問題
 
@@ -62,4 +64,5 @@ flake check成功の両方が揃った場合にのみ、親が確認なしで `g
 ## 参考
 
 - [ADR-0004: LLM並列実装パイプライン（fanout）の採用](0004-llm-fanout-pipeline.md)
+- 差し替え先: [ADR-0007: 複数Coding Agentで共有する開発ワークフロー](0007-shared-coding-agent-workflow.md)
 - 元になった壁打ち: Claude共有会話（並列実装パイプラインの構想と技術検証）

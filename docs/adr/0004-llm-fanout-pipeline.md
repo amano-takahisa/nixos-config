@@ -2,7 +2,9 @@
 
 ## ステータス
 
-承認済み（2026-07-18）
+差し替え済み（2026-10-08）
+
+現在の複数ツール共通ワークフローは[ADR-0007](0007-shared-coding-agent-workflow.md)を参照。
 
 ## コンテキストと問題
 
@@ -103,4 +105,5 @@ PRをレビューする体制にしたい。親モデルとの対話でまとめ
 ## 参考
 
 - [ADR-0005: reviewer承認+機械的ゲートのみでの自動マージ（人間承認なし）](0005-fanout-auto-merge-without-human-approval.md)
+- 差し替え先: [ADR-0007: 複数Coding Agentで共有する開発ワークフロー](0007-shared-coding-agent-workflow.md)
 - 元になった壁打ち: Claude共有会話（並列実装パイプラインの構想と技術検証）

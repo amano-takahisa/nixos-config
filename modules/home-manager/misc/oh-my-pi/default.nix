@@ -5,17 +5,11 @@
 # `programs.omp.package` defaults to that input's package; declarative settings
 # go in `programs.omp.settings` and are written to ~/.omp/agent/config.yml.
 #
-# The home-manager module manages only the package and config.yml. Everything
-# else omp discovers natively is wired here with explicit `home.file` entries,
-# mirroring modules/home-manager/misc/claude-code/default.nix:
+# Shared instructions and skills are wired by agent-workflow/default.nix.
+# This module retains only oh-my-pi-specific settings, browser guidance, and
+# hooks.
 #
-#   ~/.omp/agent/AGENTS.md            user-level context file (CLAUDE.md 相当)
-#   ~/.omp/agent/agents/*.md          task subagent definitions (`task` tool)
-#   ~/.omp/agent/skills/*/SKILL.md    skills (`/skill:<name>`, `skill://` URLs)
-#   ~/.omp/agent/commands/*.md        bare `/name` slash commands
-#   ~/.omp/agent/hooks/pre/*.ts       tool_call / before_agent_start hooks
-#
-# The first four go through `home.file` (store symlinks). Hooks must be real
+# Skills and agent definitions go through `home.file` (store symlinks). Hooks must be real
 # files: omp's native hook discovery enumerates `hooks/pre` with
 # `Dirent.isFile()`, which is false for a symlink, so a `home.file` hook is
 # silently ignored. They are installed by an activation script instead, the
@@ -26,23 +20,6 @@
 { lib, oh-my-pi, ... }:
 
 let
-  # One home.file entry per file (`regular`) or per skill directory (`directory`).
-  entriesFromDir =
-    { dir, prefix, kind }:
-    let
-      names = builtins.attrNames (
-        lib.filterAttrs (_: type: type == kind) (builtins.readDir dir)
-      );
-    in
-    builtins.listToAttrs (
-      map
-        (name: {
-          name = "${prefix}/${name}";
-          value.source = dir + "/${name}";
-        })
-        names
-    );
-
   hooksDir = ./hooks/pre;
   hookNames = builtins.attrNames (
     lib.filterAttrs (_: type: type == "regular") (builtins.readDir hooksDir)
@@ -65,23 +42,13 @@ in
         plan = "opencode-go/deepseek-v4.1-flash";
         # 軽量なバックグラウンド処理 (タイトル生成など)。
         smol = "opencode-go/deepseek-v4.1-flash";
-        # implementer サブエージェント。Kimi K2.7 Code は cache read $0.19/M・
-        # output $4.00/M で高くつくため、Flash 帯 ($0.003/M・$0.60/M) に落とす。
-        # 品質が足りなければ gpt-5.6-luna (0.02/1.20)へ。
-        worker = "opencode-go/deepseek-v4.1-flash:high";
-        # reviewer サブエージェント (推論重視)。
-        review = "opencode-go/deepseek-v4.1-flash:high";
       };
       defaultThinkingLevel = "auto";
-
-      # implementer を spawn ごとの隔離ワークスペースで動かし、成果を patch として
-      # 親ツリーへ適用する (fanout スキルの前提)。
-      task.isolation.enabled = true;
 
       # NixOS には chrome/chromium が無く、omp 同梱の Chromium も共有ライブラリを
       # 解決できず起動しない (NixOS は FHS を持たないため)。そこで Eval の
       # browser prelude は、nix-shell で起動した Chrome へ CDP で接続させる
-      # (起動手順は AGENTS.md)。screenshotDir は人間が確認できる場所に置く。
+      # (起動手順は BROWSER.md)。screenshotDir は人間が確認できる場所に置く。
       browser = {
         cdpUrl = "http://127.0.0.1:9222";
         screenshotDir = "~/Pictures/omp-shots";
@@ -98,25 +65,9 @@ in
     };
   };
 
-  home.file =
-    {
-      ".omp/agent/AGENTS.md".source = ./AGENTS.md;
-    }
-    // entriesFromDir {
-      dir = ./agents;
-      prefix = ".omp/agent/agents";
-      kind = "regular";
-    }
-    // entriesFromDir {
-      dir = ./skills;
-      prefix = ".omp/agent/skills";
-      kind = "directory";
-    }
-    // entriesFromDir {
-      dir = ./commands;
-      prefix = ".omp/agent/commands";
-      kind = "regular";
-    };
+  home.file = {
+    ".omp/agent/BROWSER.md".source = ./BROWSER.md;
+  };
 
   # Hooks are copied as regular files (see the header comment). Renaming or
   # deleting a hook file leaves the previously installed copy behind, so remove

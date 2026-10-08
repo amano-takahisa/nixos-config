@@ -1,17 +1,6 @@
 { lib, pkgs, mcp-servers-nix, llm-agents, ... }:
 
 let
-  skillsDir = ./skills;
-  skillNames = builtins.attrNames (
-    lib.filterAttrs (_: type: type == "directory") (builtins.readDir skillsDir)
-  );
-  skillFileEntries = builtins.listToAttrs (map
-    (name: {
-      name = ".claude/skills/${name}";
-      value.source = skillsDir + "/${name}";
-    })
-    skillNames);
-
   hooksDir = ./hooks;
   hookNames = builtins.attrNames (
     lib.filterAttrs (_: type: type == "regular") (builtins.readDir hooksDir)
@@ -23,22 +12,6 @@ let
     })
     hookNames);
 
-  # agents/ はエージェント定義がまだ1つも追加されていない間は存在しないため、
-  # readDir 前に pathExists で存在確認する。
-  agentsDir = ./agents;
-  agentNames =
-    if builtins.pathExists agentsDir then
-      builtins.attrNames
-        (
-          lib.filterAttrs (_: type: type == "regular") (builtins.readDir agentsDir)
-        )
-    else [ ];
-  agentFileEntries = builtins.listToAttrs (map
-    (name: {
-      name = ".claude/agents/${name}";
-      value.source = agentsDir + "/${name}";
-    })
-    agentNames);
 in
 {
   # Apps (Slack, Claude Code, etc.) sometimes replace the home-manager symlink with a
@@ -56,9 +29,7 @@ in
     "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
   };
 
-  home.file = skillFileEntries // hookFileEntries // agentFileEntries // {
-    ".claude/CLAUDE.md".source = ./CLAUDE.md;
-  };
+  home.file = hookFileEntries;
 
   programs.claude-code = {
     enable = true;
