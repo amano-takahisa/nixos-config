@@ -3,6 +3,7 @@
 {
   programs.codex = {
     enable = true;
+    mutableSettings = true;
     settings = {
       sandbox_mode = "workspace-write";
       approval_policy = "on-request";
