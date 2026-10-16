@@ -21,16 +21,17 @@ workflow instructions.
 
 ## Available skills
 
-| Skill            | Use it for                                                                                     |
-| ---------------- | ---------------------------------------------------------------------------------------------- |
-| `grill-me`       | Clarify a vague request and produce agreed scope and acceptance criteria.                      |
-| `adr`            | Record a durable architecture decision, or inspect and update existing ADRs.                   |
-| `write-plan`     | Create or inspect a persistent plan for work that spans multiple steps or sessions.            |
-| `next`           | Continue the next incomplete task from an issue or saved plan.                                 |
-| `verify-change`  | Run the relevant checks and confirm a user-visible flow.                                       |
-| `review-changes` | Review a diff against its acceptance criteria without editing it.                              |
-| `parallelize`    | Decide whether bounded independent work can safely run in parallel and coordinate integration. |
-| `commit`         | Prepare and make focused local commits following the repository's history.                     |
+| Skill            | Use it for                                                                                      |
+| ---------------- | ----------------------------------------------------------------------------------------------- |
+| `grill-me`       | Clarify a vague request and produce agreed scope and acceptance criteria.                       |
+| `adr`            | Record a durable architecture decision, or inspect and update existing ADRs.                    |
+| `write-plan`     | Create or inspect a persistent plan for work that spans multiple steps or sessions.             |
+| `next`           | Continue the next incomplete task from an issue or saved plan.                                  |
+| `execute-plan`   | Finish all remaining plan tasks with verification, progress updates, and focused local commits. |
+| `verify-change`  | Run the relevant checks and confirm a user-visible flow.                                        |
+| `review-changes` | Review a diff against its acceptance criteria without editing it.                               |
+| `parallelize`    | Decide whether bounded independent work can safely run in parallel and coordinate integration.  |
+| `commit`         | Prepare and make focused local commits following the repository's history.                      |
 
 Invoke a skill using the host's syntax:
 
@@ -61,6 +62,19 @@ available; `review-changes` supplies the shared review criteria.
    Push and open a pull request according to the repository workflow; wait for
    CI and review before merging. Do not auto-merge.
 6. Use `commit` when a local commit is wanted. It does not push changes.
+
+For an approved plan that should run to completion, use `execute-plan` instead
+of invoking `next` repeatedly. For example, in Codex:
+
+```text
+$execute-plan docs/plans/NNNN-example.md
+```
+
+It coordinates `next` and `parallelize`, continues after each task, and makes
+focused local commits after verification and plan updates. Parallel work is
+integrated and verified by one owner. It stops for decisions or blockers that
+prevent further work, and saves progress for resumption. It does not push,
+open a PR, merge, or deploy. Say explicitly if local commits are not wanted.
 
 ## Parallel work
 

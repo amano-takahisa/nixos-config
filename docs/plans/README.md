@@ -20,6 +20,7 @@ Claude Code、Codex CLI、oh-my-piから同じ正本のスキルを利用しま�
 
 - `write-plan`: 長期作業の計画を作成・一覧・表示
 - `next`: Issueまたは計画の次の未完了タスクを実装し検証
+- `execute-plan`: 計画の未完了タスクを継続実行し、検証・進捗更新後に適宜ローカルコミット
 - `verify-change`: テストとユーザー可視の動作を確認
 - `review-changes`: 受け入れ条件と差分を照合し、編集せず所見を報告
 - `parallelize`: 独立作業の並列化と統合を計画
