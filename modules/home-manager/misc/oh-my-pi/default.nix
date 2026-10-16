@@ -1,8 +1,7 @@
 # oh-my-pi (omp) coding agent for the msi host.
 #
-# The package is built from the pinned `oh-my-pi` flake input (Bun + Rust, no
-# binary cache), so the first build after a lock update is slow.
-# `programs.omp.package` defaults to that input's package; declarative settings
+# Use nixpkgs' omp package to benefit from its binary cache. The pinned
+# `oh-my-pi` flake input provides only the home-manager module; declarative settings
 # go in `programs.omp.settings` and are written to ~/.omp/agent/config.yml.
 #
 # Shared instructions and skills are wired by agent-workflow/default.nix.
@@ -17,7 +16,7 @@
 #
 # `.claude/agents` is deliberately not reused: omp skips foreign agent roots
 # because their frontmatter is not the OMP task-agent contract.
-{ lib, oh-my-pi, ... }:
+{ lib, pkgs, oh-my-pi, ... }:
 
 let
   hooksDir = ./hooks/pre;
@@ -30,6 +29,7 @@ in
 
   programs.omp = {
     enable = true;
+    package = pkgs.omp;
 
     # ~/.omp/agent/config.yml is installed as a writable regular file, so omp
     # can still rewrite it at runtime (`/settings`, onboarding). Those runtime

@@ -144,14 +144,15 @@ nix flake update llm-agents
 
 ### oh-my-pi (omp)
 
-[oh-my-pi](https://github.com/can1357/oh-my-pi) (`omp`) is pinned as a flake input
-and installed on the msi host through its home-manager module
-(`modules/home-manager/misc/oh-my-pi/default.nix`). The package is built from
-source (Bun + Rust) with no binary cache, so the first build after a lock update
-takes a while. Declarative settings go in `programs.omp.settings`.
+[oh-my-pi](https://github.com/can1357/oh-my-pi) (`omp`) is installed on the msi
+host from nixpkgs (`pkgs.omp`) to use its binary cache when available, accepting
+a potentially older version. The pinned `oh-my-pi` flake input provides only
+the home-manager module (`modules/home-manager/misc/oh-my-pi/default.nix`).
+Declarative settings go in `programs.omp.settings`.
 
 ```bash
-nix flake update oh-my-pi
+nix flake update nixpkgs # Update the installed omp package
+nix flake update oh-my-pi # Update only the settings module
 ```
 
 ### fetchFromGitHub packages
