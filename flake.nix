@@ -29,8 +29,11 @@
   outputs = { self, nixpkgs, home-manager, nixvim, nvim-config, oh-my-pi, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, sops-nix, ... }@inputs:
     let
       system = "x86_64-linux";
+      overlays = [
+        (import ./overlays/mozc.nix)
+      ];
       pkgs = import nixpkgs {
-        inherit system;
+        inherit overlays system;
         config.allowUnfree = true;
         config.permittedInsecurePackages = [
           "electron-39.8.10"
@@ -122,7 +125,10 @@
         # sx2: Desktop without graphics tools
         sx2 = nixpkgs.lib.nixosSystem {
           modules = [
-            { nixpkgs.hostPlatform = system; }
+            {
+              nixpkgs.hostPlatform = system;
+              nixpkgs.overlays = overlays;
+            }
             ./hosts/sx2/configuration.nix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
@@ -133,7 +139,10 @@
         # msi: Full-featured desktop
         msi = nixpkgs.lib.nixosSystem {
           modules = [
-            { nixpkgs.hostPlatform = system; }
+            {
+              nixpkgs.hostPlatform = system;
+              nixpkgs.overlays = overlays;
+            }
             ./hosts/msi/configuration.nix
             home-manager.nixosModules.home-manager
             sops-nix.nixosModules.sops
@@ -144,7 +153,10 @@
         # wsl: Terminal-focused WSL environment
         wsl = nixpkgs.lib.nixosSystem {
           modules = [
-            { nixpkgs.hostPlatform = system; }
+            {
+              nixpkgs.hostPlatform = system;
+              nixpkgs.overlays = overlays;
+            }
             nixos-wsl.nixosModules.wsl
             ./hosts/wsl/configuration.nix
             home-manager.nixosModules.home-manager
