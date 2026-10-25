@@ -1,4 +1,4 @@
-# oh-my-pi (omp) coding agent for the msi host.
+# oh-my-pi (omp) coding agent shared by Linux and macOS hosts.
 #
 # Use nixpkgs' omp package to benefit from its binary cache. The pinned
 # `oh-my-pi` flake input provides only the home-manager module; declarative settings
@@ -49,7 +49,7 @@ in
       # 解決できず起動しない (NixOS は FHS を持たないため)。そこで Eval の
       # browser prelude は、nix-shell で起動した Chrome へ CDP で接続させる
       # (起動手順は BROWSER.md)。screenshotDir は人間が確認できる場所に置く。
-      browser = {
+      browser = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
         cdpUrl = "http://127.0.0.1:9222";
         screenshotDir = "~/Pictures/omp-shots";
       };
@@ -65,7 +65,7 @@ in
     };
   };
 
-  home.file = {
+  home.file = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     ".omp/agent/BROWSER.md".source = ./BROWSER.md;
   };
 

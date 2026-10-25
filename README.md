@@ -2,15 +2,16 @@
 
 # NixOS Multi-Host Configuration
 
-Multi-host NixOS configuration managed with Nix flakes and home-manager.
+Multi-host NixOS and macOS user configuration managed with Nix flakes and home-manager.
 
 ## Hosts
 
-| Host | Type    | Desktop      | Notable Features                                |
-| ---- | ------- | ------------ | ----------------------------------------------- |
-| msi  | Desktop | KDE Plasma 6 | NVIDIA/CUDA, Waydroid, Podman, Geospatial tools |
-| sx2  | Desktop | KDE Plasma 6 | Lightweight desktop                             |
-| wsl  | WSL2    | None         | Terminal-focused                                |
+| Host     | Type                  | Desktop      | Notable Features                                 |
+| -------- | --------------------- | ------------ | ------------------------------------------------ |
+| msi      | Desktop               | KDE Plasma 6 | NVIDIA/CUDA, Waydroid, Podman, Geospatial tools  |
+| sx2      | Desktop               | KDE Plasma 6 | Lightweight desktop                              |
+| wsl      | WSL2                  | None         | Terminal-focused                                 |
+| chie-mac | macOS (Apple Silicon) | SSH          | Standalone Home Manager for takahisa; shared Mac |
 
 ## Quick Start
 
@@ -34,6 +35,90 @@ Full NixOS system rebuild. Defaults to `$HOSTNAME` and `switch`.
 ```
 
 ## Setup
+
+### Shared MacBook Pro (chie-mac)
+
+Chie's existing nix-darwin configuration manages the system and Nix daemon.
+This repository manages only `/Users/takahisa` with standalone Home Manager;
+it does not define a Darwin system configuration or require sudo for updates.
+The macOS account and SSH access must already exist, and the Nix daemon must
+permit this user to build packages. No `trusted-users` change is needed for
+the normal workflow.
+
+The Mac profile shares fish, tmux, Git, gh, ghq, lazygit, direnv, Atuin, search
+tools, Codex, omp, agent instructions/skills, and the external Nixvim configuration
+with the Linux profiles. Linux desktop modules, services, secret activation,
+and omp's NixOS-specific browser instructions are not imported.
+
+From an SSH session as `takahisa`, clone this repository and run:
+
+```bash
+git clone https://github.com/amano-takahisa/nixos-config.git
+cd nixos-config
+./home-rebuild.sh takahisa@chie-mac build
+./home-rebuild.sh takahisa@chie-mac switch
+```
+
+Use the branch containing the Mac configuration until it is merged. New local
+files must be added to Git before building a Git flake. Home Manager reports
+conflicting existing dotfiles: review and move those files aside individually
+before retrying; do not overwrite them blindly. Authenticate Codex, omp, and GitHub
+as `takahisa` separately; credentials are not copied from Chie or stored here.
+
+Reconnect with `ssh chie-mac`. Interactive SSH sessions enter fish through the
+managed zsh configuration, without changing the account's registered login shell.
+Noninteractive SSH commands, scp, and sftp retain zsh behavior. New tmux panes use
+fish too. Confirm the tools are available:
+
+```fish
+type -a fish tmux codex omp nvim git gh ghq direnv rg fd
+tmux new-session -s dev
+```
+
+For subsequent updates, pull the published changes and build on the Mac:
+
+```bash
+cd /path/to/nixos-config
+git pull --ff-only
+./home-rebuild.sh takahisa@chie-mac build
+```
+
+`build` creates the generation without activating it. When ready to apply it, run:
+
+```bash
+./home-rebuild.sh takahisa@chie-mac switch
+```
+
+On macOS the helper's default target is `takahisa@chie-mac` (using the current
+`$USER`), so `./home-rebuild.sh` also applies updates. The helper uses
+the Home Manager CLI pinned by this repository's lock file. Roll back a user
+generation with `home-manager generations`, then execute the desired generation's
+`activate` script. This does not roll back Chie's system configuration.
+
+Each development project provides its own `flake.nix` and ML dependencies.
+This repository's `nix develop` environment supports both `x86_64-linux` and
+`aarch64-darwin` for configuration maintenance.
+
+#### Verify PyTorch GPU access over SSH
+
+Run this from the repository on the Mac, inside an SSH session. It obtains uv
+from the pinned nixpkgs input and creates an isolated Python environment using
+the PyTorch macOS wheel; PyTorch is not installed into the Home Manager profile:
+
+```bash
+nix shell --inputs-from . nixpkgs#uv -c uv run --no-project --isolated --python 3.12 --with torch scripts/check-mps.py
+```
+
+The check requires MPS to be built and available, executes matrix multiplication
+and a backward pass on `mps`, synchronizes the GPU, and compares results with CPU
+results. CPU fallback is disabled. A `PASS` confirms those operations in that
+SSH session; it does not guarantee support for every model or operation. The
+resolved PyTorch version is printed, and uv may retain downloaded packages in
+its user cache. Project dependencies should be pinned separately.
+See the [PyTorch MPS documentation](https://docs.pytorch.org/docs/stable/notes/mps.html).
+
+tmux preserves sessions across SSH disconnections while the Mac is awake;
+it does not prevent sleep or guarantee computation while the lid is closed.
 
 ### WSL2
 

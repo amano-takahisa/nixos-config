@@ -1,5 +1,5 @@
 {
-  description = "Multi-host NixOS configuration for sx2, msi, wsl";
+  description = "NixOS and Home Manager configuration for sx2, msi, wsl, and chie-mac";
 
   inputs = {
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -39,6 +39,12 @@
           "electron-39.8.10"
         ];
       };
+      darwinSystem = "aarch64-darwin";
+      darwinPkgs = import nixpkgs {
+        system = darwinSystem;
+        config.allowUnfree = true;
+      };
+      supportedPkgs = { ${system} = pkgs; ${darwinSystem} = darwinPkgs; };
 
       # Common modules for all hosts
       commonModules = [
@@ -120,6 +126,14 @@
     {
       # Formatter for `nix fmt` - uses treefmt.toml in project root
       formatter.${system} = pkgs.treefmt;
+      formatter.${darwinSystem} = darwinPkgs.treefmt;
+
+      # Use the same pinned Home Manager for evaluation and activation.
+      packages = lib.mapAttrs
+        (system: _: {
+          home-manager = home-manager.packages.${system}.home-manager;
+        })
+        supportedPkgs;
 
       nixosConfigurations = {
         # sx2: Desktop without graphics tools
@@ -171,22 +185,34 @@
         "takahisa@sx2" = mkHomeManagerConfiguration "sx2";
         "takahisa@msi" = mkHomeManagerConfiguration "msi";
         "takahisa@wsl" = mkHomeManagerConfiguration "wsl";
+        "takahisa@chie-mac" = home-manager.lib.homeManagerConfiguration {
+          pkgs = darwinPkgs;
+          extraSpecialArgs = hmExtraSpecialArgs;
+          modules = [
+            ./hosts/chie-mac/home.nix
+            nvim-config.homeModules.default
+          ];
+        };
       };
 
-      devShells.${system}.default = pkgs.mkShell {
-        packages = with pkgs; [
-          # pre-commit and formatters
-          nixpkgs-fmt
-          prettier
-          pre-commit
-          ruff
-          shfmt
-          sops
-          treefmt
+      devShells = lib.mapAttrs
+        (_: pkgs: {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              # pre-commit and formatters
+              nixpkgs-fmt
+              prettier
+              pre-commit
+              ruff
+              shfmt
+              sops
+              treefmt
 
-          # Nix LSP
-          nixd
-        ];
-      };
+              # Nix LSP
+              nixd
+            ];
+          };
+        })
+        supportedPkgs;
     };
 }
