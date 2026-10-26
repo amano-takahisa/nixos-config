@@ -50,14 +50,32 @@ tools, Codex, omp, agent instructions/skills, and the external Nixvim configurat
 with the Linux profiles. Linux desktop modules, services, secret activation,
 and omp's NixOS-specific browser instructions are not imported.
 
-From an SSH session as `takahisa`, clone this repository and run:
+Connect with `ssh chie-mac` as `takahisa`. Repositories on the Mac use the same
+ghq layout as MSI: `~/ghq/personal/github.com/<owner>/<repository>`.
+Before Home Manager is installed, obtain ghq and Git temporarily through Nix:
 
 ```bash
-git clone https://github.com/amano-takahisa/nixos-config.git
-cd nixos-config
+env GHQ_ROOT="$HOME/ghq/personal" nix shell nixpkgs#ghq nixpkgs#git \
+  -c ghq get --update https://github.com/amano-takahisa/nixos-config.git
+cd "$HOME/ghq/personal/github.com/amano-takahisa/nixos-config"
 ./home-rebuild.sh takahisa@chie-mac build
+```
+
+`ghq get --update` clones the repository on the first run and pulls updates if
+it already exists. `GHQ_ROOT` explicitly selects MSI's personal repository root
+before the shared Git configuration is installed. HTTPS avoids needing GitHub
+SSH keys for the initial clone. Neither ghq nor Git needs to be installed
+globally for this command. See the [ghq documentation](https://github.com/x-motemen/ghq).
+
+After the build succeeds, activate the user environment:
+
+```bash
 ./home-rebuild.sh takahisa@chie-mac switch
 ```
+
+The activated environment provides ghq and Git, with `ghq.root` set to
+`~/ghq/personal`, so subsequent use does not need the temporary Nix command or
+the `GHQ_ROOT` override.
 
 Use the branch containing the Mac configuration until it is merged. New local
 files must be added to Git before building a Git flake. Home Manager reports
@@ -78,7 +96,7 @@ tmux new-session -s dev
 For subsequent updates, pull the published changes and build on the Mac:
 
 ```bash
-cd /path/to/nixos-config
+cd "$HOME/ghq/personal/github.com/amano-takahisa/nixos-config"
 git pull --ff-only
 ./home-rebuild.sh takahisa@chie-mac build
 ```
