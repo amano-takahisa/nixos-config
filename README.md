@@ -138,6 +138,15 @@ See the [PyTorch MPS documentation](https://docs.pytorch.org/docs/stable/notes/m
 tmux preserves sessions across SSH disconnections while the Mac is awake;
 it does not prevent sleep or guarantee computation while the lid is closed.
 
+Terminal host indicators use blue on Linux (including MSI) and orange on the
+Mac. tmux shows the host and session at the top, with a brighter border around
+the active pane; fish uses the same accent for its host label. The Mac label is
+`chie-mac`, independent of the SSH connection or the Mac's system hostname.
+Interactive fish shells on the Mac export `LC_CTYPE=en_US.UTF-8` so tmux can
+display Unicode characters even when SSH starts in the C locale.
+After activating an update, open a new fish shell and reload an existing tmux
+server with `tmux source-file ~/.config/tmux/tmux.conf`.
+
 ### WSL2
 
 Install NixOS on WSL2 following [NixOS-WSL](https://nix-community.github.io/NixOS-WSL/).

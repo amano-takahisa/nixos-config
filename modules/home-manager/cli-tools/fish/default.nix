@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.fish = {
@@ -40,6 +40,15 @@
       set -g __fish_git_prompt_char_untrackedfiles '?'
       set -g fish_prompt_pwd_dir_length 3
       set -g fish_prompt_pwd_full_dirs 3
+      # Match tmux's host accent, including after reattaching a session.
+      set -g fish_color_host '${if pkgs.stdenv.hostPlatform.isDarwin then "ffb454" else "82aaff"}'
+      set -g fish_color_host_remote $fish_color_host
+      ${if pkgs.stdenv.hostPlatform.isDarwin then ''
+        set -g fish_prompt_host_label 'chie-mac'
+        # SSH on macOS may start in the C locale. tmux would replace Unicode
+        # output with underscores unless its client sees a UTF-8 locale.
+        set -gx LC_CTYPE en_US.UTF-8
+      '' else ""}
       source ${./fish_prompt.fish}
       function fish_title
         set -q argv[1]; or set argv fish

@@ -1,4 +1,20 @@
-{ ... }:
+{ pkgs, ... }:
+
+let
+  # Keep host identification visible while full-screen applications are running.
+  theme =
+    if pkgs.stdenv.hostPlatform.isDarwin then {
+      background = "#3b2616";
+      border = "#a66328";
+      accent = "#ffb454";
+      label = "chie-mac";
+    } else {
+      background = "#182a3a";
+      border = "#365b7a";
+      accent = "#82aaff";
+      label = "#h";
+    };
+in
 
 {
   # tmux
@@ -45,8 +61,8 @@
       # bind-key -n M-Down select-pane -D
 
       # Change pane border colors
-      set-option -g pane-border-style "bg=#333333,fg=#aaaaaa"
-      set-option -g pane-active-border-style "bg=#aaaaaa,fg=#333333"
+      set-option -g pane-border-style "fg=${theme.border}"
+      set-option -g pane-active-border-style "fg=${theme.accent}"
 
       # Keep showing window numbe when <prefix> q
       bind-key -T prefix e display-panes -d 0
@@ -65,11 +81,13 @@
       #################
       # Set status bar position
       set-option -g renumber-windows on
-      set-option -g status-bg "#333333"
-      set-option -g status-fg "#aaaaaa"
+      set-option -g status-bg "${theme.background}"
+      set-option -g status-fg "${theme.accent}"
+      set-option -g status-left-length 40
+      set-option -g status-left "#[bold] ${theme.label} #[nobold]#S "
       set-option -g status-justify centre
       set-option -g status-position top
-      set-window-option -g window-status-current-style "bg=#aaaaaa,fg=#333333"
+      set-window-option -g window-status-current-style "bg=${theme.accent},fg=${theme.background},bold"
 
       #################
       # Mouse

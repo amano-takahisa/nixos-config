@@ -37,7 +37,7 @@ function fish_prompt
     # This prompt shows:
     # - green lines if the last return command is OK, red otherwise
     # - your user name, in red if root or yellow otherwise
-    # - your hostname, in cyan if ssh or blue otherwise
+    # - your hostname, in the host accent shared with tmux
     # - the current path (with prompt_pwd)
     # - date +%X
     # - the current virtual environment, if any
@@ -112,13 +112,19 @@ function fish_prompt
     set_color -o white
     echo -n @
 
-    if test -z "$SSH_CLIENT"
+    if set -q fish_color_host
+        set_color -o $fish_color_host
+    else if test -z "$SSH_CLIENT"
         set_color -o blue
     else
         set_color -o cyan
     end
 
-    echo -n (prompt_hostname)
+    if set -q fish_prompt_host_label
+        echo -n $fish_prompt_host_label
+    else
+        echo -n (prompt_hostname)
+    end
     set_color -o white
     echo -n :(prompt_pwd)
 
