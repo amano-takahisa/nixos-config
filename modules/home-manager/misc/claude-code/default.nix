@@ -12,6 +12,15 @@ let
     })
     hookNames);
 
+  # Serena pins `mcp<2` and imports `mcp.server.fastmcp`, which mcp 2.x renamed
+  # to `mcp.server.mcpserver`. nixpkgs still packages the 1.x line as `mcp_1`,
+  # so build the servers from this module against that scope.
+  mcpServersPkgs = pkgs.extend (_final: prev: {
+    python3Packages = prev.python3Packages.overrideScope (
+      _pythonFinal: pythonPrev: { mcp = pythonPrev.mcp_1; }
+    );
+  });
+
 in
 {
   # Apps (Slack, Claude Code, etc.) sometimes replace the home-manager symlink with a
@@ -111,7 +120,7 @@ in
 
 
     mcpServers =
-      (mcp-servers-nix.lib.evalModule pkgs {
+      (mcp-servers-nix.lib.evalModule mcpServersPkgs {
         programs = {
           context7.enable = true;
           playwright.enable = true;
