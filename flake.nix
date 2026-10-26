@@ -29,11 +29,8 @@
   outputs = { self, nixpkgs, home-manager, nixvim, nvim-config, oh-my-pi, plasma-manager, nixos-wsl, mcp-servers-nix, llm-agents, sops-nix, ... }@inputs:
     let
       system = "x86_64-linux";
-      overlays = [
-        (import ./overlays/mozc.nix)
-      ];
       pkgs = import nixpkgs {
-        inherit overlays system;
+        inherit system;
         config.allowUnfree = true;
         config.permittedInsecurePackages = [
           "electron-39.8.10"
@@ -141,7 +138,6 @@
           modules = [
             {
               nixpkgs.hostPlatform = system;
-              nixpkgs.overlays = overlays;
             }
             ./hosts/sx2/configuration.nix
             home-manager.nixosModules.home-manager
@@ -155,7 +151,6 @@
           modules = [
             {
               nixpkgs.hostPlatform = system;
-              nixpkgs.overlays = overlays;
             }
             ./hosts/msi/configuration.nix
             home-manager.nixosModules.home-manager
@@ -169,7 +164,6 @@
           modules = [
             {
               nixpkgs.hostPlatform = system;
-              nixpkgs.overlays = overlays;
             }
             nixos-wsl.nixosModules.wsl
             ./hosts/wsl/configuration.nix
