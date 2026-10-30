@@ -70,11 +70,25 @@ of invoking `next` repeatedly. For example, in Codex:
 $execute-plan docs/plans/NNNN-example.md
 ```
 
-It coordinates `next` and `parallelize`, continues after each task, and makes
-focused local commits after verification and plan updates. Parallel work is
-integrated and verified by one owner. It stops for decisions or blockers that
+The invoking agent coordinates `next` and `parallelize` as the parent. It assigns
+independent tasks to implementation subagents in separate branches and worktrees,
+collects their evidence, dispatches separate reviewers, returns findings for
+fixes, and integrates verified results. It also requests an independent review
+of the combined change. Only the parent updates shared plan progress. It continues
+after each task and makes focused local commits after verification and plan updates.
+It stops for decisions or blockers that
 prevent further work, and saves progress for resumption. It does not push,
 open a PR, merge, or deploy. Say explicitly if local commits are not wanted.
+
+The preferred model split is a mid-tier parent, lightweight implementation
+workers, and mid-tier or stronger reviewers. Configure concrete models and agent
+roles in the host tool; invoking the skill does not automatically change the
+parent model or install agent definitions. In oh-my-pi, start with the intended
+parent model before invoking `/skill:execute-plan docs/plans/NNNN-example.md`.
+The executor reports available model selections and limitations. Without native
+subagents it works serially and labels its review as self-review; without isolated
+worktrees it runs implementation sequentially. This repository's current OMP
+model roles all use the same model, so they do not establish the preferred split.
 
 ## Parallel work
 

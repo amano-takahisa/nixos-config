@@ -1,6 +1,6 @@
 ---
 name: execute-plan
-description: Execute all remaining tasks in a saved implementation plan, coordinating sequential or parallel work, verification, progress updates, and focused local commits.
+description: Execute a saved implementation plan through parent coordination, parallel implementation workers, independent review, verification, and focused local commits.
 ---
 
 Use the plan named by the user, or the unambiguous active plan in the current
@@ -9,6 +9,28 @@ unclear. Read its scope, acceptance criteria, dependencies, and repository
 instructions before starting. Invocation authorizes focused local commits for
 this execution unless the user says otherwise; it does not authorize pushing,
 opening a pull request, merging, or deployment.
+
+## Roles and model selection
+
+The invoking agent is the parent and integration owner. It reads the full plan,
+resolves dependencies, assigns bounded tasks, dispatches reviews, and owns the
+combined result and plan updates. Prefer delegating implementation to native
+subagents over doing all tasks in the parent when delegation is available.
+
+Use the host's configured agents and model-selection capabilities. Prefer a
+mid-tier model for the parent, lightweight models for bounded implementation,
+and a mid-tier or stronger model for independent review. Respect explicit user
+model choices. Check available roles and model identifiers rather than inventing
+them; a background-processing role is not necessarily an implementation worker.
+Model names and provider settings belong in the host configuration, not this
+shared skill. Do not change persistent model settings as part of execution.
+
+Skill invocation does not itself switch the parent model. Report the actual
+parent and worker/reviewer selection when exposed by the host, or state that
+it is unknown. If a preferred model is unavailable, use available models and
+state the limitation. If native delegation is unavailable, implement serially
+and perform an explicit self-review, reporting that independent review was not
+possible. Do not claim that reading a review skill starts a separate agent.
 
 ## Execution loop
 
@@ -19,18 +41,27 @@ end the turn or ask whether to continue.
 1. Select unfinished tasks whose dependencies are satisfied. Use `next` for
    each coherent implementation task; its one-task boundary defines the work
    unit, not the stopping point of this execution.
-2. Use `parallelize` when independent work can reduce elapsed time. Delegate
-   bounded tasks to native subagents when available. Concurrent implementation
-   requires separate branches and worktrees; otherwise implement sequentially.
-   Keep one integration owner responsible for the combined result. Worker
-   commits may be used for transfer when needed, but are not proof that a task
-   is verified or integrated. Integrate local work without merging a PR.
-3. Implement and run the relevant checks, using `verify-change` for user-visible
-   behavior. Fix failures caused by this work and verify again. Record unrelated
-   failures or unavailable checks without claiming they passed.
+2. Use `parallelize` to dispatch independent ready tasks concurrently, within
+   the host's capacity. Give each implementation worker the task contract below.
+   Concurrent implementation requires separate branches and worktrees;
+   otherwise dispatch tasks sequentially. Workers implement and run relevant
+   checks, using `verify-change` for user-visible behavior. They return results
+   to the parent rather than marking the shared plan complete.
+3. For each returned task, inspect its diff and evidence, then dispatch a
+   separate reviewer using `review-changes`. Give the reviewer the task contract,
+   base and resulting commit or exact diff, worktree path, and verification
+   results. The reviewer must inspect the implementation, report actionable
+   findings and unverified criteria, and not edit files. Return findings to the
+   implementation worker for fixes and checks, then have the reviewer inspect
+   the revised result. If the same blocker recurs without new evidence, have
+   the parent diagnose it or reassign to a more capable available worker;
+   do not repeat an unchanged delegation indefinitely. Continue unrelated tasks.
 4. Update the plan with verified progress and check results. Use `commit` at
    each coherent, independently useful boundary after relevant checks pass.
-   Normally commit one completed task with its progress update. Split a large
+   Integrate reviewed worker changes locally, resolve conflicts, and verify
+   the combined behavior before marking tasks complete. Worker commits are
+   transfer artifacts, not proof of acceptance. Normally commit one completed
+   task with its progress update. Split a large
    task only at meaningful verified milestones; combine tiny inseparable tasks
    when that makes a clearer commit. Avoid committing known-broken intermediate
    states. For parallel work, the integration owner verifies the combined
@@ -38,10 +69,35 @@ end the turn or ask whether to continue.
 5. Re-read remaining tasks and dependencies, then continue immediately with
    the next executable work. A blocked task must not stop unrelated work.
 
-After implementation, review the combined change against the plan using
-`review-changes`, fix findings within scope, and rerun affected checks. Complete
+After implementation, dispatch an independent review of the combined change
+against the plan using `review-changes`; task reviews do not replace this
+integration review. Fix findings within scope, obtain review of the fixes, and
+rerun affected checks. Complete
 the plan's final verification, record the outcome, and commit any remaining
 related changes. Do not mark tasks complete without their acceptance evidence.
+
+## Delegation contract
+
+Give each worker enough context to act without the parent's conversation:
+
+- Task ID, outcome, acceptance criteria, dependencies, and relevant plan excerpts.
+- Repository instructions, allowed scope, shared interfaces, and out-of-scope work.
+- Absolute worktree path, branch, base revision, and actual verification commands.
+- The required result format: task ID and status; worktree, branch and commit(s)
+  or diff location; changes made; acceptance evidence and check results; remaining
+  risks, blockers, and decisions needed.
+
+Require all worker commands to run in the assigned worktree. Workers must not
+switch the parent's checkout, integrate other branches, edit shared plan progress,
+or spawn further workers. The parent owns scheduling and shared records. Allow
+focused worker commits for transfer under this invocation's commit authorization;
+if commits were declined, use a reviewable diff without silently committing.
+
+Reviewers must inspect the exact submitted revision in a stable worktree; do
+not run review against files an implementer is still changing. A task's reviewer
+must be a separate agent from its implementer. The parent collects the findings,
+assigns fixes, and verifies integration rather than treating a worker's success
+message or a review verdict as sufficient evidence.
 
 ## Boundaries and handoff
 
