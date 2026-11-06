@@ -80,7 +80,7 @@
       ".serena"
 
       # shitty files by Mac
-      .DS_Store
+      ".DS_Store"
     ];
   };
 }
