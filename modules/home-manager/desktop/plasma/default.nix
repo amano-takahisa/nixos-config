@@ -1,6 +1,15 @@
-{ ... }:
+{ config, pkgs, ... }:
 
 {
+  xdg.desktopEntries.orca = {
+    name = "Orca";
+    comment = "Orca development workspace";
+    exec = "${pkgs.appimage-run}/bin/appimage-run ${config.home.homeDirectory}/Applications/orca/orca-linux.appimage %U";
+    icon = "applications-development";
+    terminal = false;
+    categories = [ "Development" ];
+  };
+
   programs.plasma = {
     enable = true;
 
