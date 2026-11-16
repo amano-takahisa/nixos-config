@@ -88,6 +88,7 @@
   programs.kdeconnect.enable = true;
 
   networking.firewall = rec {
+    interfaces.tailscale0.allowedTCPPorts = [ 6768 ];
     allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
     allowedUDPPortRanges = allowedTCPPortRanges;
   };
